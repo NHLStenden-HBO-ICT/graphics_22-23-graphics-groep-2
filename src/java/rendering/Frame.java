@@ -2,13 +2,13 @@ package java.rendering;
 
 import java.scene.Color;
 
-public class frame {
+public class Frame {
 
 	private int hight;
 
 	private int width;
 
-	private Color[][] PixelData;
+	private Color[][] pixelData;
 
 	public Void RenderToImage(String path) {
 		return null;

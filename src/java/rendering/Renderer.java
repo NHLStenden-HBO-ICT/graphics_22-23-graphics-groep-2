@@ -8,9 +8,9 @@ public class Renderer {
 
 	private int maxRayDepth;
 
-	private float Resolution;
+	private float resolution;
 
-	public frame RenderFrame(Scene scene, int maxRayDepth) {
+	public Frame RenderFrame(Scene scene, int maxRayDepth) {
 		return null;
 	}
 
