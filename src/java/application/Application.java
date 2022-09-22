@@ -1,7 +1,12 @@
 package java.application;
 
-public class Application {
-    public static void main(String[] args) {
+import java.rendering.Renderer;
 
-    }
+public class Application {
+
+	private Renderer renderer;
+
+	public void main(int String[] args) {
+
+	}
 }

@@ -8,10 +8,16 @@ public class Renderer {
 
 	private int maxRayDepth;
 
-	private float resolution;
-
 	public Frame RenderFrame(Scene scene, int maxRayDepth) {
 		return null;
+	}
+
+	public Scene getscene() {
+		return null;
+	}
+
+	public void setscene(Scene scene) {
+
 	}
 
 }

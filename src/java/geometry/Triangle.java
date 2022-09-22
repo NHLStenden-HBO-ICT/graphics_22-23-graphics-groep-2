@@ -1,11 +1,25 @@
 package java.geometry;
 
+import java.math.Vector3;
+
 public class Triangle extends Solid {
 
-	private Vector3 point1;
+	private Vector3[] Vertices;
 
-	private Vector3 point2;
+	public Vector3 getvertex(int index) {
+		return null;
+	}
 
-	private Vector3 point3;
+	public Vector3[] getvertices() {
+		return null;
+	}
+
+	public void setvertex(int index, Vector3 vertex) {
+
+	}
+
+	public void setvertices(Vector3[] vertices) {
+
+	}
 
 }

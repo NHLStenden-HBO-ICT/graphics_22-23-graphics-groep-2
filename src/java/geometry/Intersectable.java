@@ -1,7 +1,10 @@
 package java.geometry;
 
+import java.math.RayHit;
+import java.math.Ray;
+
 public interface Intersectable {
 
-	public abstract Vector3 Intersects(Ray ray);
+	public abstract RayHit Intersects(Ray ray);
 
 }
