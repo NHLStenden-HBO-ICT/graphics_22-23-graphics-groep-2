@@ -6,7 +6,7 @@ import java.math.Ray;
 
 import java.scene.Material;
 
-public class Solid implements Intersectable {
+public abstract class Solid implements Intersectable {
 
 	private Material material;
 
