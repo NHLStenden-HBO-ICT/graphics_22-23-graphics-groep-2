@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RaytracerApplication/RaytracerApplication.iml" filepath="$PROJECT_DIR$/RaytracerApplication/RaytracerApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/graphics_22-23-graphics-groep-2.iml" filepath="$PROJECT_DIR$/.idea/graphics_22-23-graphics-groep-2.iml" />
     </modules>
   </component>
