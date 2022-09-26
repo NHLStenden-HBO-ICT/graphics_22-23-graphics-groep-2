@@ -1,4 +1,4 @@
-package java.math;
+package java.maths;
 
 public class Ray {
 
