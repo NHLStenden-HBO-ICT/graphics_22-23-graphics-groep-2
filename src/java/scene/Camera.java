@@ -1,8 +1,8 @@
 package java.scene;
 
-import java.math.Vector3;
+import java.maths.Vector3;
 
-import java.geometry.Vector3;
+//import java.geometry.Vector3;
 
 public class Camera {
 

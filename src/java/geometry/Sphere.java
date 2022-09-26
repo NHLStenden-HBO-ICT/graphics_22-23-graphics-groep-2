@@ -1,6 +1,6 @@
 package java.geometry;
 
-import java.math.Vector3;
+import java.maths.Vector3;
 
 public class Sphere extends Solid {
 

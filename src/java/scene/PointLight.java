@@ -1,9 +1,9 @@
 package java.scene;
 
-import java.math.Vector3;
+import java.maths.Vector3;
 import java.utils.Color;
 
-import java.geometry.Vector3;
+//import java.geometry.Vector3;
 
 public class PointLight {
 
@@ -11,7 +11,7 @@ public class PointLight {
 
 	private Color color;
 
-	private Float intensity;
+	private float intensity;
 
 	public Vector3 getposition() {
 		return null;

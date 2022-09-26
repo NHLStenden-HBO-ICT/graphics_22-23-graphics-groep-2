@@ -1,4 +1,4 @@
-package java.math;
+package java.maths;
 
 import java.geometry.Solid;
 
