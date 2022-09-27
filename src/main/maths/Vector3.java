@@ -48,7 +48,7 @@ public class Vector3 {
 		this.z=z;
 	}
 
-	//add method. doet deze vector plus de parameter vector
+	//add method. adds this vector with the paremeter vector
 	public Vector3 Add(Vector3 vector3) {
 		this.x+=vector3.x;
 		this.z+=vector3.z;
@@ -56,7 +56,7 @@ public class Vector3 {
 		return this;
 	}
 
-	//sub method. doet deze vector min de parameter vector
+	//sub method. subtracts this vector with parameter vector
 	public Vector3 Sub(Vector3 vector3) {
 		this.x-=vector3.x;
 		this.z-=vector3.z;
@@ -64,7 +64,7 @@ public class Vector3 {
 		return this;
 	}
 
-	//Multi method. doet deze vector keer de parameter
+	//Multi method. multiplies this vector with parameter of double
 	public Vector3 Multi(double multiply) {
 		this.x=this.x * multiply;
 		this.z=this.z * multiply;
@@ -72,12 +72,12 @@ public class Vector3 {
 		return this;
 	}
 
-	//Dot method. doet deze vector keer de parameter vector waar dus het inproduct uit komt
+	//Dot method. multiplies this vector times the parameter vector where the dot product is return
 	public double Dot(Vector3 vectorA) {
 		return vectorA.x*x+vectorA.y*y+vectorA.z*z;
 	}
 
-	//Normalise vector, maakt dus de normaal van de vector en return hem
+	//Normalise vector, creates a normale vector of this vector
 	public Vector3 Normalise() {
 		double magnitude = Lenght();
 		x/=magnitude;
@@ -86,7 +86,7 @@ public class Vector3 {
 		return this;
 	}
 
-	//lengte van de vector en returnd hem
+	//calculates the lenght of this vector
 	public double Lenght() {
 		return Math.sqrt(x*x+y*y+z*z);
 	}
