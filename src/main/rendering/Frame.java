@@ -14,20 +14,24 @@ public class Frame {
 		return null;
 	}
 
+	// Return the height of the frame
 	public int getheight() {
-		return 0;
+		return height;
 	}
 
+	// Return the width of the frame
 	public int getwidth() {
-		return 0;
+		return width;
 	}
 
-	public void setheight(int height) {
-
+	// Set the height of the frame
+	public void setheight(int height_) {
+		height = height_;
 	}
 
-	public void setwidth(int width) {
-
+	// Set the width of the frame
+	public void setwidth(int width_) {
+		width = width_;
 	}
 
 }
