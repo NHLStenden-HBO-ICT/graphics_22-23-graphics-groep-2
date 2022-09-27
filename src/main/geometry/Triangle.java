@@ -1,8 +1,10 @@
 package main.geometry;
 
+import main.maths.Ray;
+import main.maths.RayHit;
 import main.maths.Vector3;
 
-public class Triangle extends Solid {
+public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] Vertices;
 
@@ -38,4 +40,8 @@ public class Triangle extends Solid {
     }
 
 
+    @Override
+    public RayHit Intersects(Ray ray) {
+        return null;
+    }
 }

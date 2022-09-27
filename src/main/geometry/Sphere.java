@@ -1,8 +1,10 @@
 package main.geometry;
 
+import main.maths.Ray;
+import main.maths.RayHit;
 import main.maths.Vector3;
 
-public class Sphere extends Solid {
+public class Sphere extends Solid implements Intersectable {
 
     private double radius;
 
@@ -29,4 +31,8 @@ public class Sphere extends Solid {
         this.position = position;
     }
 
+    @Override
+    public RayHit Intersects(Ray ray) {
+        return null;
+    }
 }
