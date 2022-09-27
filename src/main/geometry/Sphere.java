@@ -4,24 +4,29 @@ import main.maths.Vector3;
 
 public class Sphere extends Solid {
 
-	private double radius;
+    private double radius;
 
-	private Vector3 position;
+    private Vector3 position;
 
-	public double getradius() {
-		return 0;
-	}
+    public Sphere(double radius, Vector3 position) {
+        this.radius = radius;
+        this.position = position;
+    }
 
-	public Vector3 getposition() {
-		return null;
-	}
+    public double getradius() {
+        return radius;
+    }
 
-	public void setradius(double radius) {
+    public Vector3 getposition() {
+        return position;
+    }
 
-	}
+    public void setradius(double radius) {
+        this.radius = radius;
+    }
 
-	public void setposition(Vector3 position) {
-
-	}
+    public void setposition(Vector3 position) {
+        this.position = position;
+    }
 
 }
