@@ -2,8 +2,8 @@ package test.maths;
 
 import org.junit.jupiter.api.Test;
 
-import java.maths.Ray;
-import java.maths.Vector3;
+import main.maths.Ray;
+import main.maths.Vector3;
 
 import static org.junit.jupiter.api.Assertions.*;
 
