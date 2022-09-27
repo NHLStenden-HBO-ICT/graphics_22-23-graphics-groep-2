@@ -50,17 +50,17 @@ public class Vector3 {
 
 	//add method. doet deze vector plus de parameter vector
 	public Vector3 Add(Vector3 vector3) {
-		this.x=+vector3.x;
-		this.z=+vector3.z;
-		this.y=+vector3.y;
+		this.x+=vector3.x;
+		this.z+=vector3.z;
+		this.y+=vector3.y;
 		return this;
 	}
 
 	//sub method. doet deze vector min de parameter vector
 	public Vector3 Sub(Vector3 vector3) {
-		this.x=-vector3.x;
-		this.z=-vector3.z;
-		this.y=-vector3.y;
+		this.x-=vector3.x;
+		this.z-=vector3.z;
+		this.y-=vector3.y;
 		return this;
 	}
 
