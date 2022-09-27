@@ -2,6 +2,7 @@ package test.geometry;
 
 import main.geometry.Triangle;
 import main.maths.Vector3;
+import main.utils.Material;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,7 @@ class TriangleTest {
     void setUp() {
         //make a new triangle before each test
         triangle = new Triangle(
+                new Material(),
                 new Vector3(0, 0, 0),
                 new Vector3(0, 0, 0),
                 new Vector3(0, 0, 0));

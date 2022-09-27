@@ -6,6 +6,10 @@ public class Material {
 
 	private Color color;
 
+	public Material() {
+
+	}
+
 	public Color getcolor() {
 		return null;
 	}

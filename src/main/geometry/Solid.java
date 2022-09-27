@@ -8,11 +8,15 @@ public abstract class Solid {
 
     private Material material;
 
+    public Solid(Material material) {
+        this.material = material;
+    }
+
     public Material getmaterial() {
-        return null;
+        return material;
     }
 
     public void setmaterial(Material material) {
-
+        this.material = material;
     }
 }

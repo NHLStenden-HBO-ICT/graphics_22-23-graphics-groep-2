@@ -3,12 +3,14 @@ package main.geometry;
 import main.maths.Ray;
 import main.maths.RayHit;
 import main.maths.Vector3;
+import main.utils.Material;
 
 public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] Vertices;
 
-    public Triangle(Vector3 point1, Vector3 point2, Vector3 point3) {
+    public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
+        super(material);
         Vertices = new Vector3[]{
                 point1,
                 point2,
