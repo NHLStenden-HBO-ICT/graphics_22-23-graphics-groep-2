@@ -2,7 +2,7 @@ package java.rendering;
 
 import java.utils.Color;
 
-import java.scene.Color;
+import java.utils.Color;
 
 public class Frame {
 

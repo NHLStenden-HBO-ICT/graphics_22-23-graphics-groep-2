@@ -6,7 +6,7 @@ public class Application {
 
 	private Renderer renderer;
 
-	public void main(int String[] args) {
+	public static void main(String[] args) {
 
 	}
 }
