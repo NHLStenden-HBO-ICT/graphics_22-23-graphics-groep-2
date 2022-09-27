@@ -1,7 +1,7 @@
-package java.scene;
+package main.scene;
 
-import java.maths.Vector3;
-import java.utils.Color;
+import main.maths.Vector3;
+import main.utils.Color;
 
 //import java.geometry.Vector3;
 

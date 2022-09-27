@@ -1,7 +1,7 @@
-package java.geometry;
+package main.geometry;
 
-import java.maths.RayHit;
-import java.maths.Ray;
+import main.maths.Ray;
+import main.maths.RayHit;
 
 public interface Intersectable {
 

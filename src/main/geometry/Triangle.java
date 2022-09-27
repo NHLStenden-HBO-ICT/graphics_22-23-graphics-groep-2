@@ -1,6 +1,6 @@
-package java.geometry;
+package main.geometry;
 
-import java.maths.Vector3;
+import main.maths.Vector3;
 
 public class Triangle extends Solid {
 

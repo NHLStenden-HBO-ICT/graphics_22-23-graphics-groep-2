@@ -1,6 +1,6 @@
-package java.maths;
+package main.maths;
 
-import java.geometry.Solid;
+import main.geometry.Solid;
 
 public class RayHit {
 

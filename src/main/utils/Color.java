@@ -1,6 +1,6 @@
-package java.utils;
+package main.utils;
 
-import java.maths.Vector3;
+import main.maths.Vector3;
 
 public class Color {
 
