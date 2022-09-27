@@ -1,6 +1,6 @@
-package java.application;
+package main.application;
 
-import java.rendering.Renderer;
+import main.rendering.Renderer;
 
 public class Application {
 

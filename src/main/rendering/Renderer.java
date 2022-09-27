@@ -1,6 +1,6 @@
-package java.rendering;
+package main.rendering;
 
-import java.scene.Scene;
+import main.scene.Scene;
 
 public class Renderer {
 

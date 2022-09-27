@@ -1,8 +1,8 @@
-package java.scene;
+package main.scene;
 
-import java.geometry.Solid;
-import java.maths.RayHit;
-import java.maths.Ray;
+import main.geometry.Solid;
+import main.maths.Ray;
+import main.maths.RayHit;
 
 public class Scene {
 

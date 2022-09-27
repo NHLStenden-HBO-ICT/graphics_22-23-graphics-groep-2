@@ -1,8 +1,6 @@
-package java.rendering;
+package main.rendering;
 
-import java.utils.Color;
-
-import java.utils.Color;
+import main.utils.Color;
 
 public class Frame {
 

@@ -1,4 +1,4 @@
-package java.utils;
+package main.utils;
 
 public class Material {
 

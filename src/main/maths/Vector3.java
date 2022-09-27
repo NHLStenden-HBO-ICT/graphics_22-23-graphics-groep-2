@@ -1,4 +1,4 @@
-package java.maths;
+package main.maths;
 import java.lang.Math;
 
 public class Vector3 {

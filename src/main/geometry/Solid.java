@@ -1,8 +1,8 @@
-package java.geometry;
+package main.geometry;
 
-import java.maths.Ray;
-import java.maths.RayHit;
-import java.utils.Material;
+import main.maths.Ray;
+import main.maths.RayHit;
+import main.utils.Material;
 
 public abstract class Solid implements Intersectable {
 
@@ -18,7 +18,7 @@ public abstract class Solid implements Intersectable {
 
 
 	/**
-	 * @see java.geometry.Intersectable#Intersects(Ray)
+	 * @see Intersectable#Intersects(Ray)
 	 *  
 	 */
 	public RayHit Intersects(Ray ray) {
