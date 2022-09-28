@@ -4,30 +4,30 @@ import main.utils.Color;
 
 public class Frame {
 
-	private int height;
+    private int height;
 
-	private int width;
+    private int width;
 
-	private Color[][] pixelData;
+    private Color[][] pixelData;
 
-	public Void RenderToImage(String path) {
-		return null;
-	}
+    public Void RenderToImage(String path) {
+        return null;
+    }
 
-	public int getheight() {
-		return 0;
-	}
+    public int getHeight() {
+        return 0;
+    }
 
-	public int getwidth() {
-		return 0;
-	}
+    public int getWidth() {
+        return 0;
+    }
 
-	public void setheight(int height) {
+    public void setHeight(int height) {
 
-	}
+    }
 
-	public void setwidth(int width) {
+    public void setWidth(int width) {
 
-	}
+    }
 
 }

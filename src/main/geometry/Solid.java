@@ -6,23 +6,22 @@ import main.utils.Material;
 
 public abstract class Solid implements Intersectable {
 
-	private Material material;
+    private Material material;
 
-	public Material getmaterial() {
-		return null;
-	}
+    public Material getMaterial() {
+        return null;
+    }
 
-	public void setmaterial(Material material) {
+    public void setMaterial(Material material) {
 
-	}
+    }
 
 
-	/**
-	 * @see Intersectable#Intersects(Ray)
-	 *  
-	 */
-	public RayHit Intersects(Ray ray) {
-		return null;
-	}
+    /**
+     * @see Intersectable#intersects(Ray)
+     */
+    public RayHit intersects(Ray ray) {
+        return null;
+    }
 
 }
