@@ -58,7 +58,7 @@ class Vector3Test {
     }
 
     @Test
-    void lenght() {
+    void length() {
         Vector3 vecA = new Vector3(4, 2, 4);
         double length = vecA.length();
         assertEquals(6, length);

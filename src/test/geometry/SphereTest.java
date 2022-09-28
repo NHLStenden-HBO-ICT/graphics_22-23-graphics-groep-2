@@ -22,21 +22,21 @@ class SphereTest {
     @Test
     void intersectsSphere() {
         //this ray should hit the sphere dead center
-        RayHit hit = sphere.Intersects(new Ray(new Vector3(-1, 0, 0), new Vector3(3, 0, 0)));
+        RayHit hit = sphere.intersects(new Ray(new Vector3(-1, 0, 0), new Vector3(3, 0, 0)));
         assertEquals(false, hit == null);
     }
 
     @Test
     void DoesNotIntersectsSphere() {
         //this ray should miss by 0.1
-        RayHit hit = sphere.Intersects(new Ray(new Vector3(-1, 0, 0), new Vector3(3, 0, 1.1)));
+        RayHit hit = sphere.intersects(new Ray(new Vector3(-1, 0, 0), new Vector3(3, 0, 1.1)));
         assertEquals(true, hit == null);
     }
 
     @Test
     void intersectsAtCorrectDistance() {
         //this ray should hit the sphere from exactly 1 away
-        RayHit hit = sphere.Intersects(new Ray(new Vector3(-1, 0, 0), new Vector3(3, 0, 0)));
+        RayHit hit = sphere.intersects(new Ray(new Vector3(-1, 0, 0), new Vector3(3, 0, 0)));
         assertEquals(1.0, hit.getDistance());
     }
 

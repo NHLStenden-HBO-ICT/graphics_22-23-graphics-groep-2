@@ -26,12 +26,12 @@ class TriangleTest {
     @Test
     void setVertices() {
         //make a vertex array of the correct length
-        Vector3[] vecs = {new Vector3(1, 1, 1),
+        Vector3[] vec = {new Vector3(1, 1, 1),
                 new Vector3(1, 1, 1),
                 new Vector3(1, 1, 1)};
 
         //assign that vertex array to the triangle
-        triangle.setVertices(vecs);
+        triangle.setVertices(vec);
 
         //check if the triangle is changed as we expect it to
         assertEquals(1, triangle.getVertex(0).getX());
