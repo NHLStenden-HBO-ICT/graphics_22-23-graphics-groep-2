@@ -7,19 +7,25 @@ public class RayHit {
     private Ray ray;
 
     private Solid hitSolid;
+    private double distance;
 
-    private Vector3 hitPosition;
+
+    public RayHit(Ray ray, Solid hitSolid, double distance) {
+        this.ray = ray;
+        this.hitSolid = hitSolid;
+        this.distance = distance;
+    }
 
     public Ray getRay() {
-        return null;
+        return ray;
     }
 
     public Solid getHitSolid() {
-        return null;
+        return hitSolid;
     }
 
-    public Vector3 getHitPosition() {
-        return null;
+    public double getDistance() {
+        return distance;
     }
 
     public Vector3 getNormal() {

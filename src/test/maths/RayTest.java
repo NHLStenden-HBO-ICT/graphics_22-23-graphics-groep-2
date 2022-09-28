@@ -1,11 +1,11 @@
 package test.maths;
 
-import main.maths.Ray;
-import main.maths.Vector3;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import main.maths.Ray;
+import main.maths.Vector3;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 class RayTest {
     //superfluous test methods for getters and setters
