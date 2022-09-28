@@ -7,27 +7,27 @@ import main.utils.Material;
 
 public class Triangle extends Solid implements Intersectable {
 
-    private Vector3[] Vertices;
+    private Vector3[] vertices;
 
     public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
         super(material);
-        Vertices = new Vector3[]{
+        this.vertices = new Vector3[]{
                 point1,
                 point2,
                 point3,
         };
     }
 
-    public Vector3 getvertex(int index) {
-        return Vertices[index];
+    public Vector3 getVertex(int index) {
+        return vertices[index];
     }
 
-    public Vector3[] getvertices() {
-        return Vertices;
+    public Vector3[] getVertices() {
+        return vertices;
     }
 
-    public void setvertex(int index, Vector3 vertex) {
-        this.Vertices[index] = vertex;
+    public void setVertex(int index, Vector3 vertex) {
+        this.vertices[index] = vertex;
     }
 
     //this method would normally allow us to change the length of the Triangle.Vertices array
@@ -43,7 +43,7 @@ public class Triangle extends Solid implements Intersectable {
 
 
     @Override
-    public RayHit Intersects(Ray ray) {
+    public RayHit intersects(Ray ray) {
         return null;
     }
 }

@@ -2,28 +2,24 @@ package main.utils;
 
 public class Material {
 
-	private double reflectivity;
+    private double reflectivity;
 
-	private Color color;
+    private Color color;
 
-	public Material() {
+    public Color getColor() {
+        return null;
+    }
 
-	}
+    public double getReflectivity() {
+        return 0;
+    }
 
-	public Color getcolor() {
-		return null;
-	}
+    public void setColor(Color color) {
 
-	public double getreflectivity() {
-		return 0;
-	}
+    }
 
-	public void setcolor(Color color) {
+    public void setReflectivity(double reflectivity) {
 
-	}
-
-	public void setreflectivity(double reflectivity) {
-
-	}
+    }
 
 }

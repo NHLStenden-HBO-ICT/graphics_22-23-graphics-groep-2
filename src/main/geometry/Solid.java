@@ -12,11 +12,11 @@ public abstract class Solid {
         this.material = material;
     }
 
-    public Material getmaterial() {
+    public Material getMaterial() {
         return material;
     }
 
-    public void setmaterial(Material material) {
+    public void setMaterial(Material material) {
         this.material = material;
     }
 }

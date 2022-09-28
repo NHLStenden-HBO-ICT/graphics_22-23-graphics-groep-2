@@ -9,59 +9,59 @@ class Vector3Test {
 
     @Test
     void add() {
-        Vector3 veca =new Vector3(1,1,1) ;
-        veca.Add(new Vector3(2,2,2));
+        Vector3 vecA = new Vector3(1, 1, 1);
+        vecA.add(new Vector3(2, 2, 2));
 
-        assertEquals(3, veca.GetX());
-        assertEquals(3, veca.GetY());
-        assertEquals(3, veca.GetY());
+        assertEquals(3, vecA.getX());
+        assertEquals(3, vecA.getY());
+        assertEquals(3, vecA.getY());
 
 
     }
 
     @Test
     void sub() {
-        Vector3 veca =new Vector3(3,3,3) ;
-        veca.Sub(new Vector3(2,2,2));
+        Vector3 vecA = new Vector3(3, 3, 3);
+        vecA.sub(new Vector3(2, 2, 2));
 
-        assertEquals(1, veca.GetX());
-        assertEquals(1, veca.GetY());
-        assertEquals(1, veca.GetY());
+        assertEquals(1, vecA.getX());
+        assertEquals(1, vecA.getY());
+        assertEquals(1, vecA.getY());
     }
 
     @Test
     void multi() {
-        Vector3 veca =new Vector3(3,3,3) ;
-        veca.Multi(2);
+        Vector3 vecA = new Vector3(3, 3, 3);
+        vecA.multi(2);
 
-        assertEquals(6, veca.GetX());
-        assertEquals(6, veca.GetY());
-        assertEquals(6, veca.GetY());
+        assertEquals(6, vecA.getX());
+        assertEquals(6, vecA.getY());
+        assertEquals(6, vecA.getY());
     }
 
     @Test
     void dot() {
-        Vector3 veca =new Vector3(3,3,3) ;
-        double dot = veca.Dot(new Vector3(2,2,2));
+        Vector3 vecA = new Vector3(3, 3, 3);
+        double dot = vecA.dot(new Vector3(2, 2, 2));
         assertEquals(18, dot);
     }
 
     @Test
     void normalise() {
-        Vector3 veca =new Vector3(2,2,2) ;
-        Vector3 vecb = veca.Normalise();
+        Vector3 vecA = new Vector3(2, 2, 2);
+        Vector3 vecB = vecA.normalise();
 
-        assertEquals(0.5773502691896258, vecb.GetX());
-        assertEquals(0.5773502691896258, vecb.GetY());
-        assertEquals(0.5773502691896258, vecb.GetY());
+        assertEquals(0.5773502691896258, vecB.getX());
+        assertEquals(0.5773502691896258, vecB.getY());
+        assertEquals(0.5773502691896258, vecB.getY());
 
     }
 
     @Test
     void lenght() {
-        Vector3 veca =new Vector3(4,2,4) ;
-        double lenght= veca.Lenght();
-        assertEquals(6, lenght);
+        Vector3 vecA = new Vector3(4, 2, 4);
+        double length = vecA.length();
+        assertEquals(6, length);
     }
 
 }

@@ -5,6 +5,6 @@ import main.maths.RayHit;
 
 public interface Intersectable {
 
-	public abstract RayHit Intersects(Ray ray);
+    public abstract RayHit intersects(Ray ray);
 
 }

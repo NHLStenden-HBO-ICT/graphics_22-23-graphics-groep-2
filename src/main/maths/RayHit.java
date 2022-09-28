@@ -20,7 +20,7 @@ public class RayHit {
         return ray;
     }
 
-    public Solid gethitSolid() {
+    public Solid getHitSolid() {
         return hitSolid;
     }
 
