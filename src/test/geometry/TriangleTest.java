@@ -34,7 +34,7 @@ class TriangleTest {
         triangle.setVertices(vecs);
 
         //check if the triangle is changed as we expect it to
-        assertEquals(1, triangle.getvertex(0).GetX());
+        assertEquals(1, triangle.getVertex(0).getX());
     }
 
     @Test

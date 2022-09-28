@@ -7,7 +7,7 @@ import main.utils.Material;
 
 public class Sphere extends Solid implements Intersectable {
 
-	private double radius;
+    private double radius;
 
     private final double radiusSquared; //radius2 = radius * radius
 
@@ -44,11 +44,11 @@ public class Sphere extends Solid implements Intersectable {
     @Override
     public RayHit intersects(Ray ray) {
 
-        Vector3 relativePosition = ray.getOrigin().Sub(position);
+        Vector3 relativePosition = ray.getOrigin().sub(position);
 
-        double a = ray.getDirection().Dot(ray.getDirection());
-        double b = ray.getDirection().Dot(relativePosition);
-        double c = relativePosition.Dot(relativePosition) - radiusSquared;
+        double a = ray.getDirection().dot(ray.getDirection());
+        double b = ray.getDirection().dot(relativePosition);
+        double c = relativePosition.dot(relativePosition) - radiusSquared;
         double discriminant = b * b - a * c;
 
         if (discriminant < 0.0) {

@@ -38,7 +38,7 @@ public class Triangle extends Solid implements Intersectable {
                     "A triangle can only have 3 vertices but " + vertices.length + " were provided");
         }
 
-        this.Vertices = vertices;
+        this.vertices = vertices;
     }
 
 
