@@ -8,11 +8,11 @@ public abstract class Solid implements Intersectable {
 
     private Material material;
 
-    public Material getmaterial() {
+    public Material getMaterial() {
         return null;
     }
 
-    public void setmaterial(Material material) {
+    public void setMaterial(Material material) {
 
     }
 

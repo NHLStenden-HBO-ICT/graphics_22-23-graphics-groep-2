@@ -12,11 +12,11 @@ public class Renderer {
         return null;
     }
 
-    public Scene getscene() {
+    public Scene getScene() {
         return null;
     }
 
-    public void setscene(Scene scene) {
+    public void setScene(Scene scene) {
 
     }
 

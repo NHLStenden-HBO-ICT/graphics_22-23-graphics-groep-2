@@ -7,34 +7,34 @@ import main.utils.Color;
 
 public class PointLight {
 
-	private Vector3 position;
+    private Vector3 position;
 
-	private Color color;
+    private Color color;
 
-	private float intensity;
+    private float intensity;
 
-	public Vector3 getposition() {
-		return null;
-	}
+    public Vector3 getPosition() {
+        return null;
+    }
 
-	public Color getcolor() {
-		return null;
-	}
+    public Color getColor() {
+        return null;
+    }
 
-	public float getintensity() {
-		return 0;
-	}
+    public float getIntensity() {
+        return 0;
+    }
 
-	public void setposition(Vector3 vector3) {
+    public void setPosition(Vector3 vector3) {
 
-	}
+    }
 
-	public void setcolor(Color color) {
+    public void setColor(Color color) {
 
-	}
+    }
 
-	public void setintensity(float intensity) {
+    public void setIntensity(float intensity) {
 
-	}
+    }
 
 }

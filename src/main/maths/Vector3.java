@@ -23,7 +23,7 @@ public class Vector3 {
         this.z = z;
     }
 
-    //get methodes
+    //get methods
     public double getX() {
         return x;
     }
@@ -87,7 +87,7 @@ public class Vector3 {
         return this;
     }
 
-    //calculates the lenght of this vector
+    //calculates the length of this vector
     public double length() {
         return Math.sqrt(x * x + y * y + z * z);
     }

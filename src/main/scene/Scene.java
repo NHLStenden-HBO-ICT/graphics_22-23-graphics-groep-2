@@ -12,21 +12,21 @@ public class Scene {
 
     private Camera camera;
 
-    private float skyEmmision;
+    private float skyEmission;
 
-    public Solid[] getgeometry() {
+    public Solid[] getGeometry() {
         return null;
     }
 
-    public PointLight[] getlights() {
+    public PointLight[] getLights() {
         return null;
     }
 
-    public Camera getcamera() {
+    public Camera getCamera() {
         return null;
     }
 
-    public float getskyEmmision() {
+    public float getSkyEmission() {
         return 0;
     }
 

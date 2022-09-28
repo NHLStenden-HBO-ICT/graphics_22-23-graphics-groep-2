@@ -4,22 +4,22 @@ import main.maths.Vector3;
 
 public class Triangle extends Solid {
 
-	private Vector3[] Vertices;
+    private Vector3[] Vertices;
 
-	public Vector3 getvertex(int index) {
-		return null;
-	}
+    public Vector3 getVertex(int index) {
+        return null;
+    }
 
-	public Vector3[] getvertices() {
-		return null;
-	}
+    public Vector3[] getVertices() {
+        return null;
+    }
 
-	public void setvertex(int index, Vector3 vertex) {
+    public void setVertex(int index, Vector3 vertex) {
 
-	}
+    }
 
-	public void setvertices(Vector3[] vertices) {
+    public void setVertices(Vector3[] vertices) {
 
-	}
+    }
 
 }
