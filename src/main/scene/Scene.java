@@ -6,64 +6,64 @@ import main.maths.RayHit;
 
 public class Scene {
 
-	private Solid[] geometry;
+    private Solid[] geometry;
 
-	private PointLight[] lights;
+    private PointLight[] lights;
 
-	private Camera camera;
+    private Camera camera;
 
-	private float skyEmmision;
+    private float skyEmmision;
 
-	public Solid[] getgeometry() {
-		return null;
-	}
+    public Solid[] getgeometry() {
+        return null;
+    }
 
-	public PointLight[] getlights() {
-		return null;
-	}
+    public PointLight[] getlights() {
+        return null;
+    }
 
-	public Camera getcamera() {
-		return null;
-	}
+    public Camera getcamera() {
+        return null;
+    }
 
-	public float getskyEmmision() {
-		return 0;
-	}
+    public float getskyEmmision() {
+        return 0;
+    }
 
-	public void AddSolid(Solid solid) {
+    public void addSolid(Solid solid) {
 
-	}
+    }
 
-	public void ClearSolid() {
+    public void clearSolid() {
 
-	}
+    }
 
-	public void RemoveSolid(Solid solid) {
+    public void removeSolid(Solid solid) {
 
-	}
+    }
 
-	public void RemoveSolid(int index) {
+    public void removeSolid(int index) {
 
-	}
+    }
 
-	public void Addlights(PointLight light) {
+    public void addLight(PointLight light) {
 
-	}
+    }
 
-	public void Clearlights() {
+    public void clearLights() {
 
-	}
+    }
 
-	public void Removelights(PointLight light) {
+    public void removeLight(PointLight light) {
 
-	}
+    }
 
-	public void RemoveLights(int index) {
+    public void removeLight(int index) {
 
-	}
+    }
 
-	public RayHit RayCast(Ray ray) {
-		return null;
-	}
+    public RayHit rayCast(Ray ray) {
+        return null;
+    }
 
 }
