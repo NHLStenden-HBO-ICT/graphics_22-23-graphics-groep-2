@@ -9,7 +9,7 @@ public class Sphere extends Solid implements Intersectable {
 
     private double radius;
 
-    private double radiusSquared; //radius2 = radius * radius
+    private final double radiusSquared; //radius2 = radius * radius
 
     private Vector3 position;
 
@@ -18,31 +18,35 @@ public class Sphere extends Solid implements Intersectable {
         this.radius = radius;
         this.radiusSquared = radius * radius;
         this.position = position;
-
     }
 
-    public double getradius() {
+    public double GetRadius() {
         return radius;
     }
 
-    public Vector3 getposition() {
+    public Vector3 GetPosition() {
         return position;
     }
 
-    public void setradius(double radius) {
+    public void SetRadius(double radius) {
         this.radius = radius;
     }
 
-    public void setposition(Vector3 position) {
+    public void SetPosition(Vector3 position) {
         this.position = position;
     }
 
-    //this is an implementation of https://raytracing.github.io/books/RayTracingInOneWeekend.html#addingasphere/ray-sphereintersection
+    // this is an implementation of https://raytracing.github.io/books/RayTracingInOneWeekend.html#addingasphere/ray-sphereintersection
+    // It takes a Ray and returns a RayHit containing:
+    // a reference to this object,
+    // the ray that intersected it
+    // and the distance along the ray where the intersection happened.
     @Override
     public RayHit Intersects(Ray ray) {
 
         Vector3 relativePosition = ray.getOrigin().Sub(position);
-        double a = ray.getDirection().Normalise().Dot(ray.getDirection().Normalise());
+
+        double a = ray.getDirection().Dot(ray.getDirection());
         double b = ray.getDirection().Dot(relativePosition);
         double c = relativePosition.Dot(relativePosition) - radiusSquared;
         double discriminant = b * b - a * c;
@@ -51,8 +55,10 @@ public class Sphere extends Solid implements Intersectable {
             return null; //no intersection
         }
 
+        //calculate the distance
         double distance = (-b - Math.sqrt(discriminant)) / a;
         return new RayHit(ray, this, distance);
-
     }
+
+
 }
