@@ -7,7 +7,7 @@ public class Ray {
     private Vector3 direction;
 
     public Ray(Vector3 direction, Vector3 origin) {
-        this.direction = direction.Normalise();
+        this.direction = direction.normalise();
         this.origin = origin;
     }
 
