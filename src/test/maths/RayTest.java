@@ -8,18 +8,27 @@ import main.maths.Vector3;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RayTest {
-    //superfluous test methods for getters and setters
-    //mostly just here to verify the testing platform and familiarize myself with it
     @Test
-    void getOrigin() {
-        Ray testRay = new Ray(new Vector3(0, 1, 2), new Vector3(0, 0, 0));
-        assertEquals(testRay.getOrigin().getX(), 0);
-        assertEquals(testRay.getOrigin().getX(), 1);
-        assertEquals(testRay.getOrigin().getY(), 2);
+    void getDistanceAtPoint1() {
+        Ray testRay = new Ray(-1, 0, 0, 4, 0, 0);
 
+        Vector3 point = testRay.getPointAlongRay(10);
+
+        assertEquals(-6.0, point.getX());
+        assertEquals(0.0, point.getY());
+        assertEquals(0.0, point.getZ());
     }
 
     @Test
-    void getDirection() {
+    void getDistanceAtPoint2() {
+        Ray testRay = new Ray(0, -1, 0, 4, 1, 2);
+
+        Vector3 point = testRay.getPointAlongRay(3);
+
+        System.out.println(point.toString());
+        assertEquals(4.0, point.getX());
+        assertEquals(-2.0, point.getY());
+        assertEquals(2.0, point.getZ());
     }
+
 }
