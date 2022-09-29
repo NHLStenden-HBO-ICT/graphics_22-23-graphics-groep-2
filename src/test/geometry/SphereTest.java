@@ -37,7 +37,10 @@ class SphereTest {
     void intersectsAtCorrectDistance() {
         //this ray should hit the sphere from exactly 1 away
         RayHit hit = sphere.intersects(new Ray(new Vector3(-1, 0, 0), new Vector3(3, 0, 0)));
-        assertEquals(1.0, hit.getDistance());
+
+        assertEquals(2.0, hit.getContactPoint().getX());
+        assertEquals(0.0, hit.getContactPoint().getY());
+        assertEquals(0.0, hit.getContactPoint().getZ());
     }
 
 }
