@@ -4,15 +4,15 @@ import main.utils.Color;
 
 public class Frame {
 
-	private int height;
+    private int height;
 
-	private int width;
+    private int width;
 
-	private Color[][] pixelData;
+    private Color[][] pixelData;
 
-	public Void RenderToImage(String path) {
-		return null;
-	}
+    public Void RenderToImage(String path) {
+        return null;
+    }
 
 	// Return the height of the frame
 	public int getheight() {

@@ -4,26 +4,32 @@ import main.geometry.Solid;
 
 public class RayHit {
 
-	private Ray ray;
+    private Ray ray;
 
-	private Solid hitSolid;
+    private Solid hitSolid;
+    private double distance;
 
-	private Vector3 hitPosition;
 
-	public Ray getRay() {
-		return null;
-	}
+    public RayHit(Ray ray, Solid hitSolid, double distance) {
+        this.ray = ray;
+        this.hitSolid = hitSolid;
+        this.distance = distance;
+    }
 
-	public Solid gethitSolid() {
-		return null;
-	}
+    public Ray getRay() {
+        return ray;
+    }
 
-	public Vector3 gethitPosition() {
-		return null;
-	}
+    public Solid getHitSolid() {
+        return hitSolid;
+    }
 
-	public Vector3 getNormal() {
-		return null;
-	}
+    public double getDistance() {
+        return distance;
+    }
+
+    public Vector3 getNormal() {
+        return null;
+    }
 
 }

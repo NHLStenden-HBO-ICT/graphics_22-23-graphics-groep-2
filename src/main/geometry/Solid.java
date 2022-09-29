@@ -4,25 +4,19 @@ import main.maths.Ray;
 import main.maths.RayHit;
 import main.utils.Material;
 
-public abstract class Solid implements Intersectable {
+public abstract class Solid {
 
-	private Material material;
+    private Material material;
 
-	public Material getmaterial() {
-		return null;
-	}
+    public Solid(Material material) {
+        this.material = material;
+    }
 
-	public void setmaterial(Material material) {
+    public Material getMaterial() {
+        return material;
+    }
 
-	}
-
-
-	/**
-	 * @see Intersectable#Intersects(Ray)
-	 *  
-	 */
-	public RayHit Intersects(Ray ray) {
-		return null;
-	}
-
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
 }

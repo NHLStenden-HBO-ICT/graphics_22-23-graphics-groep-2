@@ -4,13 +4,13 @@ import main.scene.Scene;
 
 public class Renderer {
 
-	private Scene scene;
+    private Scene scene;
 
-	private int maxRayDepth;
+    private int maxRayDepth;
 
-	public Frame RenderFrame(Scene scene, int maxRayDepth) {
-		return null;
-	}
+    public Frame renderFrame(Scene scene, int maxRayDepth) {
+        return null;
+    }
 
 	// Return the current scene
 	public Scene getscene() {
