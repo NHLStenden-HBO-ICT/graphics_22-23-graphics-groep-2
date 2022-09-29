@@ -64,4 +64,15 @@ class Vector3Test {
         assertEquals(6, length);
     }
 
+    @Test
+    void cross() {
+        Vector3 vecA = new Vector3(1, 2, 3);
+        Vector3 vecB = new Vector3(4, 5, 6);
+        Vector3 result = vecA.cross(vecB);
+        
+        assertEquals(-3, result.getX());
+        assertEquals(6, result.getY());
+        assertEquals(-3, result.getZ());
+    }
+
 }

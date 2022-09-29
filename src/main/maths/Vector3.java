@@ -91,6 +91,15 @@ public class Vector3 {
         );
     }
 
+    //returns the cross product of this vector and a given vector
+    public Vector3 cross(Vector3 vector3) {
+        return new Vector3(
+                (this.y * vector3.z) - (this.z * vector3.y),
+                (this.z * vector3.x) - (this.x * vector3.z),
+                (this.x * vector3.y) - (this.y * vector3.x)
+        );
+    }
+
     //calculates the length of this vector
     public double length() {
         return Math.sqrt(x * x + y * y + z * z);
