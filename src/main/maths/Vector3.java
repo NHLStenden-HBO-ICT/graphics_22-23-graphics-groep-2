@@ -53,8 +53,8 @@ public class Vector3 {
     public Vector3 add(Vector3 vector3) {
         return new Vector3(
                 this.x + vector3.x,
-                this.z + vector3.z,
-                this.y + vector3.y
+                this.y + vector3.y,
+                this.z + vector3.z
         );
     }
 
@@ -62,8 +62,8 @@ public class Vector3 {
     public Vector3 sub(Vector3 vector3) {
         return new Vector3(
                 this.x - vector3.x,
-                this.z - vector3.z,
-                this.y - vector3.y
+                this.y - vector3.y,
+                this.z - vector3.z
         );
     }
 
