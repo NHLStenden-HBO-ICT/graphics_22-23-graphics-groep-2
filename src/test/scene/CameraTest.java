@@ -8,6 +8,9 @@ import main.maths.Vector3;
 
 public class CameraTest {
 
+    private int screenWidth = 500;
+    private int screenHeight = 500;
+
     private Vector3 position = new Vector3(0,0,0);
 
     private Vector3 direction = new Vector3(1,0,0);
@@ -57,5 +60,13 @@ public class CameraTest {
         topLeft = center.add(new Vector3(-1,1,0));
         topRight = center.add(new Vector3(1,1,0));
         botLeft = center.add(new Vector3(-1,-1,0));
+    }
+
+    // Calculate a coordinate on the screen using (NOT DONE YET)
+    public return calculatePoint(double x, double y) {
+
+        double u = x / screenWidth;
+        double v = y / screenHeight
+
     }
 }
