@@ -7,13 +7,13 @@ public class RayHit {
     private Ray ray;
 
     private Solid hitSolid;
-    private double distance;
+    private Vector3 contactPoint;
 
 
-    public RayHit(Ray ray, Solid hitSolid, double distance) {
+    public RayHit(Ray ray, Solid hitSolid, Vector3 contactPoint) {
         this.ray = ray;
         this.hitSolid = hitSolid;
-        this.distance = distance;
+        this.contactPoint = contactPoint;
     }
 
     public Ray getRay() {
@@ -24,8 +24,8 @@ public class RayHit {
         return hitSolid;
     }
 
-    public double getDistance() {
-        return distance;
+    public Vector3 getContactPoint() {
+        return contactPoint;
     }
 
     public Vector3 getNormal() {
