@@ -8,9 +8,10 @@ public class Renderer {
 
     private int maxRayDepth;
 
-    public Frame renderFrame(Scene scene, int maxRayDepth) {
-        return null;
-    }
+	public Renderer(){
+		scene =new Scene();
+	}
+
 
 	// Return the current scene
 	public Scene getscene() {
@@ -21,5 +22,13 @@ public class Renderer {
 	public void setscene(Scene scene_) {
 		scene = scene_;
 	}
+
+	//renders frame and returns it
+	public Frame renderFrame() {
+
+		return new Frame(400, 400, scene);
+	}
+
+
 
 }

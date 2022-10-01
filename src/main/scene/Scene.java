@@ -1,12 +1,13 @@
 package main.scene;
 
+import main.geometry.Intersectable;
 import main.geometry.Solid;
 import main.maths.Ray;
 import main.maths.RayHit;
 
 public class Scene {
 
-    private Solid[] geometry;
+    private Intersectable[] geometry;
 
     private PointLight[] lights;
 
@@ -14,8 +15,15 @@ public class Scene {
 
     private float skyEmission;
 
-    public Solid[] getGeometry() {
-        return null;
+    public Scene()
+    {
+        camera =new Camera();
+    }
+
+
+    //get methods
+    public Intersectable[] getGeometry() {
+        return geometry;
     }
 
     public PointLight[] getLights() {
@@ -23,12 +31,13 @@ public class Scene {
     }
 
     public Camera getCamera() {
-        return null;
+        return this.camera;
     }
 
     public float getSkyEmission() {
         return 0;
     }
+
 
     public void addSolid(Solid solid) {
 
