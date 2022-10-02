@@ -55,10 +55,12 @@ class TriangleTest {
     @Test
         //a ray pointing at a triangle should intersect it at the correct coordinates
     void intersects() {
+        //make a ray
         Ray ray = new Ray(0, 0, -1, 0, 0, 4);
-
+        //get the intersection of the ray and the triangle
         RayHit hit = triangle.intersects(ray);
 
+        //this ray should hit the triangle exactly at the origin
         assertEquals(0, hit.getContactPoint().getX());
         assertEquals(0, hit.getContactPoint().getY());
         assertEquals(0, hit.getContactPoint().getZ());
@@ -67,30 +69,36 @@ class TriangleTest {
     @Test
         //a ray narrowly not pointing at a triangle should not hit it
     void intersectMisses() {
+        //make a ray that misses the triangle by 0.1
         Ray ray = new Ray(0, 0, -1, 0, -0.1, 4);
 
+        //check if the triangle hits the ray
         RayHit hit = triangle.intersects(ray);
 
+        //the answer should be null if no intersection takes place
         assertEquals(null, hit);
     }
 
     @Test
         //a ray perfectly parallel to a triangle should not intersect it
     void intersectsParallel() {
+
+        //create a ray that is perfectly parallel to the triangle
         Ray ray = new Ray(-1, 0, 0, 4, 0, 0);
-
+        //check if we hit it
         RayHit hit = triangle.intersects(ray);
-
+        //in case of no intersection the return should be null
         assertEquals(null, hit);
     }
 
     @Test
         //a ray pointing in the exact opposite direction of a triangle should not hit it
     void missesWhenFacingAway() {
+        //create a new ray that points in the exact opposite direction of the triangle
         Ray ray = new Ray(0, 0, 1, 0, 0, 4);
-
+        //check if we intersect it
         RayHit hit = triangle.intersects(ray);
-
+        //in case of no intersection the return should be nullg
         assertEquals(null, hit);
     }
 
