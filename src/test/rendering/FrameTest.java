@@ -1,8 +1,8 @@
-package main.rendering;
+package test.rendering;
 
 import main.utils.Color;
 
-public class Frame {
+public class FrameTest {
 
     private int height;
 

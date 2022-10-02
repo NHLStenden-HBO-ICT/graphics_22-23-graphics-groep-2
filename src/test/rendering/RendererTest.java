@@ -1,14 +1,14 @@
-package main.rendering;
+package test.rendering;
 
 import main.scene.Scene;
 
-public class Renderer {
+public class RendererTest {
 
     private Scene scene;
 
     private int maxRayDepth;
 
-    public Frame renderFrame(Scene scene, int maxRayDepth) {
+    public FrameTest renderFrame(Scene scene, int maxRayDepth) {
         return null;
     }
 
