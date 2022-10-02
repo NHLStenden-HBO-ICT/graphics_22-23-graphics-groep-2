@@ -2,7 +2,7 @@ package test.rendering;
 
 import org.junit.jupiter.api.Test;
 
-class FrameTest {
+class PixelDataTest {
 
     @Test
     void getheight() {

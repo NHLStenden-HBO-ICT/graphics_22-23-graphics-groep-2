@@ -11,22 +11,15 @@ public class Camera {
 
     private Vector3 direction;
 
-//todo following 3 must begiving using the constructor
-    double viewport_height = 2.0;
-    double viewport_width = 2.0;
-    double fieldOfView = 10;
-
+//todo following 3 must be given using the constructor
+    double viewport_Height,viewport_Width,fieldOfView;
     private Vector3 origin = new Vector3();
-    //private Vector3 horizontal = new Vector3(viewport_width, 0, 0);
-    //private Vector3 vertical = new Vector3(0, viewport_height, 0);
-    //private Vector3 lower_left_corner = origin.sub(horizontal.divide(2).add(vertical.divide(2)).add(new Vector3(0, 0, fieldOfView)));
 
-
-
-    public Camera(){
-
+    public Camera(double viewport_Height,  double viewport_Width, double fieldOfView ){
+        this.viewport_Width=viewport_Width;
+        this.viewport_Height=viewport_Height;
+        this.fieldOfView=fieldOfView;
     }
-
 
     public Vector3 getPosition() {
         return null;
@@ -49,12 +42,13 @@ public class Camera {
     public Vector3 getOrigin(){return origin;}
 
     public Vector3 getHorizontal(){
-        Vector3 horizontal = new Vector3(viewport_width, 0, 0);
+        Vector3 horizontal = new Vector3(viewport_Width, 0, 0);
         return horizontal;}
 
     public Vector3 getVertical(){
-        Vector3 vertical = new Vector3(0, viewport_height, 0);
+        Vector3 vertical = new Vector3(0, viewport_Height, 0);
         return vertical;}
+
 /* the calculations for the four corners of the screen
     public Vector3 getLower_left_corner() {
         Vector3 lower_left_corner = origin.sub(getHorizontal().divide(2)).sub(getVertical().divide(2)).sub(new Vector3(0, 0, fieldOfView));
@@ -74,34 +68,27 @@ public class Camera {
     }
 */
 
-    //returns a ray that uses the coords x and y to find the correct spot on the virtual image
+    //returns a ray that uses the coörds x and y to find the correct spot on the virtual image
     public Ray rayThroughPixel(int x, int y, int imageX, int imageY) {
 
-        //
+        //virtual camera coörds
+        //u=x
+        //v=y
         double u =0;
         double v =0;
 
-        double heightcalc = viewport_height/imageY;
-        double widthcalc =viewport_width/imageX;
+        //calculates the ratio between x,y and u,v.
+        //it uses the height and width of virtual camera divided by the height and width of the image that's going to be displayed.
+        double heightRatio = viewport_Height/imageY;
+        double widthRatio =viewport_Width/imageX;
 
-        if (x<200&&y<200){ //upper left
-            u=-(x-200)*widthcalc;
-            v=(y-200)*heightcalc;
-        }else if (x<200&&y>=200){//bottom left
-            u=-(x-200)*widthcalc;
-            v=-(y-200)*heightcalc;
-        } else if (x>=200&&y<200){//upper right
-            u=(x-200)*widthcalc;
-            v=(y-200)*heightcalc;
-        }else if (x>=200&&y>=200) {//bottem right.//and midden
-            u = (x - 200) * widthcalc;
-            v = -(y - 200) * heightcalc;
-        }
+        //if x <200 than it will be negative
+        //y starts with - because y=1 starts in positive
+        u=(x-200.0)*widthRatio;
+        v=-(y-200.0)*heightRatio;
 
-
-        //System.out.println("widthcalc " + widthcalc + " heightcalc " +heightcalc + " u " + u + " v " + v);
-
-        return new Ray( new Vector3(u,v,fieldOfView),new Vector3(0,0,-1));
+        //returns ray with the virtual camera coörds
+        return new Ray(new Vector3(u,v,fieldOfView),new Vector3(0,0,-1));
     }
 
 

@@ -1,7 +1,6 @@
 package main.application;
 
 import main.rendering.Renderer;
-import main.rendering.Frame;
 
 public class Application {
 
@@ -11,9 +10,7 @@ public class Application {
 		double start = System.nanoTime();//start of run time of one frame
 
 		renderer = new Renderer();
-		Frame frame = renderer.renderFrame();
-		frame.RenderToImage(renderer.getscene());
-
+		renderer.RenderToImage();
 		double end = System.nanoTime();//end of run time of one frame
 
 		System.out.println("tijd per frame: " + (end-start)/1000000000f);//time per frame
