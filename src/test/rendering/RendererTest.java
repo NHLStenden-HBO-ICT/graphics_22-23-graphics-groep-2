@@ -1,25 +1,18 @@
 package test.rendering;
 
-import main.scene.Scene;
+import org.junit.jupiter.api.Test;
 
-public class RendererTest {
+class RendererTest {
 
-    private Scene scene;
-
-    private int maxRayDepth;
-
-    public FrameTest renderFrame(Scene scene, int maxRayDepth) {
-        return null;
+    @Test
+    void renderFrame() {
     }
 
-	// Return the current scene
-	public Scene getscene() {
-		return scene;
-	}
+    @Test
+    void getscene() {
+    }
 
-	// Set the current scene
-	public void setscene(Scene scene_) {
-		scene = scene_;
-	}
-
+    @Test
+    void setscene() {
+    }
 }

@@ -7,8 +7,7 @@ public class Ray {
     private Vector3 direction;
 
     public Ray(Vector3 direction, Vector3 origin) {
-        //this.direction = direction.normalise();
-        this.direction = direction;
+        this.direction = direction.normalise();
         this.origin = origin;
     }
 
@@ -17,7 +16,6 @@ public class Ray {
         this.direction = new Vector3(dirX, dirY, dirZ).normalise();
         this.origin = new Vector3(originX, originY, originZ);
     }
-
 
     public Vector3 getOrigin() {
         return origin;

@@ -1,37 +1,27 @@
 package test.rendering;
 
-import main.utils.Color;
+import org.junit.jupiter.api.Test;
 
-public class FrameTest {
+class FrameTest {
 
-    private int height;
-
-    private int width;
-
-    private Color[][] pixelData;
-
-    public Void RenderToImage(String path) {
-        return null;
+    @Test
+    void getheight() {
     }
 
-	// Return the height of the frame
-	public int getheight() {
-		return height;
-	}
+    @Test
+    void getwidth() {
+    }
 
-	// Return the width of the frame
-	public int getwidth() {
-		return width;
-	}
+    @Test
+    void setheight() {
+    }
 
-	// Set the height of the frame
-	public void setheight(int height_) {
-		height = height_;
-	}
+    @Test
+    void setwidth() {
+    }
 
-	// Set the width of the frame
-	public void setwidth(int width_) {
-		width = width_;
-	}
+    @Test
+    void renderToImage() {
 
+    }
 }

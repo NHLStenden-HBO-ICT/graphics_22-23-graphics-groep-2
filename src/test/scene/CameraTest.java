@@ -1,9 +1,5 @@
 package test.scene;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
 import main.maths.Vector3;
 
 public class CameraTest {
@@ -52,7 +48,7 @@ public class CameraTest {
 
     // Calculate the center of the screen
     public void getCenter() {
-        center = position + direction.multi(fieldOfView);
+        center = position.add(direction.multi(fieldOfView));
     }
 
     // Calculate the corners of the screen
@@ -63,10 +59,10 @@ public class CameraTest {
     }
 
     // Calculate a coordinate on the screen using (NOT DONE YET)
-    public return calculatePoint(double x, double y) {
+    public void calculatePoint(double x, double y) {
 
         double u = x / screenWidth;
-        double v = y / screenHeight
+        double v = y / screenHeight;
 
     }
 }
