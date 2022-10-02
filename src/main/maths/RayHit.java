@@ -4,9 +4,11 @@ import main.geometry.Solid;
 
 public class RayHit {
 
+    //the ray that collided
     private Ray ray;
-
+    //the solid it collided with
     private Solid hitSolid;
+    //the point it made contact at
     private Vector3 contactPoint;
 
 

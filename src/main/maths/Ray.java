@@ -27,6 +27,7 @@ public class Ray {
         return direction;
     }
 
+    //returns a point that's the specified distance away from the origin and lies on the ray.g
     public Vector3 getPointAlongRay(double distance) {
         return origin.add(direction.multi(distance));
     }
