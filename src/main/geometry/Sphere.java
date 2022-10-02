@@ -57,7 +57,7 @@ public class Sphere extends Solid implements Intersectable {
 
         //calculate the distance
         double distance = (-b - Math.sqrt(discriminant)) / a;
-        return new RayHit(ray, this, distance);
+        return new RayHit(ray, this, ray.getPointAlongRay(distance));
     }
 
 }
