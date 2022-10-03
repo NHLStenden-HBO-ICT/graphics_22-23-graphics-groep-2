@@ -1,14 +1,12 @@
 package main.utils;
 
-import main.maths.Vector3;
-
 public class Material {
 
     private double reflectivity;
 
-    private Vector3 color;
+    private Color color;
 
-    public Vector3 getColor() {
+    public Color getColor() {
         return color;
     }
 
