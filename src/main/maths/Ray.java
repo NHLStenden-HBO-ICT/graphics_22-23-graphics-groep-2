@@ -17,7 +17,6 @@ public class Ray {
         this.origin = new Vector3(originX, originY, originZ);
     }
 
-
     public Vector3 getOrigin() {
         return origin;
     }
