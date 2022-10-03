@@ -2,6 +2,7 @@ package main.geometry;
 
 import main.maths.FullRay;
 import main.maths.RayHit;
+import main.maths.ShadowRay;
 import main.maths.Vector3;
 import main.utils.Material;
 
@@ -60,4 +61,15 @@ public class Sphere extends Solid implements Intersectable {
         return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
     }
 
+    @Override
+    public boolean intersectsFast(ShadowRay shadowRay) {
+        Vector3 relativePosition = shadowRay.getOrigin().sub(position);
+
+        double a = shadowRay.getDirection().dot(shadowRay.getDirection());
+        double b = shadowRay.getDirection().dot(relativePosition);
+        double c = relativePosition.dot(relativePosition) - radiusSquared;
+        double discriminant = b * b - a * c;
+
+        return (discriminant > 0.0);
+    }
 }
