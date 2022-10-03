@@ -26,15 +26,12 @@ public class ShadowRay extends Ray {
 
         //loop over all the intersectables
         for (int i = 0; i < intersectables.length; i++) {
-            RayHit hit = intersectables[i].intersects(this);
-
+            boolean hit = intersectables[i].intersectsFast(this);
 
             //if no collision has been found, save the found collision
-            if (hit == null) {
-                continue;
+            if (hit == true) {
+                return true;
             }
-
-            return true;
         }
         return false;
     }
