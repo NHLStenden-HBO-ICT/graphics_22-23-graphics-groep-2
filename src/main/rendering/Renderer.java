@@ -1,11 +1,9 @@
 package main.rendering;
 
-import main.geometry.Sphere;
-import main.maths.Ray;
-import main.maths.Vector3;
+import main.maths.FullRay;
+import main.maths.RayHit;
 import main.scene.Camera;
 import main.scene.Scene;
-import main.utils.Material;
 
 import java.awt.image.BufferedImage;
 
@@ -35,18 +33,18 @@ public class Renderer {
 		PixelData pixelData =new PixelData(400,scene.getCamera().getRatio());
 		BufferedImage buffer =new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
 
-		Sphere sphere =new Sphere(new Material(), 1, new Vector3(0,0,100)); //test sphere
 		Camera camera = scene.getCamera();
 
 		//loop for each pixel on the image
 		for (int y = 0; y < pixelData.getHeight(); ++y){
 			for (int x = 0; x< pixelData.getWidth(); ++x){
 
-				Ray ray =camera.rayThroughPixel(x,y, pixelData.getWidth(), pixelData.getHeight());//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
+				FullRay ray =camera.rayThroughPixel(x,y, pixelData.getWidth(), pixelData.getHeight());//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
+				RayHit hit = ray.castRay(scene.getGeometry());
 
-				if (sphere.intersects(ray)!=null){
+				if (hit!=null){
 					//if there is intersection then it will color x and y blue
-					buffer.setRGB(x,y, 1000);
+					buffer.setRGB(x,y, 1000);//todo get the color of hitobject
 					System.out.println("intersect on  x: " + x + " y : " +y);
 				}
 				else {

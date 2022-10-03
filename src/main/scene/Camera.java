@@ -1,6 +1,6 @@
 package main.scene;
 
-import main.maths.Ray;
+import main.maths.FullRay;
 import main.maths.Vector3;
 
 //import java.geometry.Vector3;
@@ -73,7 +73,7 @@ public class Camera {
 */
 
     //returns a ray that uses the coörds x and y to find the correct spot on the virtual image
-    public Ray rayThroughPixel(int x, int y, int imageX, int imageY) {
+    public FullRay rayThroughPixel(int x, int y, int imageX, int imageY) {
 
         //virtual camera coörds
         //u=x
@@ -92,7 +92,7 @@ public class Camera {
         v=-(y-(imageY/2))*heightRatio;
 
         //returns ray with the virtual camera coörds
-        return new Ray(new Vector3(u,v,fieldOfView),new Vector3(0,0,-1));
+        return new FullRay(new Vector3(u,v,fieldOfView),new Vector3(0,0,-1));
     }
 
 
