@@ -32,7 +32,7 @@ public class Renderer {
 
 	public void RenderToImage() {
 
-		PixelData pixelData =new PixelData(400,400);
+		PixelData pixelData =new PixelData(400,scene.getCamera().getRatio());
 		BufferedImage buffer =new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
 
 		Sphere sphere =new Sphere(new Material(), 1, new Vector3(0,0,100)); //test sphere

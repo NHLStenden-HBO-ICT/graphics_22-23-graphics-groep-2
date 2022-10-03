@@ -17,7 +17,7 @@ public class Scene {
 
     public Scene()
     {
-        camera =new Camera(2.0,2.0,10);
+        camera =new Camera(2.0,10,16.0/9.0);
     }
 
 

@@ -10,11 +10,15 @@ public class PixelData {
 
     private int height;
     private int width;
+	private double ratio;
+
     private Color[][] pixelData;
 
-	public PixelData(int height, int width){
+	public PixelData(int height, double ratio){
 		this.height =height;
-		this.width =width;
+		Double u = height *ratio;
+		this.width = u.intValue();
+
 	}
 
 	// Return the height of the frame

@@ -12,14 +12,18 @@ public class Camera {
     private Vector3 direction;
 
 //todo following 3 must be given using the constructor
-    double viewport_Height,viewport_Width,fieldOfView;
+    double viewportHeight,viewportWidth,fieldOfView,ratio;
     private Vector3 origin = new Vector3();
 
-    public Camera(double viewport_Height,  double viewport_Width, double fieldOfView ){
-        this.viewport_Width=viewport_Width;
-        this.viewport_Height=viewport_Height;
+    public Camera(double viewportHeight, double fieldOfView, double ratio ){
+        this.ratio=ratio;
+        this.viewportHeight=viewportHeight;
         this.fieldOfView=fieldOfView;
+        Double u = viewportHeight *ratio;
+        this.viewportWidth=u.intValue();
     }
+
+    public double getRatio(){return ratio;}
 
     public Vector3 getPosition() {
         return null;
@@ -42,11 +46,11 @@ public class Camera {
     public Vector3 getOrigin(){return origin;}
 
     public Vector3 getHorizontal(){
-        Vector3 horizontal = new Vector3(viewport_Width, 0, 0);
+        Vector3 horizontal = new Vector3(viewportWidth, 0, 0);
         return horizontal;}
 
     public Vector3 getVertical(){
-        Vector3 vertical = new Vector3(0, viewport_Height, 0);
+        Vector3 vertical = new Vector3(0, viewportHeight, 0);
         return vertical;}
 
 /* the calculations for the four corners of the screen
@@ -79,13 +83,13 @@ public class Camera {
 
         //calculates the ratio between x,y and u,v.
         //it uses the height and width of virtual camera divided by the height and width of the image that's going to be displayed.
-        double heightRatio = viewport_Height/imageY;
-        double widthRatio =viewport_Width/imageX;
+        double heightRatio = viewportHeight/imageY;
+        double widthRatio =viewportWidth/imageX;
 
         //if x <200 than it will be negative
         //y starts with - because y=1 starts in positive
-        u=(x-200.0)*widthRatio;
-        v=-(y-200.0)*heightRatio;
+        u=(x-(imageX/2))*widthRatio;
+        v=-(y-(imageY/2))*heightRatio;
 
         //returns ray with the virtual camera coörds
         return new Ray(new Vector3(u,v,fieldOfView),new Vector3(0,0,-1));
