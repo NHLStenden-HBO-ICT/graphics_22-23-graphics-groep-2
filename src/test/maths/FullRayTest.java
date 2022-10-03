@@ -1,5 +1,10 @@
 package test.maths;
 
+import main.geometry.Intersectable;
+import main.geometry.Sphere;
+import main.maths.Ray;
+import main.maths.RayHit;
+import main.utils.Material;
 import org.junit.jupiter.api.Test;
 
 import main.maths.FullRay;
@@ -36,6 +41,26 @@ class FullRayTest {
         assertEquals(4.0, point.getX());
         assertEquals(-2.0, point.getY());
         assertEquals(2.0, point.getZ());
+    }
+
+
+    //test to see if a ray intersecting with multiple objects actually returns the closest one
+    @Test
+    void castTest() {
+        //create an array with two spheres
+        Material mat = new Material();
+
+        Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
+        Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
+        Intersectable[] intersectables = {sphereA, sphereB};
+
+        //create a ray that will intersect with both spheres
+        FullRay testRay = new FullRay(-1, 0, 0, 10, 0, 0);
+        //this ray should hit the sphere with x: 2 because it's placed on the x axis, facing towards the origin
+
+        RayHit closestHit = testRay.rayCast(intersectables);
+
+        assertEquals(sphereB, closestHit.getHitSolid());
     }
 
 }
