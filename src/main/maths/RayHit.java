@@ -5,21 +5,24 @@ import main.geometry.Solid;
 public class RayHit {
 
     //the ray that collided
-    private Ray ray;
+    private FullRay fullRay;
     //the solid it collided with
     private Solid hitSolid;
     //the point it made contact at
     private Vector3 contactPoint;
+    //the distance to the contact point
+    private double distance;
 
 
-    public RayHit(Ray ray, Solid hitSolid, Vector3 contactPoint) {
-        this.ray = ray;
+    public RayHit(FullRay fullRay, Solid hitSolid, Vector3 contactPoint, double distance) {
+        this.fullRay = fullRay;
         this.hitSolid = hitSolid;
         this.contactPoint = contactPoint;
+        this.distance = distance;
     }
 
-    public Ray getRay() {
-        return ray;
+    public FullRay getRay() {
+        return fullRay;
     }
 
     public Solid getHitSolid() {
@@ -32,6 +35,10 @@ public class RayHit {
 
     public Vector3 getNormal() {
         return null;
+    }
+
+    public double getDistance() {
+        return distance;
     }
 
 }
