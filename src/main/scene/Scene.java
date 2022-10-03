@@ -19,9 +19,9 @@ public class Scene {
 
     private float skyEmission;
 
-    public Scene()
+    public Scene(double ratio)
     {
-        camera =new Camera(2.0,10,16.0/9.0);
+        camera =new Camera(2.0,10,ratio);
         geometry = new Intersectable[3];
         geometry[0]=new Sphere(new Material(), 1, new Vector3(10,5,100)); //test sphere
         geometry[1]=new Sphere(new Material(), 1, new Vector3(-10,5,300)); //test sphere

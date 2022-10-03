@@ -1,7 +1,5 @@
 package main.rendering;
 
-import main.utils.Color;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,8 +9,6 @@ public class PixelData {
     private int height;
     private int width;
 	private double ratio;
-
-    private Color[][] pixelData;
 
 	public PixelData(int height, double ratio){
 		this.height =height;
