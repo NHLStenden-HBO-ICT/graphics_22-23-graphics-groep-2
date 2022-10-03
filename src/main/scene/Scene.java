@@ -1,12 +1,17 @@
 package main.scene;
 
+import main.geometry.Intersectable;
 import main.geometry.Solid;
+import main.geometry.Sphere;
+import main.geometry.Triangle;
 import main.maths.FullRay;
 import main.maths.RayHit;
+import main.maths.Vector3;
+import main.utils.Material;
 
 public class Scene {
 
-    private Solid[] geometry;
+    private Intersectable[] geometry;
 
     private PointLight[] lights;
 
@@ -14,8 +19,19 @@ public class Scene {
 
     private float skyEmission;
 
-    public Solid[] getGeometry() {
-        return null;
+    public Scene()
+    {
+        camera =new Camera(2.0,10,16.0/9.0);
+        geometry = new Intersectable[3];
+        geometry[0]=new Sphere(new Material(), 1, new Vector3(10,5,100)); //test sphere
+        geometry[1]=new Sphere(new Material(), 1, new Vector3(-10,5,300)); //test sphere
+        geometry[2]=new Triangle(new Material(),new Vector3(-0.5,0,100),new Vector3(0.5,0,100),new Vector3(0,1,100));
+    }
+
+
+    //get methods
+    public Intersectable[] getGeometry() {
+        return geometry;
     }
 
     public PointLight[] getLights() {
@@ -23,12 +39,13 @@ public class Scene {
     }
 
     public Camera getCamera() {
-        return null;
+        return this.camera;
     }
 
     public float getSkyEmission() {
         return 0;
     }
+
 
     public void addSolid(Solid solid) {
 

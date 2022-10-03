@@ -76,6 +76,15 @@ public class Vector3 {
         );
     }
 
+    //part method. divides the vector with the division parameter
+    public Vector3 divide(double division) {
+        return new Vector3(
+                this.x /division,
+                this.y /division,
+                this.z /division
+        );
+    }
+
     //Dot method. multiplies this vector times the parameter vector where the dot product is return
     public double dot(Vector3 vectorA) {
         return vectorA.x * x + vectorA.y * y + vectorA.z * z;
