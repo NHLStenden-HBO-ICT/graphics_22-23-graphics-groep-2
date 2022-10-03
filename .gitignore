@@ -1,2 +1,3 @@
 #ignore the out/ directory. We chose to only include source code on git, not build binaries.
 out/
+.vscode/

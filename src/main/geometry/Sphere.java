@@ -1,7 +1,8 @@
 package main.geometry;
 
-import main.maths.Ray;
+import main.maths.FullRay;
 import main.maths.RayHit;
+import main.maths.ShadowRay;
 import main.maths.Vector3;
 import main.utils.Material;
 
@@ -42,12 +43,12 @@ public class Sphere extends Solid implements Intersectable {
     // the ray that intersected it
     // and the distance along the ray where the intersection happened.
     @Override
-    public RayHit intersects(Ray ray) {
+    public RayHit intersects(FullRay fullRay) {
 
-        Vector3 relativePosition = ray.getOrigin().sub(position);
+        Vector3 relativePosition = fullRay.getOrigin().sub(position);
 
-        double a = ray.getDirection().dot(ray.getDirection());
-        double b = ray.getDirection().dot(relativePosition);
+        double a = fullRay.getDirection().dot(fullRay.getDirection());
+        double b = fullRay.getDirection().dot(relativePosition);
         double c = relativePosition.dot(relativePosition) - radiusSquared;
         double discriminant = b * b - a * c;
 
@@ -57,8 +58,18 @@ public class Sphere extends Solid implements Intersectable {
 
         //calculate the distance
         double distance = (-b - Math.sqrt(discriminant)) / a;
-
-        return new RayHit(ray, this, ray.getPointAlongRay(distance));
+        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
     }
 
+    @Override
+    public boolean intersectsFast(ShadowRay shadowRay) {
+        Vector3 relativePosition = shadowRay.getOrigin().sub(position);
+
+        double a = shadowRay.getDirection().dot(shadowRay.getDirection());
+        double b = shadowRay.getDirection().dot(relativePosition);
+        double c = relativePosition.dot(relativePosition) - radiusSquared;
+        double discriminant = b * b - a * c;
+
+        return (discriminant > 0.0);
+    }
 }

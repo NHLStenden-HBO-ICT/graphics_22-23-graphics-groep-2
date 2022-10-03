@@ -1,8 +1,6 @@
 package main.geometry;
 
-import main.maths.Ray;
-import main.maths.RayHit;
-import main.maths.Vector3;
+import main.maths.*;
 import main.utils.Material;
 
 public class Triangle extends Solid implements Intersectable {
@@ -44,9 +42,10 @@ public class Triangle extends Solid implements Intersectable {
 
     //going to try and make this happen
     // https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
-    @Override
-    public RayHit intersects(Ray ray) {
 
+    //returns the distance if an intersection happens
+    //return -1.0 if no intersection happens
+    private double findDistance(Ray ray) {
         //get all the vertices of the triangle for easier referencing
         Vector3 vertex0 = this.getVertex(0);
         Vector3 vertex1 = this.getVertex(1);
@@ -68,7 +67,7 @@ public class Triangle extends Solid implements Intersectable {
         //if the angle is sufficiently small then the ray is parallel to the triangle
         //we don't  intersect with a plane that's parallel
         if (a > -EPSILON && a < EPSILON) {
-            return null;
+            return -1.0;
         }
 
         f = 1.0 / a;
@@ -78,14 +77,14 @@ public class Triangle extends Solid implements Intersectable {
         //in case of an intersection u & v should be between 0 and 1.
         //if this is not the case no intersection happens, and we can eject from the algorithm early.
         if (u < 0.0 || u > 1.0) {
-            return null;
+            return -1.0;
         }
 
         q = s.cross(edge1);
         v = f * ray.getDirection().dot(q);
 
         if (v < 0.0 || u + v > 1.0) {
-            return null;
+            return -1.0;
         }
 
         //at this stage we know a line intersection happens.
@@ -95,12 +94,31 @@ public class Triangle extends Solid implements Intersectable {
         //if the distance is negative the intersection doesn't lay on the ray.
         //it instead lies on the same line as the ray but before the origin.
         if (distance < EPSILON) {
-            return null; //line intersection happens, but no ray intersection
+            return -1.0; //line intersection happens, but no ray intersection
         }
 
         //all conditions where a ray intersection doesn't happen have been ruled out
         //a ray intersection happens at the distance we've calculated
-        //we can now return a RayHit object because a collision does happen.
-        return new RayHit(ray, this, ray.getPointAlongRay(distance));
+        return distance;
+    }
+
+    @Override
+    public RayHit intersects(FullRay fullRay) {
+        double distance = findDistance((Ray) fullRay);
+        if (distance > 0.0) {
+            //we can return a RayHit object because a collision happens.
+            return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean intersectsFast(ShadowRay shadowRay) {
+        double distance = findDistance((Ray) shadowRay);
+        if (distance > 0.0) {
+            //we can return a RayHit object because a collision happens.
+            return true;
+        }
+        return false;
     }
 }

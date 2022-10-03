@@ -1,58 +1,68 @@
 package test.scene;
 
-import org.junit.jupiter.api.Test;
+import main.geometry.Solid;
+import main.maths.FullRay;
+import main.maths.RayHit;
 
-class SceneTest {
+public class SceneTest {
 
-    @Test
-    void getGeometry() {
+    private Solid[] geometry;
+
+    private PointLight[] lights;
+
+    private Camera camera;
+
+    private float skyEmission;
+
+    public Solid[] getGeometry() {
+        return null;
     }
 
-    @Test
-    void getLights() {
+    public PointLight[] getLights() {
+        return null;
     }
 
-    @Test
-    void getCamera() {
+    public Camera getCamera() {
+        return null;
     }
 
-    @Test
-    void getSkyEmission() {
+    public float getSkyEmission() {
+        return 0;
     }
 
-    @Test
-    void addSolid() {
+    public void addSolid(Solid solid) {
+
     }
 
-    @Test
-    void clearSolid() {
+    public void clearSolid() {
+
     }
 
-    @Test
-    void removeSolid() {
+    public void removeSolid(Solid solid) {
+
     }
 
-    @Test
-    void testRemoveSolid() {
+    public void removeSolid(int index) {
+
     }
 
-    @Test
-    void addLight() {
+    public void addLight(PointLight light) {
+
     }
 
-    @Test
-    void clearLights() {
+    public void clearLights() {
+
     }
 
-    @Test
-    void removeLight() {
+    public void removeLight(PointLight light) {
+
     }
 
-    @Test
-    void testRemoveLight() {
+    public void removeLight(int index) {
+
     }
 
-    @Test
-    void rayCast() {
+    public RayHit rayCast(FullRay fullRay) {
+        return null;
     }
 }
