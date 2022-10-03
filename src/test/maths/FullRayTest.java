@@ -2,7 +2,6 @@ package test.maths;
 
 import main.geometry.Intersectable;
 import main.geometry.Sphere;
-import main.maths.Ray;
 import main.maths.RayHit;
 import main.utils.Material;
 import org.junit.jupiter.api.Test;
@@ -58,7 +57,7 @@ class FullRayTest {
         FullRay testRay = new FullRay(-1, 0, 0, 10, 0, 0);
         //this ray should hit the sphere with x: 2 because it's placed on the x axis, facing towards the origin
 
-        RayHit closestHit = testRay.rayCast(intersectables);
+        RayHit closestHit = testRay.castRay(intersectables);
 
         assertEquals(sphereB, closestHit.getHitSolid());
     }
