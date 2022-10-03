@@ -101,6 +101,6 @@ public class Triangle extends Solid implements Intersectable {
         //all conditions where a ray intersection doesn't happen have been ruled out
         //a ray intersection happens at the distance we've calculated
         //we can now return a RayHit object because a collision does happen.
-        return new RayHit(ray, this, ray.getPointAlongRay(distance));
+        return new RayHit(ray, this, ray.getPointAlongRay(distance), distance);
     }
 }

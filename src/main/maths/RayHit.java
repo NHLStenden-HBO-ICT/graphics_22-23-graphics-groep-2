@@ -10,12 +10,15 @@ public class RayHit {
     private Solid hitSolid;
     //the point it made contact at
     private Vector3 contactPoint;
+    //the distance to the contact point
+    private double distance;
 
 
-    public RayHit(Ray ray, Solid hitSolid, Vector3 contactPoint) {
+    public RayHit(Ray ray, Solid hitSolid, Vector3 contactPoint, double distance) {
         this.ray = ray;
         this.hitSolid = hitSolid;
         this.contactPoint = contactPoint;
+        this.distance = distance;
     }
 
     public Ray getRay() {
