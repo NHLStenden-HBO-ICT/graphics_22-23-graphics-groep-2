@@ -1,18 +1,18 @@
 package main.maths;
 
-public class Ray {
+public class FullRay {
 
     private Vector3 origin;
 
     private Vector3 direction;
 
-    public Ray(Vector3 direction, Vector3 origin) {
+    public FullRay(Vector3 direction, Vector3 origin) {
         this.direction = direction.normalise();
         this.origin = origin;
     }
 
     //some overloaded constructors to reduce boilerplate code
-    public Ray(double dirX, double dirY, double dirZ, double originX, double originY, double originZ) {
+    public FullRay(double dirX, double dirY, double dirZ, double originX, double originY, double originZ) {
         this.direction = new Vector3(dirX, dirY, dirZ).normalise();
         this.origin = new Vector3(originX, originY, originZ);
     }

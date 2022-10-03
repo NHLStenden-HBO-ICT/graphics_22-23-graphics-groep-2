@@ -1,6 +1,6 @@
 package main.geometry;
 
-import main.maths.Ray;
+import main.maths.FullRay;
 import main.maths.RayHit;
 import main.maths.Vector3;
 import main.utils.Material;
@@ -45,7 +45,7 @@ public class Triangle extends Solid implements Intersectable {
     //going to try and make this happen
     // https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
     @Override
-    public RayHit intersects(Ray ray) {
+    public RayHit intersects(FullRay fullRay) {
 
         //get all the vertices of the triangle for easier referencing
         Vector3 vertex0 = this.getVertex(0);
@@ -61,7 +61,7 @@ public class Triangle extends Solid implements Intersectable {
         edge1 = vertex1.sub(vertex0);
         edge2 = vertex2.sub(vertex0);
 
-        h = ray.getDirection().cross(edge2);
+        h = fullRay.getDirection().cross(edge2);
         a = edge1.dot(h);
 
         //a describes the angle between the ray direction and the triangle direction
@@ -72,7 +72,7 @@ public class Triangle extends Solid implements Intersectable {
         }
 
         f = 1.0 / a;
-        s = ray.getOrigin().sub(vertex0);
+        s = fullRay.getOrigin().sub(vertex0);
         u = f * (s.dot(h));
 
         //in case of an intersection u & v should be between 0 and 1.
@@ -82,7 +82,7 @@ public class Triangle extends Solid implements Intersectable {
         }
 
         q = s.cross(edge1);
-        v = f * ray.getDirection().dot(q);
+        v = f * fullRay.getDirection().dot(q);
 
         if (v < 0.0 || u + v > 1.0) {
             return null;
@@ -101,6 +101,6 @@ public class Triangle extends Solid implements Intersectable {
         //all conditions where a ray intersection doesn't happen have been ruled out
         //a ray intersection happens at the distance we've calculated
         //we can now return a RayHit object because a collision does happen.
-        return new RayHit(ray, this, ray.getPointAlongRay(distance), distance);
+        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
     }
 }

@@ -1,7 +1,5 @@
 package main.geometry;
 
-import main.maths.Ray;
-import main.maths.RayHit;
 import main.utils.Material;
 
 public abstract class Solid {

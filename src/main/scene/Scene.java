@@ -1,7 +1,7 @@
 package main.scene;
 
 import main.geometry.Solid;
-import main.maths.Ray;
+import main.maths.FullRay;
 import main.maths.RayHit;
 
 public class Scene {
@@ -62,7 +62,7 @@ public class Scene {
 
     }
 
-    public RayHit rayCast(Ray ray) {
+    public RayHit rayCast(FullRay fullRay) {
         return null;
     }
 
