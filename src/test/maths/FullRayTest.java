@@ -7,7 +7,7 @@ import main.maths.Vector3;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RayTest {
+class FullRayTest {
 
     //these tests check if Ray.getPointAtDistance return the expected point.
     @Test
