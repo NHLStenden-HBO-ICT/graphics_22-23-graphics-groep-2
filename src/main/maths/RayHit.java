@@ -37,4 +37,8 @@ public class RayHit {
         return null;
     }
 
+    public double getDistance() {
+        return distance;
+    }
+
 }
