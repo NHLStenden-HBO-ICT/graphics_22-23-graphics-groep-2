@@ -7,11 +7,11 @@ public class Color {
     private Vector3 color;
 
     public Vector3 getColor() {
-        return null;
+        return color;
     }
 
-    public void setColor(Vector3 vector3) {
-
+    public void setColor(Vector3 color) {
+        this.color = color;
     }
 
 }
