@@ -52,15 +52,21 @@ public class Renderer {
                     System.out.println("intersect on  x: " + x + " y : " + y);
 
                     Vector3 lightDir = scene.getLights().get(0).getPosition().sub(hit.getContactPoint());
-                    ShadowRay shaRay = new ShadowRay(lightDir, hit.getContactPoint());
+                    Vector3 normLightDir = lightDir.divide(lightDir.length());
+                    ShadowRay shaRay = new ShadowRay(normLightDir, hit.getContactPoint());
                     boolean lightHit = shaRay.castRay(scene.getGeometry());
 
                     if (lightHit != true){
+
+                        
+
                         Vector3 objColor = hit.getHitSolid().getMaterial().getColor().getColor();
                         java.awt.Color objColorJava = new java.awt.Color((int)objColor.getX(),(int)objColor.getY(),(int)objColor.getZ()); 
                         
                         buffer.setRGB(x, y, objColorJava.getRGB());
                         System.out.println("Hit can see light!");
+                    }else{
+                        buffer.setRGB(x, y, 000000);
                     }
 
 
