@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import main.maths.FullRay;
 import main.maths.Vector3;
 
+import java.util.Vector;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FullRayTest {
@@ -51,7 +53,9 @@ class FullRayTest {
 
         Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
         Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
-        Intersectable[] intersectables = {sphereA, sphereB};
+        Vector<Intersectable> intersectables = new Vector<>(2);
+        intersectables.add(sphereB);
+        intersectables.add(sphereA);
 
         //create a ray that will intersect with both spheres
         FullRay testRay = new FullRay(-1, 0, 0, 10, 0, 0);
