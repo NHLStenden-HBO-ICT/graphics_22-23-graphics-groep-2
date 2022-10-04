@@ -10,6 +10,12 @@ public class Material {
 
     private double matte;
 
+    public Material(Color color, double metallic, double matte){
+        this.color = color;
+        this.metallic = metallic;
+        this.matte = matte;
+    }
+
     public Color getColor() {
         return color;
     }
