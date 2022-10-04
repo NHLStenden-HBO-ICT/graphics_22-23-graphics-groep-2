@@ -52,8 +52,8 @@ class ShadowRayTest {
         Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
         Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
         Vector<Intersectable> intersectables = new Vector<>(2);
-        intersectables.add(sphereA);
         intersectables.add(sphereB);
+        intersectables.add(sphereA);
 
         //create a ray that will intersect with both spheres
         ShadowRay testRay = new ShadowRay(-1, 0, 0, 10, 0, 0);
@@ -72,8 +72,8 @@ class ShadowRayTest {
         Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
         Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
         Vector<Intersectable> intersectables = new Vector<>(2);
-        intersectables.add(sphereA);
         intersectables.add(sphereB);
+        intersectables.add(sphereA);
 
         //create a ray that will intersect with both spheres
         ShadowRay testRay = new ShadowRay(-1, 1.1, 0, 10, 0, 0);

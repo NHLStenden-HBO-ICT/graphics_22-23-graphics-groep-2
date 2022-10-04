@@ -24,8 +24,8 @@ public class Renderer {
     }
 
     // Set the current scene
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    public void setScene(Scene scene_) {
+        scene = scene_;
     }
 
     public void RenderToImage() {

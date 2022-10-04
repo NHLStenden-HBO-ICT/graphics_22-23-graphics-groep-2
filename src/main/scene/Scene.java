@@ -9,8 +9,6 @@ import main.maths.RayHit;
 import main.maths.Vector3;
 import main.utils.Material;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Vector;
 
@@ -25,19 +23,7 @@ public class Scene {
     private float skyEmission;
 
     public Scene() {
-        this.geometry = new Vector<>(10);
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
-    }
-
-    public void setGeometry(Intersectable[] geometry) {
-        Collections.addAll(this.geometry, geometry);
-    }
-
-    public void setGeometry(Vector<Intersectable> geometry) {
-        this.geometry = geometry;
+        this.geometry = new Vector<Intersectable>();
     }
 
 
@@ -58,6 +44,10 @@ public class Scene {
         return 0;
     }
 
+
+    public void addSolid(Solid solid) {
+        this.geometry.add((Intersectable) solid);
+    }
 
     public void addIntersectable(Intersectable intersectable) {
         this.geometry.add(intersectable);
@@ -89,5 +79,17 @@ public class Scene {
 
     public void removeLight(int index) {
 
+    }
+
+    public RayHit rayCast(FullRay fullRay) {
+        return null;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
+    public void setGeometry(Intersectable[] geometry) {
+        Collections.addAll(this.geometry, geometry);
     }
 }

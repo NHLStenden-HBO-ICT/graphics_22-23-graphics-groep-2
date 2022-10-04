@@ -19,16 +19,14 @@ public class Application {
         //make a new scene
         Scene scene = new Scene();
 
-        //make some stuff
-        Camera camera = new Camera(2.0, 10, 16.0 / 9.0);
-        Intersectable[] geometry = new Intersectable[3];
-        geometry[0] = new Sphere(new Material(), 1, new Vector3(10, 5, 100)); //test sphere
-        geometry[1] = new Sphere(new Material(), 1, new Vector3(-10, 5, 300)); //test sphere
-        geometry[2] = new Triangle(new Material(), new Vector3(-0.5, 0, 100), new Vector3(0.5, 0, 100), new Vector3(0, 1, 100));
+        //make some stuff and add it to the scene
+        scene.setCamera(new Camera(2.0, 10, 16.0 / 9.0));
+
+        scene.addIntersectable(new Sphere(new Material(), 1, new Vector3(10, 5, 100))); //test sphere
+        scene.addIntersectable(new Sphere(new Material(), 1, new Vector3(-10, 5, 300))); //test sphere
+        scene.addIntersectable(new Triangle(new Material(), new Vector3(-0.5, 0, 100), new Vector3(0.5, 0, 100), new Vector3(0, 1, 100)));
 
         //add said stuff to that scene
-        scene.setCamera(camera);
-        scene.setGeometry(geometry);
 
         renderer = new Renderer(scene);
         renderer.RenderToImage();
