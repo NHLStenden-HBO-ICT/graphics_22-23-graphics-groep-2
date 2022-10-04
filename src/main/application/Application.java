@@ -11,28 +11,29 @@ import main.utils.Material;
 
 public class Application {
 
-	private static Renderer renderer;
+    private static Renderer renderer;
 
-	public static void main(String[] args) {
-		double start = System.nanoTime();//start of run time of one frame
+    public static void main(String[] args) {
+        double start = System.nanoTime();//start of run time of one frame
 
-		//make a new scene
-		Scene scene = new Scene();
+        //make a new scene
+        Scene scene = new Scene();
 
-		//add some stuff to that scene
-		Camera camera = new Camera(2.0, 10, 16.0 / 9.0);
-		Intersectable[] geometry = new Intersectable[3];
-		geometry[0] = new Sphere(new Material(), 1, new Vector3(10, 5, 100)); //test sphere
-		geometry[1] = new Sphere(new Material(), 1, new Vector3(-10, 5, 300)); //test sphere
-		geometry[2] = new Triangle(new Material(), new Vector3(-0.5, 0, 100), new Vector3(0.5, 0, 100), new Vector3(0, 1, 100));
+        //make some stuff
+        Camera camera = new Camera(2.0, 10, 16.0 / 9.0);
+        Intersectable[] geometry = new Intersectable[3];
+        geometry[0] = new Sphere(new Material(), 1, new Vector3(10, 5, 100)); //test sphere
+        geometry[1] = new Sphere(new Material(), 1, new Vector3(-10, 5, 300)); //test sphere
+        geometry[2] = new Triangle(new Material(), new Vector3(-0.5, 0, 100), new Vector3(0.5, 0, 100), new Vector3(0, 1, 100));
 
-		scene.setCamera(camera);
-		scene.setGeometry(geometry);
+        //add said stuff to that scene
+        scene.setCamera(camera);
+        scene.setGeometry(geometry);
 
-		renderer = new Renderer(scene);
-		renderer.RenderToImage();
-		double end = System.nanoTime();//end of run time of one frame
+        renderer = new Renderer(scene);
+        renderer.RenderToImage();
+        double end = System.nanoTime();//end of run time of one frame
 
-		System.out.println("tijd per frame: " + (end - start) / 1000000000f);//time per frame
-	}
+        System.out.println("tijd per frame: " + (end - start) / 1000000000f);//time per frame
+    }
 }
