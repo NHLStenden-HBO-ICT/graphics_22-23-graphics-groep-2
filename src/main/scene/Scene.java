@@ -9,9 +9,14 @@ import main.maths.RayHit;
 import main.maths.Vector3;
 import main.utils.Material;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Vector;
+
 public class Scene {
 
-    private Intersectable[] geometry;
+    private Vector<Intersectable> geometry;
 
     private PointLight[] lights;
 
@@ -19,18 +24,25 @@ public class Scene {
 
     private float skyEmission;
 
-    public Scene()
-    {
-        camera =new Camera(2.0,10,16.0/9.0);
-        geometry = new Intersectable[3];
-        geometry[0]=new Sphere(new Material(), 1, new Vector3(10,5,100)); //test sphere
-        geometry[1]=new Sphere(new Material(), 1, new Vector3(-10,5,300)); //test sphere
-        geometry[2]=new Triangle(new Material(),new Vector3(-0.5,0,100),new Vector3(0.5,0,100),new Vector3(0,1,100));
+    public Scene() {
+        this.geometry = new Vector<>(10);
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
+    public void setGeometry(Intersectable[] geometry) {
+        Collections.addAll(this.geometry, geometry);
+    }
+
+    public void setGeometry(Vector<Intersectable> geometry) {
+        this.geometry = geometry;
     }
 
 
     //get methods
-    public Intersectable[] getGeometry() {
+    public Vector<Intersectable> getGeometry() {
         return geometry;
     }
 
@@ -47,8 +59,8 @@ public class Scene {
     }
 
 
-    public void addSolid(Solid solid) {
-
+    public void addIntersectable(Intersectable intersectable) {
+        this.geometry.add(intersectable);
     }
 
     public void clearSolid() {
@@ -78,9 +90,4 @@ public class Scene {
     public void removeLight(int index) {
 
     }
-
-    public RayHit rayCast(FullRay fullRay) {
-        return null;
-    }
-
 }
