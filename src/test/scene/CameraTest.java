@@ -1,27 +1,18 @@
 package test.scene;
 
-import main.maths.Ray;
 import main.scene.Camera;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CameraTest {
+class CameraTest {
 
- Camera camera;
-
+    Camera camera;
 
     @BeforeEach
     void setup() {
-        camera = new Camera(2.0 ,2.0,10);
-    }
-    @Test
-    void rayThroughPixelAtCenterCamera()
-    {
-        Ray ray =camera.rayThroughPixel(200,200,400,400);
-        assertEquals(0, ray.getDirection().getX());
-        assertEquals(0, ray.getDirection().getY());
+        camera = new Camera(2.0, 2.0, 10);
     }
 
     @Test
@@ -73,5 +64,4 @@ public class CameraTest {
         assertEquals(1, u);
         assertEquals(-1, v);
     }
-
 }

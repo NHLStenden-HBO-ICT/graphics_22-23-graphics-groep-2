@@ -1,7 +1,6 @@
 package main.maths;
 
-public class Ray {
-
+public abstract class Ray {
     private Vector3 origin;
 
     private Vector3 direction;
@@ -29,5 +28,4 @@ public class Ray {
     public Vector3 getPointAlongRay(double distance) {
         return origin.add(direction.multi(distance));
     }
-
 }

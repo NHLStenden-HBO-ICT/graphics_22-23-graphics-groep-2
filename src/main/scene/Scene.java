@@ -2,12 +2,19 @@ package main.scene;
 
 import main.geometry.Intersectable;
 import main.geometry.Solid;
-import main.maths.Ray;
+import main.geometry.Sphere;
+import main.geometry.Triangle;
+import main.maths.FullRay;
 import main.maths.RayHit;
+import main.maths.Vector3;
+import main.utils.Material;
+
+import java.util.Collections;
+import java.util.Vector;
 
 public class Scene {
 
-    private Intersectable[] geometry;
+    private Vector<Intersectable> geometry;
 
     private PointLight[] lights;
 
@@ -15,14 +22,13 @@ public class Scene {
 
     private float skyEmission;
 
-    public Scene()
-    {
-        camera =new Camera(2.0,2.0,10);
+    public Scene() {
+        this.geometry = new Vector<Intersectable>();
     }
 
 
     //get methods
-    public Intersectable[] getGeometry() {
+    public Vector<Intersectable> getGeometry() {
         return geometry;
     }
 
@@ -40,7 +46,11 @@ public class Scene {
 
 
     public void addSolid(Solid solid) {
+        this.geometry.add((Intersectable) solid);
+    }
 
+    public void addIntersectable(Intersectable intersectable) {
+        this.geometry.add(intersectable);
     }
 
     public void clearSolid() {
@@ -71,8 +81,15 @@ public class Scene {
 
     }
 
-    public RayHit rayCast(Ray ray) {
+    public RayHit rayCast(FullRay fullRay) {
         return null;
     }
 
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
+    public void setGeometry(Intersectable[] geometry) {
+        Collections.addAll(this.geometry, geometry);
+    }
 }
