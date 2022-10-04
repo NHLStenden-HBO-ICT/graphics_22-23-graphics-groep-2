@@ -11,23 +11,22 @@ import java.awt.image.BufferStrategy;
 public class Window implements Runnable{
 
     private static JFrame frame;
-    private boolean isRunning;
-
     private static Renderer renderer;
-
     private Canvas canvas;
-
     private Thread thread;
+    private Graphics g;
+
 
     private static int height;
     private static double ratio;
 
     private static final long serialVersionUID = 1L;
-    private static JLabel label;
-    private boolean state;
-    private Graphics g;
 
-    private Image image;
+    private boolean state;
+
+    private String fpsC= "raytracer";
+
+
 
     public Window(int height, double ratio){
         this.state=false;
@@ -39,8 +38,6 @@ public class Window implements Runnable{
         canvas.setMinimumSize(new Dimension(widthCalc(),this.height));
 
         createWindow(height,ratio);
-        //start();
-        //run();
     }
 
     public void start(){
@@ -50,17 +47,17 @@ public class Window implements Runnable{
 
         thread =new Thread(this::run, "thread 1");
         thread.start();
-        //canvas.createBufferStrategy(3);
-        //run();
     }
 
     public void createWindow(int height, double ratio) {
 
-        //canvas = new Canvas();
-        frame = new JFrame("Raytest");
-        JButton button = new JButton("test");
+        canvas = new Canvas();
+        frame = new JFrame(fpsC);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JButton button = new JButton("test");
         button.setBounds(50,100,95,30);
+
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (state==false){
@@ -90,11 +87,13 @@ public class Window implements Runnable{
     public void run() {
 
         while (true){
+            frame.setTitle(fpsC);
             System.out.println("running");
             double start = System.nanoTime();//start of run time of one frame
             render();
             double end = System.nanoTime();//end of run time of one frame
             System.out.println("tijd per frame: " + (end-start)/1000000000f);//time per frame
+            fpsC ="tijd per frame: " + (end-start)/1000000000f;
             update();
         }
 
