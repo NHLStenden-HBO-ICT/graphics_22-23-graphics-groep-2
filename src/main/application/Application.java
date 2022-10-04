@@ -7,6 +7,7 @@ import main.maths.Vector3;
 import main.rendering.Renderer;
 import main.scene.Camera;
 import main.scene.Scene;
+import main.utils.Color;
 import main.utils.Material;
 
 public class Application {
@@ -22,9 +23,9 @@ public class Application {
         //make some stuff and add it to the scene
         scene.setCamera(new Camera(2.0, 10, 16.0 / 9.0));
 
-        scene.addIntersectable(new Sphere(new Material(), 1, new Vector3(10, 5, 100))); //test sphere
-        scene.addIntersectable(new Sphere(new Material(), 1, new Vector3(-10, 5, 300))); //test sphere
-        scene.addIntersectable(new Triangle(new Material(), new Vector3(-0.5, 0, 100), new Vector3(0.5, 0, 100), new Vector3(0, 1, 100)));
+        scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(255,0,0)),0.0,0.0), 1, new Vector3(10, 5, 100))); //test sphere
+        scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(0,255,0)),0.0,0.0), 1, new Vector3(-10, 5, 300))); //test sphere
+        scene.addIntersectable(new Triangle(new Material(new Color(new Vector3(0,0,255)),0.0,0.0), new Vector3(-0.5, 0, 100), new Vector3(0.5, 0, 100), new Vector3(0, 1, 100)));
 
         //add said stuff to that scene
 
