@@ -6,7 +6,6 @@ import main.utils.Material;
 public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] vertices;
-    private final double EPSILON = 0.0000001; //todo: make this a global constant somewhere
 
     public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
         super(material);
@@ -66,7 +65,7 @@ public class Triangle extends Solid implements Intersectable {
         //a describes the angle between the ray direction and the triangle direction
         //if the angle is sufficiently small then the ray is parallel to the triangle
         //we don't  intersect with a plane that's parallel
-        if (a > -EPSILON && a < EPSILON) {
+        if (a > -Constants.EPSILON && a < Constants.EPSILON) {
             return -1.0;
         }
 
@@ -93,7 +92,7 @@ public class Triangle extends Solid implements Intersectable {
 
         //if the distance is negative the intersection doesn't lay on the ray.
         //it instead lies on the same line as the ray but before the origin.
-        if (distance < EPSILON) {
+        if (distance < Constants.EPSILON) {
             return -1.0; //line intersection happens, but no ray intersection
         }
 
@@ -104,21 +103,20 @@ public class Triangle extends Solid implements Intersectable {
 
     @Override
     public RayHit intersects(FullRay fullRay) {
-        double distance = findDistance((Ray) fullRay);
+        double distance = findDistance(fullRay);
         if (distance > 0.0) {
             //we can return a RayHit object because a collision happens.
             return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
         }
+
         return null;
     }
 
     @Override
     public boolean intersectsFast(ShadowRay shadowRay) {
-        double distance = findDistance((Ray) shadowRay);
-        if (distance > 0.0) {
-            //we can return a RayHit object because a collision happens.
-            return true;
-        }
-        return false;
+        double distance = findDistance(shadowRay);
+
+        //we can return a RayHit object because a collision happens.
+        return distance > Constants.EPSILON;
     }
 }
