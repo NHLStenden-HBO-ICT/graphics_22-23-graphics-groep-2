@@ -2,8 +2,11 @@ package main.rendering;
 
 import main.maths.FullRay;
 import main.maths.RayHit;
+import main.maths.ShadowRay;
+import main.maths.Vector3;
 import main.scene.Camera;
 import main.scene.Scene;
+import main.utils.Color;
 
 import java.awt.image.BufferedImage;
 
@@ -44,8 +47,23 @@ public class Renderer {
 
                 if (hit != null) {
                     //if there is intersection then it will color x and y blue
-                    buffer.setRGB(x, y, 1000);//todo get the color of hitobject
+                    //buffer.setRGB(x, y, 1000);//todo get the color of hitobject
+
                     System.out.println("intersect on  x: " + x + " y : " + y);
+
+                    Vector3 lightDir = scene.getLights().get(0).getPosition().sub(hit.getContactPoint());
+                    ShadowRay shaRay = new ShadowRay(lightDir, hit.getContactPoint());
+                    boolean lightHit = shaRay.castRay(scene.getGeometry());
+
+                    if (lightHit != true){
+                        Vector3 objColor = hit.getHitSolid().getMaterial().getColor().getColor();
+                        java.awt.Color objColorJava = new java.awt.Color((int)objColor.getX(),(int)objColor.getY(),(int)objColor.getZ()); 
+                        
+                        buffer.setRGB(x, y, objColorJava.getRGB());
+                        System.out.println("Hit can see light!");
+                    }
+
+
                 } else {
                     //if there is no intersection then it will color x and y black
                     buffer.setRGB(x, y, 000000);

@@ -6,6 +6,7 @@ import main.geometry.Triangle;
 import main.maths.Vector3;
 import main.rendering.Renderer;
 import main.scene.Camera;
+import main.scene.PointLight;
 import main.scene.Scene;
 import main.utils.Color;
 import main.utils.Material;
@@ -27,6 +28,7 @@ public class Application {
         scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(0,255,0)),0.0,0.0), 1, new Vector3(-10, 5, 300))); //test sphere
         scene.addIntersectable(new Triangle(new Material(new Color(new Vector3(0,0,255)),0.0,0.0), new Vector3(-0.5, 0, 100), new Vector3(0.5, 0, 100), new Vector3(0, 1, 100)));
 
+        scene.addLight(new PointLight(new Color(new Vector3(0,0,0)), 1000, new Vector3(3,5,100)));
         //add said stuff to that scene
 
         renderer = new Renderer(scene);
