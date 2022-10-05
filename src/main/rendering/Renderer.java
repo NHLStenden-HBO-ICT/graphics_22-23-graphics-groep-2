@@ -51,17 +51,22 @@ public class Renderer {
 
                     System.out.println("intersect on  x: " + x + " y : " + y);
 
-                    Vector3 lightDir = scene.getLights().get(0).getPosition().sub(hit.getContactPoint());
-                    Vector3 normLightDir = lightDir.divide(lightDir.length());
-                    ShadowRay shaRay = new ShadowRay(normLightDir, hit.getContactPoint());
+                    Vector3 mainLight = scene.getLights().get(0).getPosition();
+                    Vector3 lightDir = scene.getLights().get(0).getPosition().sub(hit.getContactPoint()).normalise();
+                    ShadowRay shaRay = new ShadowRay(lightDir, hit.getContactPoint());
                     boolean lightHit = shaRay.castRay(scene.getGeometry());
 
                     if (lightHit != true){
 
-                        
+                        Vector3 hitPos = hit.getContactPoint();
+                        double distance = Math.sqrt(Math.pow((hitPos.getX() - mainLight.getX()), 2) + Math.pow((hitPos.getY() - mainLight.getY()), 2) + Math.pow((hitPos.getZ() - mainLight.getZ()), 2));
+                        double light = scene.getLights().get(0).getIntensity() / Math.pow(distance, 2);
+                        Vector3 reflection = hit.getHitSolid().getMaterial().getColor().getColor().divide(255).multi(light);
+                        Vector3 reflectionFinal = reflection.multi(255);
 
-                        Vector3 objColor = hit.getHitSolid().getMaterial().getColor().getColor();
-                        java.awt.Color objColorJava = new java.awt.Color((int)objColor.getX(),(int)objColor.getY(),(int)objColor.getZ()); 
+
+                        
+                        java.awt.Color objColorJava = new java.awt.Color((int)reflectionFinal.getX(),(int)reflectionFinal.getY(),(int)reflectionFinal.getZ()); 
                         
                         buffer.setRGB(x, y, objColorJava.getRGB());
                         System.out.println("Hit can see light!");
