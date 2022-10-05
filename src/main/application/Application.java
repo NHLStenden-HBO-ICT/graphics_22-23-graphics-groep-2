@@ -19,8 +19,6 @@ public class Application {
 	private static Window window;
 
     public static void main(String[] args) {
-        double start = System.nanoTime();//start of run time of one frame
-
         //make a new scene
         Scene scene = new Scene();
 
@@ -34,10 +32,7 @@ public class Application {
         //add said stuff to that scene
 
         renderer = new Renderer(scene);
-        double end = System.nanoTime();//end of run time of one frame
-		window =new Window(height,ratio);
-		window.start(renderer);
-
-        System.out.println("tijd per frame: " + (end - start) / 1000000000f);//time per frame
+		window =new Window(height,ratio,renderer);
+		window.start();
     }
 }

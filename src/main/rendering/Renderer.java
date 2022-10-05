@@ -11,15 +11,15 @@ public class Renderer {
 
     private Scene scene;
 
-    //private int maxRayDepth;
-
     public Renderer(Scene scene) {
         this.scene = scene;
     }
 
-private int testcolor;
+private int testcolor;//a simple int to test the color
 
+	//sets the testcolor to the testcolor
 	public void setTestcolor(int testcolor){this.testcolor=testcolor;}
+
 	// Return the current scene
 	public Scene getScene() {
 		return scene;

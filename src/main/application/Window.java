@@ -21,15 +21,13 @@ public class Window implements Runnable{
     private static int height;
     private static double ratio;
 
-    private static final long serialVersionUID = 1L;
-
     private boolean state;
 
     private String fpsC= "raytracer";
 
 
-
-    public Window(int height, double ratio){
+    //constructor in which the prefered, min and max size is set. the renderer is also given to the constructor
+    public Window(int height, double ratio, Renderer renderer){
         this.state=false;
         canvas = new Canvas();
         this.height = height;
@@ -37,26 +35,23 @@ public class Window implements Runnable{
         canvas.setPreferredSize(new Dimension(widthCalc(),this.height));
         canvas.setMaximumSize(new Dimension(widthCalc(),this.height));
         canvas.setMinimumSize(new Dimension(widthCalc(),this.height));
+        this.renderer = renderer;
 
         createWindow(height,ratio);
     }
 
-    public void start(Renderer renderer1){
-        //isRunning = true;
-        System.out.println("start");
-        renderer = renderer1;
 
-        thread =new Thread(this::run, "thread 1");
-        thread.start();
+    //the method that creates the thread and starts the run method
+    public void start(){
+        thread =new Thread(this::run, "thread 1"); //this allows it to put the run loop on a thread
+        thread.start(); //starts the thread
     }
 
+    //creates the window using height of the input and the ratio
+    //it also creates al the frame items and adds these to the frame
     public void createWindow(int height, double ratio) {
-
         canvas = new Canvas();
         frame = new JFrame(fpsC);
-
-        //fpsCounter =new JLabel(fpsC);
-        //fpsCounter.setForeground(Color.white);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton button = new JButton("test");
@@ -82,28 +77,30 @@ public class Window implements Runnable{
 
     }
 
+    //calculates the width
     public int widthCalc(){
         Double u = height *ratio;
         return u.intValue();
-    } //calculates the width
+    }
 
     @Override
     public void run() {
 
-        while (true){
+        while (true){//loop
             //fpsCounter.setText(fpsC);
             frame.setTitle(fpsC); //fps in window tittle
             System.out.println("running");
             double start = System.nanoTime();//start of run time of one frame
-            render();
+            render();//the graphics side of the loop
             double end = System.nanoTime();//end of run time of one frame
             System.out.println("tijd per frame: " + (end-start)/1000000000f);//time per frame
             fpsC ="tijd per frame: " + (end-start)/1000000000f;
-            update();
+            update();//the backside calculations, in most cases the game code would start here also known as the engine or non-graphic code.
         }
 
     }
 
+    //the graphics side of the loop
     public void render(){
 
         BufferStrategy bs= canvas.getBufferStrategy();
@@ -124,6 +121,7 @@ public class Window implements Runnable{
         g.dispose();
     }
 
+    //engine
     public void update(){
 
     }
