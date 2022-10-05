@@ -26,9 +26,9 @@ public class Application {
 
         scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(255,0,0)),0.0,0.0), 1, new Vector3(10, 5, 100))); //test sphere
         scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(0,255,0)),0.0,0.0), 1, new Vector3(-10, 5, 300))); //test sphere
-        scene.addIntersectable(new Triangle(new Material(new Color(new Vector3(0,255,0)),0.0,0.0), new Vector3(-0.5, 0, 100), new Vector3(0.5, 0, 100), new Vector3(0, 1, 100)));
+        scene.addIntersectable(new Triangle(new Material(new Color(new Vector3(255,255,255)),0.0,0.0), new Vector3(-10, 0, 100), new Vector3(10, 0, 100), new Vector3(0, 10, 100)));
 
-        scene.addLight(new PointLight(new Color(new Vector3(255,255,255)), 2000, new Vector3(0,5,200)));
+        scene.addLight(new PointLight(new Color(new Vector3(200,200,200)), 1000, new Vector3(5,5,20)));
         //add said stuff to that scene
 
         renderer = new Renderer(scene);

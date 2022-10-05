@@ -62,9 +62,35 @@ public class Renderer {
                         double distance = Math.sqrt(Math.pow((hitPos.getX() - mainLight.getX()), 2) + Math.pow((hitPos.getY() - mainLight.getY()), 2) + Math.pow((hitPos.getZ() - mainLight.getZ()), 2));
                         double light = scene.getLights().get(0).getIntensity() / Math.pow(distance, 2);
                         Vector3 reflection = hit.getHitSolid().getMaterial().getColor().getColor().divide(255).multi(light);
-                        Vector3 reflectionFinal = reflection.multi(255);
+                        Vector3 lightImpact = hitPos.sub(mainLight).normalise();
+                        double lightImpactFinal = Math.cos(hitPos.dot(lightImpact));
+                        //Vector3 reflectionImpact = new Vector3(reflection.getX() - lightImpactFinal, reflection.getY() - lightImpactFinal, reflection.getZ() - lightImpactFinal);
+                        Vector3 reflectionImpact = reflection.divide(lightImpactFinal);
+                        Vector3 reflectionFinal = reflectionImpact.multi(255);
+                        if (reflectionFinal.getX() > 255){
+                            reflectionFinal.setX(255);
+                        }
 
+                        if (reflectionFinal.getX() < 0){
+                            reflectionFinal.setX(0);
+                        }
 
+                        if (reflectionFinal.getY() > 255){
+                            reflectionFinal.setY(255);
+                        }
+
+                        if (reflectionFinal.getY() < 0){
+                            reflectionFinal.setY(0);
+                        }
+
+                        if (reflectionFinal.getZ() > 255){
+                            reflectionFinal.setZ(255);
+                        }
+
+                        if (reflectionFinal.getZ() < 0){
+                            reflectionFinal.setZ(0);
+                        }
+                        System.out.println("x" + reflectionFinal.getX() + "Y" + reflectionFinal.getY() + "Z" + reflectionFinal.getZ());
                         
                         java.awt.Color objColorJava = new java.awt.Color((int)reflectionFinal.getX(),(int)reflectionFinal.getY(),(int)reflectionFinal.getZ()); 
                         
