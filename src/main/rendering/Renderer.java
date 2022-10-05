@@ -2,8 +2,11 @@ package main.rendering;
 
 import main.maths.FullRay;
 import main.maths.RayHit;
+import main.maths.ShadowRay;
+import main.maths.Vector3;
 import main.scene.Camera;
 import main.scene.Scene;
+import main.utils.Color;
 
 import java.awt.image.BufferedImage;
 
@@ -44,8 +47,34 @@ public class Renderer {
 
                 if (hit != null) {
                     //if there is intersection then it will color x and y blue
-                    buffer.setRGB(x, y, 1000);//todo get the color of hitobject
+                    //buffer.setRGB(x, y, 1000);//todo get the color of hitobject
+
                     System.out.println("intersect on  x: " + x + " y : " + y);
+
+                    Vector3 mainLight = scene.getLights().get(0).getPosition();
+                    Vector3 lightDir = scene.getLights().get(0).getPosition().sub(hit.getContactPoint()).normalise();
+                    ShadowRay shaRay = new ShadowRay(lightDir, hit.getContactPoint());
+                    boolean lightHit = shaRay.castRay(scene.getGeometry());
+
+                    if (lightHit != true){
+
+                        Vector3 hitPos = hit.getContactPoint();
+                        double distance = Math.sqrt(Math.pow((hitPos.getX() - mainLight.getX()), 2) + Math.pow((hitPos.getY() - mainLight.getY()), 2) + Math.pow((hitPos.getZ() - mainLight.getZ()), 2));
+                        double light = scene.getLights().get(0).getIntensity() / Math.pow(distance, 2);
+                        Vector3 reflection = hit.getHitSolid().getMaterial().getColor().getColor().divide(255).multi(light);
+                        Vector3 reflectionFinal = reflection.multi(255);
+
+
+                        
+                        java.awt.Color objColorJava = new java.awt.Color((int)reflectionFinal.getX(),(int)reflectionFinal.getY(),(int)reflectionFinal.getZ()); 
+                        
+                        buffer.setRGB(x, y, objColorJava.getRGB());
+                        System.out.println("Hit can see light!");
+                    }else{
+                        buffer.setRGB(x, y, 000000);
+                    }
+
+
                 } else {
                     //if there is no intersection then it will color x and y black
                     buffer.setRGB(x, y, 000000);

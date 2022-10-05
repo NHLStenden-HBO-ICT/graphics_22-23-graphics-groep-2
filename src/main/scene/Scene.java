@@ -9,14 +9,16 @@ import main.maths.RayHit;
 import main.maths.Vector3;
 import main.utils.Material;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 
 public class Scene {
 
     private Vector<Intersectable> geometry;
 
-    private PointLight[] lights;
+    private List<PointLight> lights = new ArrayList<PointLight>();;
 
     private Camera camera;
 
@@ -32,8 +34,8 @@ public class Scene {
         return geometry;
     }
 
-    public PointLight[] getLights() {
-        return null;
+    public List<PointLight> getLights() {
+        return lights;
     }
 
     public Camera getCamera() {
@@ -66,7 +68,7 @@ public class Scene {
     }
 
     public void addLight(PointLight light) {
-
+        this.lights.add(light); 
     }
 
     public void clearLights() {

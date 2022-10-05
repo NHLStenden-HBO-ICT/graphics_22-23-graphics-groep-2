@@ -5,6 +5,7 @@ import main.maths.FullRay;
 import main.maths.RayHit;
 import main.maths.ShadowRay;
 import main.maths.Vector3;
+import main.utils.Color;
 import main.utils.Material;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class TriangleTest {
         //make a new triangle before each test
         //this triangle is aligned with the x-axis and has a height of 1
         triangle = new Triangle(
-                new Material(),
+                new Material(new Color(new Vector3(0,0,0)),0.0,0.0),
                 new Vector3(1, 0, 0),
                 new Vector3(-1, 0, 0),
                 new Vector3(0, 1, 0));
