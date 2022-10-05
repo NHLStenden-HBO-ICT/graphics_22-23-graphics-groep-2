@@ -15,6 +15,7 @@ public class Window implements Runnable{
     private Canvas canvas;
     private Thread thread;
     private Graphics g;
+    private JLabel fpsCounter;
 
 
     private static int height;
@@ -54,6 +55,9 @@ public class Window implements Runnable{
         canvas = new Canvas();
         frame = new JFrame(fpsC);
 
+        //fpsCounter =new JLabel(fpsC);
+        //fpsCounter.setForeground(Color.white);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton button = new JButton("test");
         button.setBounds(50,100,95,30);
@@ -81,13 +85,14 @@ public class Window implements Runnable{
     public int widthCalc(){
         Double u = height *ratio;
         return u.intValue();
-    }
+    } //calculates the width
 
     @Override
     public void run() {
 
         while (true){
-            frame.setTitle(fpsC);
+            //fpsCounter.setText(fpsC);
+            frame.setTitle(fpsC); //fps in window tittle
             System.out.println("running");
             double start = System.nanoTime();//start of run time of one frame
             render();
