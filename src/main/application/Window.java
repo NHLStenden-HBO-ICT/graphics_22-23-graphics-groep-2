@@ -41,10 +41,10 @@ public class Window implements Runnable{
         createWindow(height,ratio);
     }
 
-    public void start(){
+    public void start(Renderer renderer1){
         //isRunning = true;
         System.out.println("start");
-        renderer = new Renderer(ratio);
+        renderer = renderer1;
 
         thread =new Thread(this::run, "thread 1");
         thread.start();
