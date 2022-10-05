@@ -1,6 +1,5 @@
 package main.application;
 
-import main.geometry.Intersectable;
 import main.geometry.Sphere;
 import main.geometry.Triangle;
 import main.maths.Vector3;
@@ -24,11 +23,11 @@ public class Application {
         //make some stuff and add it to the scene
         scene.setCamera(new Camera(2.0, 10, 16.0 / 9.0));
 
-        scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(255,0,0)),0.0,0.0), 1, new Vector3(10, 5, 100))); //test sphere
-        scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(0,255,0)),0.0,0.0), 1, new Vector3(-10, 5, 300))); //test sphere
+        //scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(255,0,0)),0.0,0.0), 1, new Vector3(10, 5, 100))); //test sphere
+        //scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(0,255,0)),0.0,0.0), 1, new Vector3(-10, 5, 300))); //test sphere
         scene.addIntersectable(new Triangle(new Material(new Color(new Vector3(255,255,255)),0.0,0.0), new Vector3(-10, 0, 100), new Vector3(10, 0, 100), new Vector3(0, 10, 100)));
 
-        scene.addLight(new PointLight(new Color(new Vector3(200,200,200)), 1000, new Vector3(5,5,20)));
+        scene.addLight(new PointLight(new Color(new Vector3(0,0,255)), 300, new Vector3(-10,-5,20)));
         //add said stuff to that scene
 
         renderer = new Renderer(scene);

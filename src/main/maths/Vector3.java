@@ -114,6 +114,11 @@ public class Vector3 {
         return Math.sqrt(x * x + y * y + z * z);
     }
 
+    // Calculate distance between this vector and a given vector
+    public double distance(Vector3 destination){
+        return Math.sqrt(Math.pow((this.getX() - destination.getX()), 2) + Math.pow((this.getY() - destination.getY()), 2) + Math.pow((this.getZ() - destination.getZ()), 2));
+    }
+
     @Override
     public String toString() {
         return "(x: " + x + ", y: " + y + ", z: " + z + ")";
