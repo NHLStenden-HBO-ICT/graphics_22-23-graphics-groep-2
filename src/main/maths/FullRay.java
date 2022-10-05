@@ -2,6 +2,8 @@ package main.maths;
 
 import main.geometry.Intersectable;
 
+import java.util.Vector;
+
 public class FullRay extends Ray {
 
     private Vector3 origin;
@@ -20,14 +22,14 @@ public class FullRay extends Ray {
 
     //given a set of intersectables, return collision between this ray and the closest intersectable
     //if no intersection takes place, return null
-    public RayHit castRay(Intersectable[] intersectables) {
+    public RayHit castRay(Vector<Intersectable> intersectables) {
         //todo rewrite this to make use of streams to filter the list and improve performance
         //create a variable to store the collision
         RayHit closestHit = null;
 
         //loop over all the intersectables
-        for (int i = 0; i < intersectables.length; i++) {
-            RayHit hit = intersectables[i].intersects(this);
+        for (int i = 0; i < intersectables.size(); i++) {
+            RayHit hit = intersectables.get(i).intersects(this);
 
             //if no collision took place, go to the next cycle in the loop
             if (hit == null) {

@@ -2,6 +2,8 @@ package main.maths;
 
 import main.geometry.Intersectable;
 
+import java.util.Vector;
+
 public class ShadowRay extends Ray {
 
     private Vector3 origin;
@@ -19,14 +21,14 @@ public class ShadowRay extends Ray {
 
 
     //given a set of intersectables, returns if a  collision between this ray and any of the objects happen
-    public boolean castRay(Intersectable[] intersectables) {
+    public boolean castRay(Vector<Intersectable> intersectables) {
         //todo rewrite this to make use of streams to filter the list and improve performance
         //create a variable to store the collision
 
 
         //loop over all the intersectables
-        for (int i = 0; i < intersectables.length; i++) {
-            boolean hit = intersectables[i].intersectsFast(this);
+        for (int i = 0; i < intersectables.size(); i++) {
+            boolean hit = intersectables.get(i).intersectsFast(this);
 
             //if no collision has been found, save the found collision
             if (hit == true) {
