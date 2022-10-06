@@ -5,6 +5,7 @@ import main.maths.FullRay;
 import main.maths.RayHit;
 import main.maths.ShadowRay;
 import main.maths.Vector3;
+import main.utils.Color;
 import main.utils.Material;
 import main.utils.Color;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,6 +61,13 @@ class SphereTest {
         //this ray should miss by 0.1
         boolean hit = sphere.intersectsFast(new ShadowRay(new Vector3(-1, 0, 0), new Vector3(3, 0, 1.1)));
         assertFalse(hit);
+    }
+
+    @Test
+    void Spheretesttset() {
+        //this ray should miss by 0.1
+        RayHit hit = sphere.intersects(new FullRay(new Vector3(50, 50, 100), new Vector3(0, 0, -1)));
+        assertEquals(true, hit == null);
     }
 
 }

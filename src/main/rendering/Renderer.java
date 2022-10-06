@@ -14,21 +14,36 @@ import java.util.List;
 
 public class Renderer {
 
-    // Cast rays from the camera into the scene to detect intersections and see if they need to be lit up
-    // First get screen resolution and ratio
-    // Then setip a buffer and a camera
-    // Then cast a ray through each pixel and calculate the color for it if it intersects with a solid
-    public void RenderToImage(Scene scene) {
+    private Scene scene;
 
-        PixelData pixelData = new PixelData(400, scene.getCamera().getRatio());
-        BufferedImage buffer = new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
+    public Renderer(Scene scene) {
+        this.scene = scene;
+    }
+
+	// Return the current scene
+	public Scene getScene() {
+		return scene;
+	}
+
+    // Set the current scene
+    public void setScene(Scene scene_) {
+        scene = scene_;
+    }
+
+  // Cast rays from the camera into the scene to detect intersections and see if they need to be lit up
+  // First get screen resolution and ratio
+  // Then setip a buffer and a camera
+  // Then cast a ray through each pixel and calculate the color for it if it intersects with a solid
+	public BufferedImage RenderToImage(int height) {
+
+		PixelData pixelData =new PixelData(height,scene.getCamera().getRatio());
+		BufferedImage buffer =new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         Camera camera = scene.getCamera();
 
         // Loop for each pixel on the image
         for (int y = 0; y < pixelData.getHeight(); ++y) {
             for (int x = 0; x < pixelData.getWidth(); ++x) {
-
                 // Cast ray and check if it intersects with something
                 FullRay ray = camera.rayThroughPixel(x, y, pixelData.getWidth(), pixelData.getHeight());//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
                 RayHit hit = ray.castRay(scene.getGeometry());
@@ -51,7 +66,7 @@ public class Renderer {
 
         // At the end call toImage(bufferedImage image) in pixelData to convert the buffer to an image
         pixelData.toImage(buffer);
-
+    		return buffer;
     }
 
     // This method checks wheter or not a pixel should be lit up by casting a shadow ray to each light source

@@ -12,16 +12,19 @@ import main.utils.Material;
 
 public class Application {
 
-    private static Renderer renderer;
+   private static Renderer renderer;
+	private static Thread thread ;
+
+    private static int height=400;
+    private static double ratio =16.0 / 9.0;
+	private static Window window;
 
     public static void main(String[] args) {
-        double start = System.nanoTime();//start of run time of one frame
-
         //make a new scene
         Scene scene = new Scene();
 
         //make some stuff and add it to the scene
-        scene.setCamera(new Camera(2.0, 10, 16.0 / 9.0));
+        scene.setCamera(new Camera(2.0, 10, ratio));
 
         //scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(255,0,0)),0.0,0.0), 1, new Vector3(10, 5, 100))); //test sphere
         //scene.addIntersectable(new Sphere(new Material(new Color(new Vector3(0,255,0)),0.0,0.0), 1, new Vector3(-10, 5, 300))); //test sphere
@@ -30,10 +33,8 @@ public class Application {
         scene.addLight(new PointLight(new Color(new Vector3(0,0,255)), 300, new Vector3(-10,-5,20)));
         //add said stuff to that scene
 
-        renderer = new Renderer();
-        renderer.RenderToImage(scene);
-        double end = System.nanoTime();//end of run time of one frame
-
-        System.out.println("tijd per frame: " + (end - start) / 1000000000f);//time per frame
+        renderer = new Renderer(scene);
+		    window =new Window(height,ratio,renderer);
+		    window.start();
     }
 }
