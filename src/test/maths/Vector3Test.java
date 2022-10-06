@@ -98,4 +98,17 @@ class Vector3Test {
         assertEquals(-3, result.getZ());
     }
 
+    @Test
+    void distance() {
+        //create two vectors
+        Vector3 a = new Vector3(3,3,3);
+        Vector3 b = new Vector3(9,9,9);
+        
+        //get the result
+        double result = a.distance(b);
+
+        //check if the result is right;
+        assertEquals(10.392304845413264, result);
+    }
+
 }
