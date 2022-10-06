@@ -7,6 +7,7 @@ import main.maths.Vector3;
 import main.scene.Camera;
 import main.scene.PointLight;
 import main.scene.Scene;
+
 import java.awt.Color;
 
 import java.awt.image.BufferedImage;
@@ -20,24 +21,24 @@ public class Renderer {
         this.scene = scene;
     }
 
-	// Return the current scene
-	public Scene getScene() {
-		return scene;
-	}
+    // Return the current scene
+    public Scene getScene() {
+        return scene;
+    }
 
     // Set the current scene
     public void setScene(Scene scene_) {
         scene = scene_;
     }
 
-  // Cast rays from the camera into the scene to detect intersections and see if they need to be lit up
-  // First get screen resolution and ratio
-  // Then setip a buffer and a camera
-  // Then cast a ray through each pixel and calculate the color for it if it intersects with a solid
-	public BufferedImage RenderToImage(int height) {
+    // Cast rays from the camera into the scene to detect intersections and see if they need to be lit up
+    // First get screen resolution and ratio
+    // Then setip a buffer and a camera
+    // Then cast a ray through each pixel and calculate the color for it if it intersects with a solid
+    public BufferedImage RenderToImage(int height) {
 
-		PixelData pixelData =new PixelData(height,scene.getCamera().getRatio());
-		BufferedImage buffer =new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
+        PixelData pixelData = new PixelData(height, scene.getCamera().getRatio());
+        BufferedImage buffer = new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         Camera camera = scene.getCamera();
 
@@ -45,7 +46,7 @@ public class Renderer {
         for (int y = 0; y < pixelData.getHeight(); ++y) {
             for (int x = 0; x < pixelData.getWidth(); ++x) {
                 // Cast ray and check if it intersects with something
-                FullRay ray = camera.rayThroughPixel(x, y, pixelData.getWidth(), pixelData.getHeight());//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
+                FullRay ray = camera.getRayFromPixel(x, y);//gets a ray that shoots through te x & y of the image
                 RayHit hit = ray.castRay(scene.getGeometry());
 
                 // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
@@ -66,18 +67,18 @@ public class Renderer {
 
         // At the end call toImage(bufferedImage image) in pixelData to convert the buffer to an image
         pixelData.toImage(buffer);
-    		return buffer;
+        return buffer;
     }
 
     // This method checks wheter or not a pixel should be lit up by casting a shadow ray to each light source
     // First it puts the lights and contactpoint in variables and makes a variable for the final output
     public Color calculateLight(RayHit hit, Scene scene) {
-        List<PointLight> lights  = scene.getLights();
+        List<PointLight> lights = scene.getLights();
         Vector3 hitPos = hit.getContactPoint();
-        Color finalColor = new Color(0,0,0);
+        Color finalColor = new Color(0, 0, 0);
 
         // Then calculate the light for the given contactpoint for each light and check if it can see the light
-        for (int i = 0; i < lights.size(); i++){
+        for (int i = 0; i < lights.size(); i++) {
 
             // Get the light position and the direction towards the light
             PointLight light = lights.get(i);
@@ -90,8 +91,8 @@ public class Renderer {
 
             // If it doesn't intersect with anything calculate light and color
             // Else return black color
-            if (lightHit != true){
-                
+            if (lightHit != true) {
+
                 // First calculate the intensity of the color of the pixel according to the intensity of the lightsource and the distance of the lightsource to the contactpoint
                 double lightIntensity = light.getIntensity() / Math.pow(hitPos.distance(lightPos), 2);
 
@@ -106,17 +107,17 @@ public class Renderer {
 
                 // Divide the reflection by the angle of the light and multiply it by 255 to get 255 rgb values again
                 Vector3 reflectionFinal = reflection.divide(lightAngle).multi(255);
-                
+
                 // Clamp the color to a range of 0-255 to prevent rgb overflows
                 reflectionFinal.clamp(0, 255);
-                Color processedColor = new Color((int)reflectionFinal.getX(), (int)reflectionFinal.getY(), (int)reflectionFinal.getZ());               
-                
+                Color processedColor = new Color((int) reflectionFinal.getX(), (int) reflectionFinal.getY(), (int) reflectionFinal.getZ());
+
                 // Add the result of the list loop with to the result of this loop
                 // This only happens when there are multiple lights
                 finalColor = addColors(finalColor, processedColor);
-            }else{
+            } else {
                 // If there is a hit return black
-                return new Color(0,0,0);
+                return new Color(0, 0, 0);
             }
         }
 
@@ -125,10 +126,10 @@ public class Renderer {
     }
 
     // Quick method to add the rbg values of two java.awt.Color objects to eachother 
-    public Color addColors(Color color1, Color color2){
+    public Color addColors(Color color1, Color color2) {
         int r = Math.min(255, (color1.getRed() + color2.getRed()));
         int g = Math.min(255, (color1.getGreen() + color2.getGreen()));
         int b = Math.min(255, (color1.getBlue() + color2.getBlue()));
-        return new Color(r,g,b);
+        return new Color(r, g, b);
     }
 }
