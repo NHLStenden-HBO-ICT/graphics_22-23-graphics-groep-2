@@ -1,13 +1,11 @@
 package main.scene;
 
 import main.geometry.Intersectable;
+import main.geometry.Model;
 import main.geometry.Solid;
-import main.geometry.Sphere;
 import main.geometry.Triangle;
 import main.maths.FullRay;
 import main.maths.RayHit;
-import main.maths.Vector3;
-import main.utils.Material;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +16,7 @@ public class Scene {
 
     private Vector<Intersectable> geometry;
 
+    private Vector<Model> models;
     private List<PointLight> lights = new ArrayList<PointLight>();;
 
     private Camera camera;
@@ -26,6 +25,7 @@ public class Scene {
 
     public Scene() {
         this.geometry = new Vector<Intersectable>();
+        this.models = new Vector<Model>();
     }
 
 
@@ -53,6 +53,20 @@ public class Scene {
 
     public void addIntersectable(Intersectable intersectable) {
         this.geometry.add(intersectable);
+    }
+
+    public void addModel(Model model) {
+        this.models.add(model);
+        for (Triangle triangle : model.getTriangles()) {
+            addIntersectable(triangle);
+        }
+    }//might need a insectable update if the model moves after its creation
+
+    public Vector<Model> getModels() {
+        return models;
+    }
+    public Model getModelofIndex(int index) {
+        return models.get(index);
     }
 
     public void clearSolid() {
