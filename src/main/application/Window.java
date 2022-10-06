@@ -87,7 +87,6 @@ public class Window implements Runnable{
     public void run() {
 
         while (true){//loop
-            //fpsCounter.setText(fpsC);
             frame.setTitle(fpsC); //fps in window tittle
             System.out.println("running");
             double start = System.nanoTime();//start of run time of one frame
@@ -100,28 +99,33 @@ public class Window implements Runnable{
 
     }
 
-    //the graphics side of the loop
+    //this method does everything that needs to be drawn on the window or is visible on the screen during the loop
+    //it sets the background as a standard black and gets the bufferimage and lets the graphics object g draw it onscreen
     public void render(){
 
-        BufferStrategy bs= canvas.getBufferStrategy();
+        BufferStrategy bs= canvas.getBufferStrategy(); //creates the buffer for the screen. also known as mechanism to organize the complex memory of like the screen.
 
         if(bs==null){
             canvas.createBufferStrategy(3);
+            //sets up a triple bufferstrategie if it does not exit yet.
+            // back, mid and front, back is on which something is rendered and front is on which it is displayed onscreen.
+            //mid is kinda of a backup in between back and front
             return;
         }
 
-        g = bs.getDrawGraphics();
+        g = bs.getDrawGraphics(); //this allows the graphic component to draw on the buffer by getting the buffer graphic component
 
         g.setColor(new Color(0));
         g.fillRect(0,0, widthCalc(),height);//background
 
-        g.drawImage(renderer.RenderToImage(height),0,0,null);
+        g.drawImage(renderer.RenderToImage(height),0,0,null); //gets the image buffer to draw on screen
 
-        bs.show();
-        g.dispose();
+        bs.show(); //shows the bufferstrategie onscreen
+        g.dispose(); //disposes the graphic object and everything it drew, so that the next frame is clean for new picture to show
     }
 
     //engine
+    //everything that is not graphic related will be placed in this method
     public void update(){
 
     }
