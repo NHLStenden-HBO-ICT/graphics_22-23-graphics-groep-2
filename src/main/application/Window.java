@@ -60,11 +60,9 @@ public class Window implements Runnable{
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (state==false){
-                    renderer.setTestcolor(16000000);
                     state=true;
                 }
                 else {
-                    renderer.setTestcolor(1000);
                     state=false;
                 }
 

@@ -38,7 +38,7 @@ public class PixelData {
 	}
 
 	public void toImage(BufferedImage buffer){
-		File image =new File("image.png");
+		File image = new File("out/image.png");
 
 		try{
 			ImageIO.write(buffer,"png" , image);

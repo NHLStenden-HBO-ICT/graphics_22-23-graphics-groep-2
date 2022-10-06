@@ -22,7 +22,8 @@ class TriangleTest {
         //make a new triangle before each test
         //this triangle is aligned with the x-axis and has a height of 1
         triangle = new Triangle(
-                new Material(new Color(),0,0),
+                new Material(new Color(new Vector3(0,0,0)),0.0,0.0),
+
                 new Vector3(1, 0, 0),
                 new Vector3(-1, 0, 0),
                 new Vector3(0, 1, 0));

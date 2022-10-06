@@ -34,7 +34,7 @@ public class RayHit {
     }
 
     public Vector3 getNormal() {
-        return null;
+        return contactPoint;
     }
 
     public double getDistance() {
