@@ -15,16 +15,16 @@ public class PointLight {
 
     //constructor for light source at origin
     public PointLight(Color color, float intensity){
-        this.color =color;
-        this.intensity =intensity;
-        this.position =new Vector3(0,0,0);
+        this.color = color;
+        this.intensity = intensity;
+        this.position = new Vector3(0,0,0);
     }
 
     //constructor
     public PointLight(Color color, float intensity, Vector3 position){
-        this.color =color;
-        this.intensity =intensity;
-        this.position =position;
+        this.color = color;
+        this.intensity = intensity;
+        this.position = position;
     }
 
     //get methods
@@ -42,17 +42,17 @@ public class PointLight {
 
     //set methods
     public void setPosition(Vector3 vector3) {
-    this.position =vector3;
+    this.position = vector3;
     }
 
     public void setColor(Color color) {
-        this.color=color;
+        this.color = color;
 
     }
 
     public void setIntensity(float intensity)
     {
-        this.intensity =intensity;
+        this.intensity = intensity;
     }
 
 }

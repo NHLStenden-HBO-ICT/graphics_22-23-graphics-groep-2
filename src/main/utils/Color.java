@@ -6,6 +6,10 @@ public class Color {
 
     private Vector3 color;
 
+    public Color (Vector3 color){
+        this.color = color;
+    }
+
     public Vector3 getColor() {
         return color;
     }

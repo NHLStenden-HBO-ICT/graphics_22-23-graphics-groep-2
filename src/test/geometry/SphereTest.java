@@ -7,6 +7,7 @@ import main.maths.ShadowRay;
 import main.maths.Vector3;
 import main.utils.Color;
 import main.utils.Material;
+import main.utils.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class SphereTest {
 
     @BeforeEach
     void setup() {
-        sphere = new Sphere(new Material(new Color(),0,0), 1, new Vector3(50, 50, 0));
+        sphere = new Sphere(new Material(new Color(new Vector3(0,0,0)),0.0,0.0), 1, new Vector3(1, 0, 0));
     }
 
     @Test
