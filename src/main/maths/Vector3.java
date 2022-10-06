@@ -116,7 +116,37 @@ public class Vector3 {
 
     // Calculate distance between this vector and a given vector
     public double distance(Vector3 destination){
-        return Math.sqrt(Math.pow((this.getX() - destination.getX()), 2) + Math.pow((this.getY() - destination.getY()), 2) + Math.pow((this.getZ() - destination.getZ()), 2));
+        return Math.sqrt(Math.pow((x - destination.getX()), 2) + Math.pow((y - destination.getY()), 2) + Math.pow((z - destination.getZ()), 2));
+    }
+
+    // Check if the coordinates of the vector are above the max or below the minimum
+    // If they are set them to either the max or the min
+    public void clamp(double min, double max){
+
+        //Check if they are above or below the minimum
+        if (x > max){
+            x = max;
+        }
+
+        if (x < min){
+            x = min;
+        }
+
+        if (y > max){
+            y = max;
+        }
+
+        if (y < min){
+            y = min;
+        }
+
+        if (z > max){
+            z = max;
+        }
+
+        if (z < min){
+            z = min;
+        }
     }
 
     @Override

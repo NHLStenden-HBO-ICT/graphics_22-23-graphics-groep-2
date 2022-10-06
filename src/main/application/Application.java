@@ -30,8 +30,8 @@ public class Application {
         scene.addLight(new PointLight(new Color(new Vector3(0,0,255)), 300, new Vector3(-10,-5,20)));
         //add said stuff to that scene
 
-        renderer = new Renderer(scene);
-        renderer.RenderToImage();
+        renderer = new Renderer();
+        renderer.RenderToImage(scene);
         double end = System.nanoTime();//end of run time of one frame
 
         System.out.println("tijd per frame: " + (end - start) / 1000000000f);//time per frame

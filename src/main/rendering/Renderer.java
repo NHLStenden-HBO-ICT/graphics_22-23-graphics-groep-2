@@ -14,29 +14,11 @@ import java.util.List;
 
 public class Renderer {
 
-    private Scene scene;
-
-    private int maxRayDepth;
-
-    public Renderer(Scene scene) {
-        this.scene = scene;
-    }
-
-    // Return the current scene
-    public Scene getScene() {
-        return scene;
-    }
-
-    // Set the current scene
-    public void setScene(Scene scene_) {
-        scene = scene_;
-    }
-
     // Cast rays from the camera into the scene to detect intersections and see if they need to be lit up
     // First get screen resolution and ratio
     // Then setip a buffer and a camera
     // Then cast a ray through each pixel and calculate the color for it if it intersects with a solid
-    public void RenderToImage() {
+    public void RenderToImage(Scene scene) {
 
         PixelData pixelData = new PixelData(400, scene.getCamera().getRatio());
         BufferedImage buffer = new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -56,7 +38,7 @@ public class Renderer {
                 if (hit != null) {
 
                     System.out.println("intersect on  x: " + x + " y : " + y);
-                    Color finalColor = calculateLight(hit);
+                    Color finalColor = calculateLight(hit, scene);
 
                     buffer.setRGB(x, y, finalColor.getRGB());
 
@@ -74,7 +56,7 @@ public class Renderer {
 
     // This method checks wheter or not a pixel should be lit up by casting a shadow ray to each light source
     // First it puts the lights and contactpoint in variables and makes a variable for the final output
-    public Color calculateLight(RayHit hit) {
+    public Color calculateLight(RayHit hit, Scene scene) {
         List<PointLight> lights  = scene.getLights();
         Vector3 hitPos = hit.getContactPoint();
         Color finalColor = new Color(0,0,0);
@@ -111,7 +93,8 @@ public class Renderer {
                 Vector3 reflectionFinal = reflection.divide(lightAngle).multi(255);
                 
                 // Clamp the color to a range of 0-255 to prevent rgb overflows
-                Color processedColor = clampColor(reflectionFinal);                
+                reflectionFinal.clamp(0, 255);
+                Color processedColor = new Color((int)reflectionFinal.getX(), (int)reflectionFinal.getY(), (int)reflectionFinal.getZ());               
                 
                 // Add the result of the list loop with to the result of this loop
                 // This only happens when there are multiple lights
@@ -132,45 +115,5 @@ public class Renderer {
         int g = Math.min(255, (color1.getGreen() + color2.getGreen()));
         int b = Math.min(255, (color1.getBlue() + color2.getBlue()));
         return new Color(r,g,b);
-    }
-
-    // Method that sets the xyz of the given vector to 255 if they are above that and/or to 0 if they are below that
-    // Outputs a java.awt.Color object
-    // This method works perfectely fine but only works for a vector input and a color output
-    // Could be made dynamic in the future
-    public Color clampColor(Vector3 color) {
-
-        // Get values
-        double r = color.getX();
-        double g = color.getY();
-        double b = color.getZ();
-
-        //Check if they are above or below the minimum
-        if (r > 255){
-            r = 255;
-        }
-
-        if (r < 0){
-            r = 0;
-        }
-
-        if (g > 255){
-            g = 255;
-        }
-
-        if (g < 0){
-            g = 0;
-        }
-
-        if (b > 255){
-            b = 255;
-        }
-
-        if (b < 0){
-            b = 0;
-        }
-
-        // Return the resulting color
-        return new Color((int)r,(int)g,(int)b);
     }
 }
