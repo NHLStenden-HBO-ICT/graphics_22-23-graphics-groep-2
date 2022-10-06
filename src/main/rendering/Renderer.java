@@ -46,7 +46,9 @@ public class Renderer {
             for (int x = 0; x < pixelData.getWidth(); ++x) {
                 // Cast ray and check if it intersects with something
                 FullRay ray = camera.rayThroughPixel(x, y, pixelData.getWidth(), pixelData.getHeight());//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
-                RayHit hit = ray.castRay(scene.getGeometry());
+                //RayHit hit = ray.castRay(scene.getGeometry());
+
+                RayHit hit = ray.castRay(scene.getModelintersectables());
 
                 // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
                 // Finally set that pixel with the final color in the image buffer

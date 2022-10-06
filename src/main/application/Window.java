@@ -43,8 +43,10 @@ public class Window implements Runnable{
 
     //the method that creates the thread and starts the run method
     public void start(){
-        thread =new Thread(this::run, "thread 1"); //this allows it to put the run loop on a thread
-        thread.start(); //starts the thread
+        //this allows it to put the run loop on a thread
+        thread =new Thread(this::run, "thread 1");
+        //starts the thread
+        thread.start();
     }
 
     //creates the window using height of the input and the ratio
@@ -84,15 +86,21 @@ public class Window implements Runnable{
     @Override
     public void run() {
 
-        while (true){//loop
-            frame.setTitle(fpsC); //fps in window tittle
-            System.out.println("running");
-            double start = System.nanoTime();//start of run time of one frame
-            render();//the graphics side of the loop
-            double end = System.nanoTime();//end of run time of one frame
-            System.out.println("tijd per frame: " + (end-start)/1000000000f);//time per frame
+        //loop
+        while (true){
+            //fps in window tittle
+            frame.setTitle(fpsC);
+
+            //start of run time of one frame
+            double start = System.nanoTime();
+            render();
+
+            //end of run time of one frame
+            double end = System.nanoTime();
             fpsC ="tijd per frame: " + (end-start)/1000000000f;
-            update();//the backside calculations, in most cases the game code would start here also known as the engine or non-graphic code.
+
+            //the backside calculations, in most cases the game code would start here also known as the engine or non-graphic code.
+            update();
         }
 
     }
@@ -101,25 +109,31 @@ public class Window implements Runnable{
     //it sets the background as a standard black and gets the bufferimage and lets the graphics object g draw it onscreen
     public void render(){
 
-        BufferStrategy bs= canvas.getBufferStrategy(); //creates the buffer for the screen. also known as mechanism to organize the complex memory of like the screen.
+        //creates the buffer for the screen. also known as mechanism to organize the complex memory of like the screen.
+        BufferStrategy bs= canvas.getBufferStrategy();
 
         if(bs==null){
-            canvas.createBufferStrategy(3);
             //sets up a triple bufferstrategie if it does not exit yet.
             // back, mid and front, back is on which something is rendered and front is on which it is displayed onscreen.
             //mid is kinda of a backup in between back and front
+            canvas.createBufferStrategy(3);
             return;
         }
+        //this allows the graphic component to draw on the buffer by getting the buffer graphic component
+        g = bs.getDrawGraphics();
 
-        g = bs.getDrawGraphics(); //this allows the graphic component to draw on the buffer by getting the buffer graphic component
-
+        //sets up background color in case no picture is being made
         g.setColor(new Color(0));
-        g.fillRect(0,0, widthCalc(),height);//background
+        g.fillRect(0,0, widthCalc(),height);
 
-        g.drawImage(renderer.RenderToImage(height),0,0,null); //gets the image buffer to draw on screen
+        //gets the image buffer to draw on screen
+        g.drawImage(renderer.RenderToImage(height),0,0,null);
 
-        bs.show(); //shows the bufferstrategie onscreen
-        g.dispose(); //disposes the graphic object and everything it drew, so that the next frame is clean for new picture to show
+        //shows the bufferstrategie onscreen
+        bs.show();
+
+        //disposes the graphic object and everything it drew, so that the next frame is clean for new picture to show
+        g.dispose();
     }
 
     //engine

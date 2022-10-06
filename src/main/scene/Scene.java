@@ -3,7 +3,6 @@ package main.scene;
 import main.geometry.Intersectable;
 import main.geometry.Model;
 import main.geometry.Solid;
-import main.geometry.Triangle;
 import main.maths.FullRay;
 import main.maths.RayHit;
 
@@ -57,10 +56,7 @@ public class Scene {
 
     public void addModel(Model model) {
         this.models.add(model);
-        for (Triangle triangle : model.getTriangles()) {
-            addIntersectable(triangle);
-        }
-    }//might need a insectable update if the model moves after its creation
+    }
 
     public Vector<Model> getModels() {
         return models;
@@ -107,5 +103,14 @@ public class Scene {
 
     public void setGeometry(Intersectable[] geometry) {
         Collections.addAll(this.geometry, geometry);
+    }
+
+    //returns a list of all the models intersectables so the models can move
+    public Vector<Intersectable> getModelintersectables(){
+        Vector<Intersectable> modelInter = new Vector<Intersectable>();
+        for (Model model:models) {
+            modelInter.addAll(model.getTriangles());
+        }
+        return modelInter;
     }
 }
