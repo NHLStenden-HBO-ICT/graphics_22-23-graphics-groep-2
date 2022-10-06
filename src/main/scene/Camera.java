@@ -39,14 +39,19 @@ public class Camera {
     }
 
     //returns a ray that uses the x and y of an image and returns a ray that can be cast
+    //full explanation can be found at: https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays
     public FullRay getRayFromPixel(double x, double y) {
         //first we normalize the pixel coordinates
+        //this makes it so that x & y become values between 0...1
+        //so if your image width is 100, and x is 50 x becomes 0.5
         x = ((x + 0.5) / imageWidth);
         y = ((y + 0.5) / imageHeight);
 
+        //this makes x & y range between -0.5 & 0.5
         double pixelScreenX = 1 - x;
         double pixelScreenY = 1 - y;
 
+        //here we translate the pixel from image space into camera space
         double pixelCameraX = ((2 * pixelScreenX) - 1) * ratio * Math.tan(Math.toRadians(fieldOfView) / 2);
         double pixelCameraY = (1 - (2 * pixelScreenY)) * Math.tan(Math.toRadians(fieldOfView) / 2);
 
@@ -58,7 +63,6 @@ public class Camera {
 
         //finally we need to transform this point by the camera's position
         Vector3 PositionInSpace = pointInCameraSpace.add(position);
-
 
         return new FullRay(pointInCameraSpace, PositionInSpace);
     }

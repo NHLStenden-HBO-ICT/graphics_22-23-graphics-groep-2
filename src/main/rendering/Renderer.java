@@ -9,7 +9,6 @@ import main.scene.PointLight;
 import main.scene.Scene;
 
 import java.awt.Color;
-
 import java.awt.image.BufferedImage;
 import java.util.List;
 
