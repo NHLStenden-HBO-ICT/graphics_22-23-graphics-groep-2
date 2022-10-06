@@ -15,25 +15,27 @@ public class Renderer {
         this.scene = scene;
     }
 
-private int testcolor;//a simple int to test the color
+    private int testcolor;//a simple int to test the color
 
-	//sets the testcolor to the testcolor
-	public void setTestcolor(int testcolor){this.testcolor=testcolor;}
+    //sets the testcolor to the testcolor
+    public void setTestcolor(int testcolor) {
+        this.testcolor = testcolor;
+    }
 
-	// Return the current scene
-	public Scene getScene() {
-		return scene;
-	}
+    // Return the current scene
+    public Scene getScene() {
+        return scene;
+    }
 
     // Set the current scene
     public void setScene(Scene scene_) {
         scene = scene_;
     }
 
-	public BufferedImage RenderToImage(int height) {
+    public BufferedImage RenderToImage(int height) {
 
-		PixelData pixelData =new PixelData(height,scene.getCamera().getRatio());
-		BufferedImage buffer =new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
+        PixelData pixelData = new PixelData(height, scene.getCamera().getRatio());
+        BufferedImage buffer = new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         Camera camera = scene.getCamera();
 
@@ -41,24 +43,22 @@ private int testcolor;//a simple int to test the color
         for (int y = 0; y < pixelData.getHeight(); ++y) {
             for (int x = 0; x < pixelData.getWidth(); ++x) {
 
-				FullRay ray =camera.rayThroughPixel(x,y, pixelData.getWidth(), pixelData.getHeight());//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
-				RayHit hit = ray.castRay(scene.getGeometry());
+                FullRay ray = camera.getRayFromPixel(x, y);//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
+                RayHit hit = ray.castRay(scene.getGeometry());
 
-				if (hit!=null){
-					//if there is intersection then it will color x and y blue
-					buffer.setRGB(x,y, testcolor);//todo get the color of hitobject
+                if (hit != null) {
+                    //if there is intersection then it will color x and y blue
+                    buffer.setRGB(x, y, testcolor);//todo get the color of hitobject
 
-					System.out.println("intersect on  x: " + x + " y : " +y);
-				}
-				else {
-					//if there is no intersection then it will color x and y black
-					buffer.setRGB(x, y, 000000);
-				}
-			}
-		}
+                } else {
+                    //if there is no intersection then it will color x and y black
+                    buffer.setRGB(x, y, 000000);
+                }
+            }
+        }
 
-		pixelData.toImage(buffer);
+        pixelData.toImage(buffer);
 
-		return buffer;
-	}
+        return buffer;
+    }
 }
