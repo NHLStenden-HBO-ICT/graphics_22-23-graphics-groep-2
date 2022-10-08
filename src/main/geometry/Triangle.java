@@ -6,6 +6,7 @@ import main.utils.Material;
 public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] vertices;
+    private Vector3 surfaceNormal;
 
     public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
         super(material);
@@ -14,6 +15,7 @@ public class Triangle extends Solid implements Intersectable {
                 point2,
                 point3,
         };
+        this.surfaceNormal = calculateSurfaceNormal();
     }
 
     public Vector3 getVertex(int index) {
@@ -26,6 +28,24 @@ public class Triangle extends Solid implements Intersectable {
 
     public void setVertex(int index, Vector3 vertex) {
         this.vertices[index] = vertex;
+    }
+
+    private Vector3 calculateSurfaceNormal() {
+        Vector3 u = vertices[0].sub(vertices[1]);
+        Vector3 v = vertices[2].sub(vertices[0]);
+
+        Vector3 normal = new Vector3();
+
+        normal.setX((u.getY() * v.getZ()) - (u.getZ() * v.getY()));
+        normal.setY((u.getZ() * v.getX()) - (u.getX() * v.getZ()));
+        normal.setZ((u.getX() * v.getY()) - (u.getY() * v.getX()));
+
+        return normal;
+    }
+
+    @Override
+    public Vector3 getSurfaceNormal(Vector3 point) {
+        return surfaceNormal;
     }
 
     //this method would normally allow us to change the length of the Triangle.Vertices array

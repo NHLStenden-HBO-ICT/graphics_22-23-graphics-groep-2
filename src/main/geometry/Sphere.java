@@ -37,6 +37,10 @@ public class Sphere extends Solid implements Intersectable {
         this.position = position;
     }
 
+    public Vector3 getSurfaceNormal(Vector3 point) {
+        return point.sub(position);
+    }
+
     // this is an implementation of https://raytracing.github.io/books/RayTracingInOneWeekend.html#addingasphere/ray-sphereintersection
     // It takes a Ray and returns a RayHit containing:
     // a reference to this object,
