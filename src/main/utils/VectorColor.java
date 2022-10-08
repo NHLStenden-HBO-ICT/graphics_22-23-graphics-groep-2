@@ -44,6 +44,7 @@ public class VectorColor {
         this.color = color;
     }
 
+    //adds two colors together, making sure no integer overflow happens;
     public VectorColor addVectorColor(VectorColor colorToAdd) {
         if (getR() + colorToAdd.getR() > Double.MAX_VALUE) {
             setR(Double.MAX_VALUE);
@@ -59,8 +60,11 @@ public class VectorColor {
         return new VectorColor(color.add(colorToAdd.getVector()));
     }
 
+    //turns a vector color into a java color
     public Color getJavaColor() {
-        color.clamp(0, 255);
+        //first we clamp it because java colors can't exceed 255, 255, 255
+        color = color.clamp(0, 255);
+        //then we cast the components to in
         return new Color((int) color.getX(), (int) color.getY(), (int) color.getZ());
     }
 
