@@ -34,6 +34,7 @@ public class Sphere extends Solid implements Intersectable {
         this.position = position;
     }
 
+    //returns the surface normal for a given point
     public Vector3 getSurfaceNormal(Vector3 point) {
         return point.sub(position);
     }

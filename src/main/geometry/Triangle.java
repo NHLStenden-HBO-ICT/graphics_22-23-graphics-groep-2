@@ -30,16 +30,23 @@ public class Triangle extends Solid implements Intersectable {
         this.vertices[index] = vertex;
     }
 
+    // calculates the surface normal of this triangle.
+    // by calculating this when the triangle gets generated we avoid having to continuously recalculate this
+    // while ray tracing
+
     private Vector3 calculateSurfaceNormal() {
+        //find two edges
         Vector3 u = vertices[0].sub(vertices[1]);
         Vector3 v = vertices[2].sub(vertices[0]);
 
         Vector3 normal = new Vector3();
 
+        //use the edges to find the surface normal for the triangle
         normal.setX((u.getY() * v.getZ()) - (u.getZ() * v.getY()));
         normal.setY((u.getZ() * v.getX()) - (u.getX() * v.getZ()));
         normal.setZ((u.getX() * v.getY()) - (u.getY() * v.getX()));
 
+        //return the surface normal
         return normal;
     }
 
