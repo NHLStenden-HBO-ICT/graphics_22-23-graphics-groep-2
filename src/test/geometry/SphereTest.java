@@ -62,11 +62,4 @@ class SphereTest {
         assertFalse(hit);
     }
 
-    @Test
-    void Spheretesttset() {
-        //this ray should miss by 0.1
-        RayHit hit = sphere.intersects(new FullRay(new Vector3(50, 50, 100), new Vector3(0, 0, -1)));
-        assertEquals(true, hit == null);
-    }
-
 }

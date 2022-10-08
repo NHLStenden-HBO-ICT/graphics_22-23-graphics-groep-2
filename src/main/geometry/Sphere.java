@@ -1,9 +1,6 @@
 package main.geometry;
 
-import main.maths.FullRay;
-import main.maths.RayHit;
-import main.maths.ShadowRay;
-import main.maths.Vector3;
+import main.maths.*;
 import main.utils.Material;
 
 public class Sphere extends Solid implements Intersectable {
@@ -41,6 +38,10 @@ public class Sphere extends Solid implements Intersectable {
         return point.sub(position);
     }
 
+    private double findDistance(Ray ray) {
+        return -1;
+    }
+
     // this is an implementation of https://raytracing.github.io/books/RayTracingInOneWeekend.html#addingasphere/ray-sphereintersection
     // It takes a Ray and returns a RayHit containing:
     // a reference to this object,
@@ -48,32 +49,82 @@ public class Sphere extends Solid implements Intersectable {
     // and the distance along the ray where the intersection happened.
     @Override
     public RayHit intersects(FullRay fullRay) {
+        Vector3 relativePosition = position.sub(fullRay.getOrigin());
 
-        Vector3 relativePosition = fullRay.getOrigin().sub(position);
-
-        double a = fullRay.getDirection().dot(fullRay.getDirection());
-        double b = fullRay.getDirection().dot(relativePosition);
-        double c = relativePosition.dot(relativePosition) - radiusSquared;
-        double discriminant = b * b - a * c;
-
-        if (discriminant < 0.0) {
-            return null; //no intersection
+        //double a = fullRay.getDirection().length() * fullRay.getDirection().length();
+        double a = relativePosition.dot(fullRay.getDirection());
+        if (a < 0) {
+            return null; //sphere is behind the ray origin
         }
 
-        //calculate the distance
-        double distance = (-b - Math.sqrt(discriminant)) / a;
-        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
+        double b = relativePosition.dot(relativePosition) - a * a;
+        if (b > radiusSquared) {
+            return null; //ray is outside of sphere
+        }
+        double c = Math.sqrt(radiusSquared - b);
+        //there are two possible intersections, let's calculate both
+        double distance1 = a - c;
+        double distance2 = a + c;
+
+        //if distance 1 is biger than distance 2, swap the two variables
+        //this makes for easier logic because we can assume distance 1 to be the smaller of the two
+        //we always want to return the closest intersection, i.e. the intersection with the lowest distance value
+        if (distance1 > distance2) {
+            double i = distance1;
+            distance1 = distance2;
+            distance2 = i;
+        }
+
+        //if distance 1 is less then 0, we can use distance 2 instead
+        if (distance1 < 0) {
+            distance1 = distance2;
+        }
+        //if both are less than 0 no intersection takes place
+        if (distance1 < 0) {
+            return null;
+        }
+
+        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance1), distance1);
     }
 
     @Override
     public boolean intersectsFast(ShadowRay shadowRay) {
-        Vector3 relativePosition = shadowRay.getOrigin().sub(position);
 
-        double a = shadowRay.getDirection().dot(shadowRay.getDirection());
-        double b = shadowRay.getDirection().dot(relativePosition);
-        double c = relativePosition.dot(relativePosition) - radiusSquared;
-        double discriminant = b * b - a * c;
+        Vector3 relativePosition = position.sub(shadowRay.getOrigin());
 
-        return (discriminant > 0.0);
+        //double a = fullRay.getDirection().length() * fullRay.getDirection().length();
+        double a = relativePosition.dot(shadowRay.getDirection());
+        if (a < 0) {
+            return false; //sphere is behind the ray origin
+        }
+
+        double b = relativePosition.dot(relativePosition) - a * a;
+        if (b > radiusSquared) {
+            return false; //ray is outside of sphere
+        }
+        double c = Math.sqrt(radiusSquared - b);
+        //there are two possible intersections, let's calculate both
+        double distance1 = a - c;
+        double distance2 = a + c;
+
+        //if distance 1 is bigger than distance 2, swap the two variables
+        //this makes for easier logic because we can assume distance 1 to be the smaller of the two
+        //we always want to return the closest intersection, i.e. the intersection with the lowest distance value
+        if (distance1 > distance2) {
+            double i = distance1;
+            distance1 = distance2;
+            distance2 = i;
+        }
+
+        //if distance 1 is less then 0, we can use distance 2 instead
+        if (distance1 < 0) {
+            distance1 = distance2;
+        }
+        //if both are less than 0 no intersection takes place
+        if (distance1 < 0) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -124,12 +124,12 @@ public class Triangle extends Solid implements Intersectable {
     @Override
     public RayHit intersects(FullRay fullRay) {
         double distance = findDistance(fullRay);
-        if (distance > 0.0) {
+        if (distance < Constants.EPSILON) {
             //we can return a RayHit object because a collision happens.
-            return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
+            return null;
         }
+        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
 
-        return null;
     }
 
     @Override
