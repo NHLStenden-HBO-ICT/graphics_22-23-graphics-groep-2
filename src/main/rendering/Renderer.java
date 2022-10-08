@@ -7,6 +7,7 @@ import main.maths.Vector3;
 import main.scene.Camera;
 import main.scene.PointLight;
 import main.scene.Scene;
+import main.utils.VectorColor;
 
 import java.awt.Color;
 
@@ -52,8 +53,7 @@ public class Renderer {
                 // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
                 // Finally set that pixel with the final color in the image buffer
                 if (hit != null) {
-
-                    System.out.println("intersect on  x: " + x + " y : " + y);
+                    //System.out.println("intersect on  x: " + x + " y : " + y);
                     Color finalColor = calculateLight(hit, scene);
 
                     buffer.setRGB(x, y, finalColor.getRGB());
@@ -87,37 +87,39 @@ public class Renderer {
 
             // Cast a shadowray to the light source
             ShadowRay shaRay = new ShadowRay(lightDir, hitPos);
-            boolean lightHit = shaRay.castRay(scene.getGeometry());
+            boolean shadowHit = shaRay.castRay(scene.getGeometry());
 
             // If it doesn't intersect with anything calculate light and color
             // Else return black color
-            if (lightHit != true) {
-
+            if (!shadowHit) {
                 // First calculate the intensity of the color of the pixel according to the intensity of the lightsource and the distance of the lightsource to the contactpoint
                 double lightIntensity = light.getIntensity() / Math.pow(hitPos.distance(lightPos), 2);
 
-                // Get contactpoint solid, get material of that then get the color of it and then get the color of that, divide it by 255 to get 0-1 rgb values
+                // Get contactpoint solid, get material of that then get the color of it and then get the vector of that, divide it by 255 to get 0-1 rgb values
+                VectorColor hitColor = new VectorColor(hit.getHitSolid().getMaterial().getColor().getVector());
                 // Then multiply it by the light intensity
+                hitColor.setColor(hitColor.getVector().multi(lightIntensity));
                 // Then do the same for the color of the light and add the result to the reflection vector
-                Vector3 reflection = hit.getHitSolid().getMaterial().getColor().getColor().divide(255).multi(lightIntensity).add(light.getColor().getColor().divide(255).multi(lightIntensity));
+                VectorColor lightColor = new VectorColor(light.getColor().getVector().multi(lightIntensity));
+                VectorColor reflection = hitColor.addVectorColor(lightColor);
 
-                // Calculate the angle at which the light hits the contactpoint
-                Vector3 lightAngleDir = hitPos.sub(lightPos).normalise();
-                double lightAngle = Math.cos(hitPos.dot(lightAngleDir));
+                // Calculate the angle at which the light hits the contact point
+                Vector3 lightAngleDir = hitPos.sub(lightPos);
+                double lightAngle = Math.max(0.01, hit.getHitSolid().getSurfaceNormal(hitPos).dot(lightAngleDir));
 
                 // Divide the reflection by the angle of the light and multiply it by 255 to get 255 rgb values again
-                Vector3 reflectionFinal = reflection.divide(lightAngle).multi(255);
-                
+                VectorColor reflectionFinal = new VectorColor(reflection.getVector().divide(lightAngle));
+
                 // Clamp the color to a range of 0-255 to prevent rgb overflows
-                reflectionFinal.clamp(0, 255);
-                Color processedColor = new Color((int) reflectionFinal.getX(), (int) reflectionFinal.getY(), (int) reflectionFinal.getZ());
+                //reflectionFinal.clamp(0, 255);
+                //Color processedColor = new Color((int) reflectionFinal.getX(), (int) reflectionFinal.getY(), (int) reflectionFinal.getZ());
 
                 // Add the result of the list loop with to the result of this loop
                 // This only happens when there are multiple lights
-                finalColor = addColors(finalColor, processedColor);
+                finalColor = addColors(finalColor, reflectionFinal.getJavaColor());
             } else {
                 // If there is a hit return black
-                return new Color(0, 0, 0);
+                return new Color(40, 40, 40);
             }
         }
 
@@ -125,7 +127,7 @@ public class Renderer {
         return finalColor;
     }
 
-    // Quick method to add the rbg values of two java.awt.Color objects to eachother 
+    // Quick method to add the rbg values of two java.awt.Color objects to each other
     public Color addColors(Color color1, Color color2) {
         int r = (color1.getRed() + color2.getRed());
         int g = (color1.getGreen() + color2.getGreen());

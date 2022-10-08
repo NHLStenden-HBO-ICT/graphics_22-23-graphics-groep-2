@@ -11,17 +11,17 @@ public class PointLight {
 
     private VectorColor vectorColor;
 
-    private float intensity;
+    private double intensity;
 
     //constructor for light source at origin
-    public PointLight(VectorColor vectorColor, float intensity) {
+    public PointLight(VectorColor vectorColor, double intensity) {
         this.vectorColor = vectorColor;
         this.intensity = intensity;
         this.position = new Vector3(0, 0, 0);
     }
 
     //constructor
-    public PointLight(VectorColor vectorColor, float intensity, Vector3 position) {
+    public PointLight(VectorColor vectorColor, double intensity, Vector3 position) {
         this.vectorColor = vectorColor;
         this.intensity = intensity;
         this.position = position;
@@ -36,7 +36,7 @@ public class PointLight {
         return vectorColor;
     }
 
-    public float getIntensity() {
+    public double getIntensity() {
         return intensity;
     }
 
@@ -47,7 +47,6 @@ public class PointLight {
 
     public void setColor(VectorColor vectorColor) {
         this.vectorColor = vectorColor;
-
     }
 
     public void setIntensity(float intensity) {
