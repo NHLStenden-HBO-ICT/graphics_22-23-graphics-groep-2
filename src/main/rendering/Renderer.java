@@ -118,7 +118,8 @@ public class Renderer {
                 // This only happens when there are multiple lights
                 finalColor = addColors(finalColor, reflectionFinal.getJavaColor());
             } else {
-                // If there is a hit return black
+                // If there is a hit return gray
+                // we do this because it allows us to disambiguate shadows from the background
                 return new Color(40, 40, 40);
             }
         }
