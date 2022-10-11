@@ -8,6 +8,7 @@ import main.utils.VectorColor;
 import main.utils.Material;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,7 +54,7 @@ class ShadowRayTest {
 
         Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
         Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
-        Vector<Intersectable> intersectables = new Vector<>(2);
+        ArrayList<Intersectable> intersectables = new ArrayList<>(2);
         intersectables.add(sphereB);
         intersectables.add(sphereA);
 
@@ -73,7 +74,7 @@ class ShadowRayTest {
 
         Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
         Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
-        Vector<Intersectable> intersectables = new Vector<>(2);
+        ArrayList<Intersectable> intersectables = new ArrayList<>(2);
         intersectables.add(sphereB);
         intersectables.add(sphereA);
 

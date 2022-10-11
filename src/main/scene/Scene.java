@@ -2,12 +2,8 @@ package main.scene;
 
 import main.geometry.Intersectable;
 import main.geometry.Solid;
-import main.geometry.Sphere;
-import main.geometry.Triangle;
 import main.maths.FullRay;
 import main.maths.RayHit;
-import main.maths.Vector3;
-import main.utils.Material;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,21 +12,22 @@ import java.util.Vector;
 
 public class Scene {
 
-    private Vector<Intersectable> geometry;
+    private ArrayList<Intersectable> geometry;
 
-    private List<PointLight> lights = new ArrayList<PointLight>();;
+    private List<PointLight> lights = new ArrayList<PointLight>();
+    ;
 
     private Camera camera;
 
     private float skyEmission;
 
     public Scene() {
-        this.geometry = new Vector<Intersectable>();
+        this.geometry = new ArrayList<Intersectable>();
     }
 
 
     //get methods
-    public Vector<Intersectable> getGeometry() {
+    public ArrayList<Intersectable> getGeometry() {
         return geometry;
     }
 
@@ -68,7 +65,7 @@ public class Scene {
     }
 
     public void addLight(PointLight light) {
-        this.lights.add(light); 
+        this.lights.add(light);
     }
 
     public void clearLights() {

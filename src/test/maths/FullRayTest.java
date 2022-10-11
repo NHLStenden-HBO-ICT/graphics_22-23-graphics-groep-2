@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import main.maths.FullRay;
 import main.maths.Vector3;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,7 +55,7 @@ class FullRayTest {
 
         Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
         Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
-        Vector<Intersectable> intersectables = new Vector<>(2);
+        ArrayList<Intersectable> intersectables = new ArrayList<>(2);
         intersectables.add(sphereB);
         intersectables.add(sphereA);
 
