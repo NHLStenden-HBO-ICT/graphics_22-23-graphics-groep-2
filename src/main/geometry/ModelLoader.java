@@ -1,7 +1,7 @@
 package main.geometry;
 
 import main.maths.Vector3;
-import main.utils.Color;
+import main.utils.VectorColor;
 import main.utils.Material;
 
 import java.io.BufferedReader;
@@ -39,8 +39,16 @@ public class ModelLoader {
                     break;
                 //face data for each point of the face example of face data 2/2/3 which can be translated to vertex/vertexTexture/vertexNormal
                 case "f" :
-                    triangles.add(setFace(vertices,data));
-                    break;
+                    if (data.length>4){
+                        System.out.println("this object's faces are made out squaires and not triangles so this can not be used");
+                        triangles.addAll(squareToTriangle(data,vertices));
+                        break;
+                        //todo maybe add code to deal with squaires that in turn gets turned into triangles.
+                    }
+                    else {
+                        triangles.add(setFace(vertices,data));
+                        break;
+                    }
                 //todo more option can be added for extra data from the file
             }
         }
@@ -52,7 +60,7 @@ public class ModelLoader {
     //sets the data(string) from the file over to a vector3 using double.parsedouble.
     //also changes adds the position if it needs to at certain position.
     //this can later be done through a modelobject
-    //it return the vector3 which can be seen as the vertice
+    //it return the vector3 which can be seen as the vertex of a 3d object
     public Vector3 setVertice(String[] data){
         return new Vector3(Double.parseDouble(data[1]),Double.parseDouble(data[2]),Double.parseDouble(data[3]));
     }
@@ -62,11 +70,11 @@ public class ModelLoader {
     //it return a triangle which is a face of the object, later textures and normals can be added
     public Triangle setFace(ArrayList<Vector3> vertices, String[] data){
 
-        return new Triangle(new Material(new Color(new Vector3(255,255,255)), 0,0), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[2].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices));
+        return new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,1), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[2].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices));
     }
 
 
-    //gets the correct vertex of triangle, using the data and vertices list and returns the vector that is equale to one of the vertices
+    //gets the correct vertex(vector) of triangle, using the data and vertices list and returns the vector that is equale to one of the vertices
     public static Vector3 setTriangleVertex(String[] data, ArrayList<Vector3> vertices) {
         Vector3 vertex = null;
         //checks if data is empty otherwise vertex empty
@@ -77,6 +85,16 @@ public class ModelLoader {
             vertex = vertices.get(vertexIndex);
         }
         return vertex;
+    }
+
+    //in case an object exists out of squares it creates 2 triangles to simulate the square
+    public ArrayList<Triangle> squareToTriangle(String[] data, ArrayList<Vector3> vertices){
+       ArrayList<Triangle> squareTraingles = new ArrayList<>();
+
+       squareTraingles.add(new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,1), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[2].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices)));
+       squareTraingles.add(new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,1), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices),setTriangleVertex(data[4].split("/"),vertices)));
+       return squareTraingles;
+
     }
 
 }

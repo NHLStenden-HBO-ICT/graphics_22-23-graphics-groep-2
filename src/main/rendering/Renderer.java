@@ -72,7 +72,7 @@ public class Renderer {
         return buffer;
     }
 
-    // This method checks wheter or not a pixel should be lit up by casting a shadow ray to each light source
+    // This method checks whether a pixel should be lit up by casting a shadow ray to each light source or not
     // First it puts the lights and contactpoint in variables and makes a variable for the final output
     public Color calculateLight(RayHit hit, Scene scene) {
         List<PointLight> lights = scene.getLights();

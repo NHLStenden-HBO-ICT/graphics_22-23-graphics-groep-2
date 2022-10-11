@@ -36,8 +36,8 @@ public class Model {
         move();
     }
 
-    public void setTriangles() {
-        this.triangles=triangles;
+    public void setTriangles(ArrayList<Triangle> triangles) {
+        this.triangles=triangles; //if triangles change the vertice need to change and be moved to correct position
         move();
     }
 
