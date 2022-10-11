@@ -47,13 +47,9 @@ public class Camera {
         x = ((x + 0.5) / imageWidth);
         y = ((y + 0.5) / imageHeight);
 
-        //this makes x & y range between -0.5 & 0.5
-        double pixelScreenX = 1 - x;
-        double pixelScreenY = 1 - y;
-
         //here we translate the pixel from image space into camera space
-        double pixelCameraX = ((2 * pixelScreenX) - 1) * ratio * Math.tan(Math.toRadians(fieldOfView) / 2);
-        double pixelCameraY = (1 - (2 * pixelScreenY)) * Math.tan(Math.toRadians(fieldOfView) / 2);
+        double pixelCameraX = ((2 * x) - 1) * ratio * Math.tan(Math.toRadians(fieldOfView) / 2);
+        double pixelCameraY = (1 - (2 * y)) * Math.tan(Math.toRadians(fieldOfView) / 2);
 
         //assumes the camera has a direction of (0, 0, -1)
         Vector3 pointInCameraSpace = new Vector3(pixelCameraX, pixelCameraY, -1);
