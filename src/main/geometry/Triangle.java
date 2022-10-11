@@ -6,6 +6,7 @@ import main.utils.Material;
 public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] vertices;
+    private Vector3 surfaceNormal;
 
     public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
         super(material);
@@ -14,6 +15,8 @@ public class Triangle extends Solid implements Intersectable {
                 point2,
                 point3,
         };
+
+        this.surfaceNormal = calculateSurfaceNormal();
     }
 
     public Vector3 getVertex(int index) {
@@ -26,6 +29,31 @@ public class Triangle extends Solid implements Intersectable {
 
     public void setVertex(int index, Vector3 vertex) {
         this.vertices[index] = vertex;
+    }
+
+    // calculates the surface normal of this triangle.
+    // by calculating this when the triangle gets generated we avoid having to continuously recalculate this
+    // while ray tracing
+
+    private Vector3 calculateSurfaceNormal() {
+        //find two edges
+        Vector3 u = vertices[0].sub(vertices[1]);
+        Vector3 v = vertices[2].sub(vertices[0]);
+
+        Vector3 normal = new Vector3();
+
+        //use the edges to find the surface normal for the triangle
+        normal.setX((u.getY() * v.getZ()) - (u.getZ() * v.getY()));
+        normal.setY((u.getZ() * v.getX()) - (u.getX() * v.getZ()));
+        normal.setZ((u.getX() * v.getY()) - (u.getY() * v.getX()));
+
+        //return the surface normal
+        return normal.normalise();
+    }
+
+    @Override
+    public Vector3 getSurfaceNormal(Vector3 point) {
+        return surfaceNormal;
     }
 
     //this method would normally allow us to change the length of the Triangle.Vertices array
@@ -104,12 +132,12 @@ public class Triangle extends Solid implements Intersectable {
     @Override
     public RayHit intersects(FullRay fullRay) {
         double distance = findDistance(fullRay);
-        if (distance > 0.0) {
+        if (distance < Constants.EPSILON) {
             //we can return a RayHit object because a collision happens.
-            return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
+            return null;
         }
+        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
 
-        return null;
     }
 
     @Override
