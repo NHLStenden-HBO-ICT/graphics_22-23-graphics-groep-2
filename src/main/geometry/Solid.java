@@ -2,7 +2,7 @@ package main.geometry;
 
 import main.utils.Material;
 
-public abstract class Solid {
+public abstract class Solid implements Intersectable {
 
     private Material material;
 

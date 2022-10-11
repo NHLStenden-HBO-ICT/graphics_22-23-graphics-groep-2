@@ -1,6 +1,7 @@
 package main.application;
 
 import main.geometry.ModelLoader;
+import main.geometry.Triangle;
 import main.maths.Vector3;
 import main.rendering.Renderer;
 import main.scene.Camera;
@@ -9,14 +10,16 @@ import main.scene.Scene;
 import main.utils.Color;
 
 import java.io.File;
+import main.utils.VectorColor;
+import main.utils.Material;
 
 public class Application {
 
     private static Renderer renderer;
 
-    private static int height=400;
-    private static double ratio =16.0 / 9.0;
-	private static Window window;
+    private static int height = 400;
+    private static double ratio = 16.0 / 9.0;
+    private static Window window;
 
     public static void main(String[] args) {
         renderer = new Renderer(sceneSetup());

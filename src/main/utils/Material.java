@@ -4,47 +4,47 @@ public class Material {
 
     private double reflectivity;
 
-    private Color color;
+    private VectorColor vectorColor;
 
     private double metallic;
 
     private double matte;
 
-    public Material(Color color, double metallic, double matte){
-        this.color = color;
+    public Material(VectorColor vectorColor, double metallic, double matte) {
+        this.vectorColor = vectorColor;
         this.metallic = metallic;
         this.matte = matte;
     }
 
-    public Color getColor() {
-        return color;
+    public VectorColor getColor() {
+        return vectorColor;
     }
 
     public double getReflectivity() {
         return reflectivity;
     }
 
-    public double getMettalic(){
+    public double getMettalic() {
         return metallic;
     }
 
-    public double getMatte(){
+    public double getMatte() {
         return matte;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setColor(VectorColor vectorColor) {
+        this.vectorColor = vectorColor;
     }
 
     public void setReflectivity(double reflectivity) {
         this.reflectivity = reflectivity;
     }
 
-    public void setMetallic(double metallic){
+    public void setMetallic(double metallic) {
         this.metallic = metallic;
     }
 
-    public void setMatte(double matte){
+    public void setMatte(double matte) {
         this.matte = matte;
     }
 

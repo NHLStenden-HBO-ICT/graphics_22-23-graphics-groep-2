@@ -79,9 +79,9 @@ public class Vector3 {
     //part method. divides the vector with the division parameter
     public Vector3 divide(double division) {
         return new Vector3(
-                this.x /division,
-                this.y /division,
-                this.z /division
+                this.x / division,
+                this.y / division,
+                this.z / division
         );
     }
 
@@ -115,38 +115,40 @@ public class Vector3 {
     }
 
     // Calculate distance between this vector and a given vector
-    public double distance(Vector3 destination){
+    public double distance(Vector3 destination) {
         return Math.sqrt(Math.pow((x - destination.getX()), 2) + Math.pow((y - destination.getY()), 2) + Math.pow((z - destination.getZ()), 2));
     }
 
     // Check if the coordinates of the vector are above the max or below the minimum
     // If they are set them to either the max or the min
-    public void clamp(double min, double max){
-
+    public Vector3 clamp(double min, double max) {
+        Vector3 vec = new Vector3(x, y, z);
         //Check if they are above or below the minimum
-        if (x > max){
-            x = max;
+        if (x > max) {
+            vec.setX(max);
         }
 
-        if (x < min){
-            x = min;
+        if (x < min) {
+            vec.setX(min);
         }
 
-        if (y > max){
-            y = max;
+        if (y > max) {
+            vec.setY(max);
         }
 
-        if (y < min){
-            y = min;
+        if (y < min) {
+            vec.setY(min);
         }
 
-        if (z > max){
-            z = max;
+        if (z > max) {
+            vec.setZ(max);
         }
 
-        if (z < min){
-            z = min;
+        if (z < min) {
+            vec.setZ(min);
         }
+
+        return vec;
     }
 
     @Override
