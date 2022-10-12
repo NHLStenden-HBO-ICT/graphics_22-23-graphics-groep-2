@@ -6,96 +6,62 @@ import main.maths.Vector3;
 //import java.geometry.Vector3;
 
 public class Camera {
+    private Vector3 position, direction;
 
-    private Vector3 position;
+    double imageHeight, imageWidth, fieldOfView, ratio;
 
-    private Vector3 direction;
-
-//todo following 3 must be given using the constructor
-    double viewportHeight,viewportWidth,fieldOfView,ratio;
-    private Vector3 origin = new Vector3();
-
-    public Camera(double viewportHeight, double fieldOfView, double ratio ){
-        this.ratio=ratio;
-        this.viewportHeight=viewportHeight;
-        this.fieldOfView=fieldOfView;
-        Double u = viewportHeight *ratio;
-        this.viewportWidth=u.intValue();
+    public Camera(Vector3 position, int imageHeight, int imageWidth, int fieldOfView) {
+        this.position = position;
+        this.ratio = (double) imageWidth / (double) imageHeight;
+        this.imageHeight = imageHeight;
+        this.fieldOfView = fieldOfView; //the field of view expressed in degrees
+        this.imageWidth = imageWidth;
     }
 
-    public double getRatio(){return ratio;}
+    public double getRatio() {
+        return ratio;
+    }
 
     public Vector3 getPosition() {
-        return null;
+        return position;
     }
 
     public Vector3 getDirection() {
-        return null;
+        return this.direction;
     }
 
-    public void setPosition(Vector3 vector3) {
-
+    public void setPosition(Vector3 position) {
+        this.position = position;
     }
 
-    public void setDirection(Vector3 vector3) {
-
+    public void setDirection(Vector3 direction) {
+        this.direction = direction;
     }
 
+    //returns a ray that uses the x and y of an image and returns a ray that can be cast
+    //full explanation can be found at: https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays
+    public FullRay getRayFromPixel(double x, double y) {
+        //first we normalize the pixel coordinates
+        //this makes it so that x & y become values between 0...1
+        //so if your image width is 100, and x is 50 x becomes 0.5
+        x = ((x + 0.5) / imageWidth);
+        y = ((y + 0.5) / imageHeight);
 
+        //here we translate the pixel from image space into camera space
+        double pixelCameraX = ((2 * x) - 1) * ratio * Math.tan(Math.toRadians(fieldOfView) / 2);
+        double pixelCameraY = (1 - (2 * y)) * Math.tan(Math.toRadians(fieldOfView) / 2);
 
-    public Vector3 getOrigin(){return origin;}
+        //assumes the camera has a direction of (0, 0, -1)
+        Vector3 pointInCameraSpace = new Vector3(pixelCameraX, pixelCameraY, -1);
 
-    public Vector3 getHorizontal(){
-        Vector3 horizontal = new Vector3(viewportWidth, 0, 0);
-        return horizontal;}
+        //next we need to rotate this point to match the camera's actual direction
+        //todo make that happen using quaternions or something
 
-    public Vector3 getVertical(){
-        Vector3 vertical = new Vector3(0, viewportHeight, 0);
-        return vertical;}
+        //finally we need to transform this point by the camera's position
+        Vector3 PositionInSpace = pointInCameraSpace.add(position);
 
-/* the calculations for the four corners of the screen
-    public Vector3 getLower_left_corner() {
-        Vector3 lower_left_corner = origin.sub(getHorizontal().divide(2)).sub(getVertical().divide(2)).sub(new Vector3(0, 0, fieldOfView));
-        return lower_left_corner;
+        return new FullRay(pointInCameraSpace, PositionInSpace);
     }
-    public Vector3 getLower_right_corner() {
-        Vector3 lower_right_corner = origin.add(getHorizontal().divide(2)).sub(getVertical().divide(2)).sub(new Vector3(0, 0, fieldOfView));
-        return lower_right_corner;
-    }
-    public Vector3 getUpper_left_corner() {
-        Vector3 upper_left_corner = origin.sub(getHorizontal().divide(2)).add(getVertical().divide(2)).sub(new Vector3(0, 0, fieldOfView));
-        return upper_left_corner;
-    }
-    public Vector3 getUpper_right_corner() {
-        Vector3 upper_right_corner = origin.add(getHorizontal().divide(2)).add(getVertical().divide(2)).sub(new Vector3(0, 0, fieldOfView));
-        return upper_right_corner;
-    }
-*/
-
-    //returns a ray that uses the coörds x and y to find the correct spot on the virtual image
-    public FullRay rayThroughPixel(int x, int y, int imageX, int imageY) {
-
-        //virtual camera coörds
-        //u=x
-        //v=y
-        double u =0;
-        double v =0;
-
-        //calculates the ratio between x,y and u,v.
-        //it uses the height and width of virtual camera divided by the height and width of the image that's going to be displayed.
-        double heightRatio = viewportHeight/imageY;
-        double widthRatio =viewportWidth/imageX;
-
-        //if x <200 than it will be negative
-        //y starts with - because y=1 starts in positive
-        u=(x-(imageX/2))*widthRatio;
-        v=-(y-(imageY/2))*heightRatio;
-
-        //returns ray with the virtual camera coörds
-        return new FullRay(new Vector3(u,v,fieldOfView),new Vector3(0,0,-1));
-    }
-
-
 
 
 }

@@ -1,5 +1,7 @@
 package test.scene;
 
+import main.maths.FullRay;
+import main.maths.Vector3;
 import main.scene.Camera;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,56 +14,17 @@ class CameraTest {
 
     @BeforeEach
     void setup() {
-        camera = new Camera(2.0, 2.0, 10);
+        camera = new Camera(new Vector3(10, 10, 10), 100, 100, 90);
     }
 
     @Test
-    void pixelAtTopleft()
-    {
-        double heightRatio = 2.0/400;
-        double widthRatio =2.0/400;
-
-        double u = (0.0 - 200) * widthRatio;
-        double v = -(0.0 - 200) * heightRatio;
-
-        assertEquals(-1, u);
-        assertEquals(1, v);
-    }
-
-    @Test
-    void pixelAtTopright()
-    {
-        double heightRatio = 2.0/400;
-        double widthRatio =2.0/400;
-
-        double u = (400.0 - 200) * widthRatio;
-        double v = -(400.0 - 200) * heightRatio;
-
-        assertEquals(1, u);
-        assertEquals(-1, v);
-    }
-    @Test
-    void pixelAtBottomleft()
-    {
-        double heightRatio = 2.0/400;
-        double widthRatio =2.0/400;
-
-        double u = (0.0 - 200) * widthRatio;
-        double v = -(400.0 - 200) * heightRatio;
-
-        assertEquals(-1, u);
-        assertEquals(-1, v);
-    }
-    @Test
-    void pixelAtBottomright()
-    {
-        double heightRatio = 2.0/400;
-        double widthRatio =2.0/400;
-
-        double u = (400.0 - 200) * widthRatio;
-        double v = -(400.0 - 200) * heightRatio;
-
-        assertEquals(1, u);
-        assertEquals(-1, v);
+    void RayThroughMiddle() {
+        //when we want to shoot a ray from the camera through the middle of the image
+        //then the ray should be cast from exactly 1 away, as long as the FOV is 90 degrees
+        FullRay ray = camera.getRayFromPixel(50, 50);
+        double offset = ray.getOrigin().sub(camera.getPosition()).length();
+        assertEquals(1.0, offset, 0.001); //delta is our fuzzyness, like epsilon
+        //the ray should also be pointing almost exactly towards z:-1
+        assertEquals(-1, ray.getDirection().getZ(), 0.001);
     }
 }
