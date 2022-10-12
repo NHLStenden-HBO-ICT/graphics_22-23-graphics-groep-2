@@ -11,7 +11,7 @@ public interface Intersectable {
 
     public abstract boolean intersectsFast(ShadowRay shadowRay);
 
-    public abstract Vector3 getSurfaceNormal(Vector3 point);
+    //public abstract Vector3 getSurfaceNormal(Vector3 point);
 
 
 }

@@ -13,23 +13,22 @@ import java.util.Vector;
 
 public class Scene {
 
-    private Vector<Intersectable> geometry;
+    private ArrayList<Intersectable> geometry;
 
-    private Vector<Model> models;
-    private List<PointLight> lights = new ArrayList<PointLight>();;
+    private List<PointLight> lights = new ArrayList<PointLight>();
+    ;
 
     private Camera camera;
 
     private float skyEmission;
 
     public Scene() {
-        this.geometry = new Vector<Intersectable>();
-        this.models = new Vector<Model>();
+        this.geometry = new ArrayList<Intersectable>();
     }
 
 
     //get methods
-    public Vector<Intersectable> getGeometry() {
+    public ArrayList<Intersectable> getGeometry() {
         return geometry;
     }
 
@@ -54,17 +53,6 @@ public class Scene {
         this.geometry.add(intersectable);
     }
 
-    public void addModel(Model model) {
-        this.models.add(model);
-    }
-
-    public Vector<Model> getModels() {
-        return models;
-    }
-    public Model getModelofIndex(int index) {
-        return models.get(index);
-    }
-
     public void clearSolid() {
 
     }
@@ -78,7 +66,7 @@ public class Scene {
     }
 
     public void addLight(PointLight light) {
-        this.lights.add(light); 
+        this.lights.add(light);
     }
 
     public void clearLights() {
@@ -103,14 +91,5 @@ public class Scene {
 
     public void setGeometry(Intersectable[] geometry) {
         Collections.addAll(this.geometry, geometry);
-    }
-
-    //returns a list of all the models intersectables so the models can move
-    public Vector<Intersectable> getModelintersectables(){
-        Vector<Intersectable> modelInter = new Vector<Intersectable>();
-        for (Model model:models) {
-            modelInter.addAll(model.getTriangles());
-        }
-        return modelInter;
     }
 }

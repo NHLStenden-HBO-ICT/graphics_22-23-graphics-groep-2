@@ -47,15 +47,12 @@ public class Renderer {
         for (int y = 0; y < pixelData.getHeight(); ++y) {
             for (int x = 0; x < pixelData.getWidth(); ++x) {
                 // Cast ray and check if it intersects with something
-                FullRay ray = camera.rayThroughPixel(x, y, pixelData.getWidth(), pixelData.getHeight());//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
-                //RayHit hit = ray.castRay(scene.getGeometry());
-
-                RayHit hit = ray.castRay(scene.getModelintersectables());
+                FullRay ray = camera.getRayFromPixel(x, y);//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
+                RayHit hit = ray.castRay(scene.getGeometry());
 
                 // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
                 // Finally set that pixel with the final color in the image buffer
                 if (hit != null) {
-                    //System.out.println("intersect on  x: " + x + " y : " + y);
                     Color finalColor = calculateLight(hit, scene);
 
                     buffer.setRGB(x, y, finalColor.getRGB());
@@ -72,7 +69,7 @@ public class Renderer {
         return buffer;
     }
 
-    // This method checks whether a pixel should be lit up by casting a shadow ray to each light source or not
+    // This method checks wheter or not a pixel should be lit up by casting a shadow ray to each light source
     // First it puts the lights and contactpoint in variables and makes a variable for the final output
     public Color calculateLight(RayHit hit, Scene scene) {
         List<PointLight> lights = scene.getLights();
@@ -99,21 +96,23 @@ public class Renderer {
 
                 // Get contactpoint solid, get material of that then get the color of it and then get the vector of that, divide it by 255 to get 0-1 rgb values
                 VectorColor hitColor = new VectorColor(hit.getHitSolid().getMaterial().getColor().getVector());
+
                 // Then multiply it by the light intensity
                 hitColor.setColor(hitColor.getVector().multi(lightIntensity));
+
                 // Then do the same for the color of the light and add the result to the reflection vector
                 VectorColor lightColor = new VectorColor(light.getColor().getVector().multi(lightIntensity));
                 VectorColor reflection = hitColor.addVectorColor(lightColor);
 
                 // Calculate the angle at which the light hits the contact point
                 Vector3 lightAngleDir = hitPos.sub(lightPos);
-                double lightAngle = Math.max(0.01, hit.getHitSolid().getSurfaceNormal(hitPos).dot(lightAngleDir));
+                double lightAngle = Math.max(0.01, hit.getNormal().dot(lightAngleDir));
 
                 // Divide the reflection by the angle of the light and multiply it by 255 to get 255 rgb values again
                 VectorColor reflectionFinal = new VectorColor(reflection.getVector().divide(lightAngle));
 
                 // Clamp the color to a range of 0-255 to prevent rgb overflows
-                //reflectionFinal.clamp(0, 255);
+
                 //Color processedColor = new Color((int) reflectionFinal.getX(), (int) reflectionFinal.getY(), (int) reflectionFinal.getZ());
 
                 // Add the result of the list loop with to the result of this loop

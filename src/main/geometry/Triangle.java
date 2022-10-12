@@ -15,6 +15,7 @@ public class Triangle extends Solid implements Intersectable {
                 point2,
                 point3,
         };
+
         this.surfaceNormal = calculateSurfaceNormal();
     }
 
@@ -47,7 +48,7 @@ public class Triangle extends Solid implements Intersectable {
         normal.setZ((u.getX() * v.getY()) - (u.getY() * v.getX()));
 
         //return the surface normal
-        return normal;
+        return normal.normalise();
     }
 
     @Override
@@ -135,8 +136,7 @@ public class Triangle extends Solid implements Intersectable {
             //we can return a RayHit object because a collision happens.
             return null;
         }
-        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
-
+        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance, surfaceNormal);
     }
 
     @Override
