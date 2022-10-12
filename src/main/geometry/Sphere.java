@@ -89,7 +89,8 @@ public class Sphere extends Solid implements Intersectable {
         if (distance == -1) {
             return null;
         }
-        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
+        Vector3 hitPoint = fullRay.getPointAlongRay(distance);
+        return new RayHit(fullRay, this, hitPoint, distance, getSurfaceNormal(hitPoint));
     }
 
     @Override

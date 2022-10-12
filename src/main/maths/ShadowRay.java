@@ -21,7 +21,7 @@ public class ShadowRay extends Ray {
 
 
     //given a set of intersectables, returns if a  collision between this ray and any of the objects happen
-    public boolean castRay(ArrayList<Intersectable> intersectables) {
+    public <T extends Intersectable> boolean castRay(ArrayList<T> intersectables) {
         //todo rewrite this to make use of streams to filter the list and improve performance
         //create a variable to store the collision
 

@@ -136,8 +136,7 @@ public class Triangle extends Solid implements Intersectable {
             //we can return a RayHit object because a collision happens.
             return null;
         }
-        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
-
+        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance, surfaceNormal);
     }
 
     @Override
