@@ -15,6 +15,7 @@ public class ModelLoader {
 
         ArrayList<Triangle> triangles = new ArrayList<>();
         ArrayList<Vector3> vertices = new ArrayList<>();
+        ArrayList<Vector3> normals = new ArrayList<>();
 
         //creates bufferreader that reads the file
         BufferedReader bufferfile =new BufferedReader(new FileReader(file));
@@ -37,16 +38,18 @@ public class ModelLoader {
                 case "v" :
                     vertices.add(setVertice(data));
                     break;
+                case "vn" :
+                    normals.add(setVertice(data));
+                    break;
                 //face data for each point of the face example of face data 2/2/3 which can be translated to vertex/vertexTexture/vertexNormal
                 case "f" :
                     if (data.length>4){
                         System.out.println("this object's faces are made out squaires and not triangles so this can not be used");
-                        triangles.addAll(squareToTriangle(data,vertices));
+                        triangles.addAll(squareToTriangle(data,vertices,normals));
                         break;
-                        //todo maybe add code to deal with squaires that in turn gets turned into triangles.
                     }
                     else {
-                        triangles.add(setFace(vertices,data));
+                        triangles.add(setFace(vertices,normals,data));
                         break;
                     }
                 //todo more option can be added for extra data from the file
@@ -61,21 +64,22 @@ public class ModelLoader {
     //also changes adds the position if it needs to at certain position.
     //this can later be done through a modelobject
     //it return the vector3 which can be seen as the vertex of a 3d object
-    public Vector3 setVertice(String[] data){
+    //this method is also used to get the normals of a triangle
+    private Vector3 setVertice(String[] data){
         return new Vector3(Double.parseDouble(data[1]),Double.parseDouble(data[2]),Double.parseDouble(data[3]));
     }
 
     //sets the color of the triangle and gets the correct vertex that is a part of the face.
     //a face can be seen as the triangles of object
     //it return a triangle which is a face of the object, later textures and normals can be added
-    public Triangle setFace(ArrayList<Vector3> vertices, String[] data){
+    private Triangle setFace(ArrayList<Vector3> vertices,ArrayList<Vector3> normals, String[] data){
 
-        return new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,1), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[2].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices));
+        return new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,0), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[2].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices),setTriangleNormal(data[1].split("/"),normals));
     }
 
 
     //gets the correct vertex(vector) of triangle, using the data and vertices list and returns the vector that is equale to one of the vertices
-    public static Vector3 setTriangleVertex(String[] data, ArrayList<Vector3> vertices) {
+    private static Vector3 setTriangleVertex(String[] data, ArrayList<Vector3> vertices) {
         Vector3 vertex = null;
         //checks if data is empty otherwise vertex empty
         if (!data[0].isEmpty()) {
@@ -87,12 +91,25 @@ public class ModelLoader {
         return vertex;
     }
 
+
+    //gets the correct normal of the triangle
+    private static Vector3 setTriangleNormal(String[] data, ArrayList<Vector3> normals) {
+        Vector3 normal = null;
+
+        if (!data[0].isEmpty()) {
+
+            int normalIndex = Integer.parseInt(data[2]) - 1;
+            normal = normals.get(normalIndex);
+        }
+        return normal;
+    }
+
     //in case an object exists out of squares it creates 2 triangles to simulate the square
-    public ArrayList<Triangle> squareToTriangle(String[] data, ArrayList<Vector3> vertices){
+    private ArrayList<Triangle> squareToTriangle(String[] data, ArrayList<Vector3> vertices,ArrayList<Vector3> normals){
        ArrayList<Triangle> squareTraingles = new ArrayList<>();
 
-       squareTraingles.add(new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,1), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[2].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices)));
-       squareTraingles.add(new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,1), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices),setTriangleVertex(data[4].split("/"),vertices)));
+       squareTraingles.add(new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,0), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[2].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices),setTriangleNormal(data[1].split("/"),normals)));
+       squareTraingles.add(new Triangle(new Material(new VectorColor(new Vector3(255,255,255)), 0,0), setTriangleVertex(data[1].split("/"),vertices),setTriangleVertex(data[3].split("/"),vertices),setTriangleVertex(data[4].split("/"),vertices),setTriangleNormal(data[1].split("/"),normals)));
        return squareTraingles;
 
     }
