@@ -1,5 +1,6 @@
 package main.rendering;
 
+import main.geometry.Solid;
 import main.maths.FullRay;
 import main.maths.RayHit;
 import main.maths.ShadowRay;
@@ -54,9 +55,9 @@ public class Renderer {
                 // Finally set that pixel with the final color in the image buffer
                 if (hit != null) {
                     System.out.println("intersect on  x: " + x + " y : " + y);
-                    Color finalColor = calculateLight(hit, scene);
+                    VectorColor finalColor = calculateLight(hit, scene);
 
-                    buffer.setRGB(x, y, finalColor.getRGB());
+                    buffer.setRGB(x, y, finalColor.getJavaColor().getRGB());
 
                 } else {
                     //if there is no intersection then it will color x and y black
@@ -72,10 +73,11 @@ public class Renderer {
 
     // This method checks wheter or not a pixel should be lit up by casting a shadow ray to each light source
     // First it puts the lights and contactpoint in variables and makes a variable for the final output
-    public Color calculateLight(RayHit hit, Scene scene) {
+    public VectorColor calculateLight(RayHit hit, Scene scene) {
         List<PointLight> lights = scene.getLights();
         Vector3 hitPos = hit.getContactPoint();
-        Color finalColor = new Color(0, 0, 0);
+        Solid hitSolid = hit.getHitSolid();
+        VectorColor finalColor = new VectorColor(new Vector3(0, 0, 0));
 
         // Then calculate the light for the given contactpoint for each light and check if it can see the light
         for (int i = 0; i < lights.size(); i++) {
@@ -89,21 +91,34 @@ public class Renderer {
             ShadowRay shaRay = new ShadowRay(lightDir, hitPos);
             boolean shadowHit = shaRay.castRay(scene.getGeometry());
 
+            // First calculate the intensity of the color of the pixel according to the intensity of the lightsource and the distance of the lightsource to the contactpoint
+            double lightIntensity = light.getIntensity() / Math.pow(hitPos.distance(lightPos), 2);
+
+            // Get contactpoint solid, get material of that then get the color of it and then get the vector of that, divide it by 255 to get 0-1 rgb values
+            VectorColor hitColor = new VectorColor(hit.getHitSolid().getMaterial().getColor().getVector());
+
+            // Then multiply it by the light intensity
+            hitColor.setColor(hitColor.getVector().multi(lightIntensity));
+
+            // Then do the same for the color of the light and add the result to the reflection vector
+            VectorColor lightColor = new VectorColor(light.getColor().getVector().multi(lightIntensity));
+            VectorColor reflection = hitColor.addVectorColor(lightColor);
+            
+
+            if (hitSolid.getMaterial().getReflective()){
+
+                Vector3 fullRayDir = hit.getRay().getDirection();
+                Vector3 reflectedRayDir = fullRayDir.sub(hitPos.multi(2 * fullRayDir.dot(hitPos)));
+
+                FullRay reflectedRay = new FullRay(reflectedRayDir, hitPos);
+                RayHit reflectedHit = reflectedRay.castRay(scene.getGeometry());
+
+                return new VectorColor(calculateLight(reflectedHit, scene).getVector().multi(hitSolid.getMaterial().getReflectivity()));
+            }
+
             // If it doesn't intersect with anything calculate light and color
             // Else return black color
             if (!shadowHit) {
-                // First calculate the intensity of the color of the pixel according to the intensity of the lightsource and the distance of the lightsource to the contactpoint
-                double lightIntensity = light.getIntensity() / Math.pow(hitPos.distance(lightPos), 2);
-
-                // Get contactpoint solid, get material of that then get the color of it and then get the vector of that, divide it by 255 to get 0-1 rgb values
-                VectorColor hitColor = new VectorColor(hit.getHitSolid().getMaterial().getColor().getVector());
-
-                // Then multiply it by the light intensity
-                hitColor.setColor(hitColor.getVector().multi(lightIntensity));
-
-                // Then do the same for the color of the light and add the result to the reflection vector
-                VectorColor lightColor = new VectorColor(light.getColor().getVector().multi(lightIntensity));
-                VectorColor reflection = hitColor.addVectorColor(lightColor);
 
                 // Calculate the angle at which the light hits the contact point
                 Vector3 lightAngleDir = hitPos.sub(lightPos);
@@ -118,11 +133,11 @@ public class Renderer {
 
                 // Add the result of the list loop with to the result of this loop
                 // This only happens when there are multiple lights
-                finalColor = addColors(finalColor, reflectionFinal.getJavaColor());
+                finalColor = finalColor.addVectorColor(reflectionFinal);
             } else {
                 // If there is a hit return gray
                 // we do this because it allows us to disambiguate shadows from the background
-                return new Color(40, 40, 40);
+                return new VectorColor(new Vector3(40, 40, 40));
             }
         }
 

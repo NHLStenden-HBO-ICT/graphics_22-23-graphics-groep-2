@@ -2,6 +2,7 @@ package main.utils;
 
 public class Material {
 
+    private boolean reflective;
     private double reflectivity;
 
     private VectorColor vectorColor;
@@ -18,6 +19,10 @@ public class Material {
 
     public VectorColor getColor() {
         return vectorColor;
+    }
+
+    public boolean getReflective() {
+        return reflective;
     }
 
     public double getReflectivity() {
@@ -46,6 +51,10 @@ public class Material {
 
     public void setMatte(double matte) {
         this.matte = matte;
+    }
+
+    public void setReflective(boolean reflective){
+        this.reflective = reflective;
     }
 
 }
