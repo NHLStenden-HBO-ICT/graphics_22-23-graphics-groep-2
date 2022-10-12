@@ -2,7 +2,7 @@ package main.maths;
 
 import main.geometry.Intersectable;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class FullRay extends Ray {
 
@@ -22,7 +22,7 @@ public class FullRay extends Ray {
 
     //given a set of intersectables, return collision between this ray and the closest intersectable
     //if no intersection takes place, return null
-    public RayHit castRay(Vector<Intersectable> intersectables) {
+    public RayHit castRay(ArrayList<Intersectable> intersectables) {
         //todo rewrite this to make use of streams to filter the list and improve performance
         //create a variable to store the collision
         RayHit closestHit = null;
