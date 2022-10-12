@@ -107,7 +107,7 @@ public class Renderer {
 
                 // Calculate the angle at which the light hits the contact point
                 Vector3 lightAngleDir = hitPos.sub(lightPos);
-                double lightAngle = Math.max(0.01, hit.getHitSolid().getSurfaceNormal(hitPos).dot(lightAngleDir));
+                double lightAngle = Math.max(0.01, hit.getNormal().dot(lightAngleDir));
 
                 // Divide the reflection by the angle of the light and multiply it by 255 to get 255 rgb values again
                 VectorColor reflectionFinal = new VectorColor(reflection.getVector().divide(lightAngle));
