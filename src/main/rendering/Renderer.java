@@ -53,7 +53,6 @@ public class Renderer {
                 // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
                 // Finally set that pixel with the final color in the image buffer
                 if (hit != null) {
-                    System.out.println("intersect on  x: " + x + " y : " + y);
                     Color finalColor = calculateLight(hit, scene);
 
                     buffer.setRGB(x, y, finalColor.getRGB());
