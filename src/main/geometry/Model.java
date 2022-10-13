@@ -12,6 +12,7 @@ public class Model implements Intersectable {
     private ArrayList<Triangle> triangles; //also called faces
 
     private Vector3 position; //the over al position of the object
+    private double size;
 
     //constructor with general position at 0,0,0
     public Model(ArrayList<Triangle> triangles) {
@@ -20,9 +21,10 @@ public class Model implements Intersectable {
     }
 
     //constructor with  position
-    public Model(ArrayList<Triangle> triangles, Vector3 position) {
+    public Model(ArrayList<Triangle> triangles, Vector3 position,double size) {
         this.triangles = triangles;
         this.position = position;
+        this.size =size;
         move();
     }
 
@@ -39,6 +41,11 @@ public class Model implements Intersectable {
         move();
     }
 
+    public void setSize(double size) {
+        this.size = size;
+        move();
+    }
+
     public void setTriangles(ArrayList<Triangle> triangles) {
         this.triangles = triangles; //if triangles change the vertice need to change and be moved to correct position
         move();
@@ -49,7 +56,8 @@ public class Model implements Intersectable {
         for (Triangle triangle : triangles) {
             Vector3[] vertices = triangle.getVertices();
             for (int i = 0; i < triangle.getVertices().length; i++) {
-                triangle.setVertex(i, (triangle.getVertexOrigin(i).add(position)));
+                triangle.setVertex(i, (triangle.getVertexOrigin(i).multi(size))); //first the size is calculated before posistion because size needs to beca;lculated out of the origon before posistion is added
+                triangle.setVertex(i, (triangle.getVertex(i).add(position))); // if object moves to the plus side it will be added since plus + plus = plus while moving to minus side will also be added since plus + minus = plus-plus
             }
         }
     }

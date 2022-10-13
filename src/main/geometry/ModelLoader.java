@@ -56,7 +56,7 @@ public class ModelLoader {
             }
         }
 
-        return new Model(triangles,startPosition);
+        return new Model(triangles,startPosition,1);
 
     }
 
