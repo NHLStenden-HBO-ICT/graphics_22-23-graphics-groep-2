@@ -49,14 +49,10 @@ public class Model implements Intersectable {
         for (Triangle triangle : triangles) {
             Vector3[] vertices = triangle.getVertices();
             for (int i = 0; i < triangle.getVertices().length; i++) {
-                triangle.setVertex(i, (triangle.getVertex(i).add(position)));
+                triangle.setVertex(i, (triangle.getVertexOrigin(i).add(position)));
             }
-
         }
-
-
     }
-
 
     @Override
     public RayHit intersects(FullRay fullRay) {
