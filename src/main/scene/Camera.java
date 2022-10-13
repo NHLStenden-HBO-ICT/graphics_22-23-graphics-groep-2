@@ -1,14 +1,19 @@
 package main.scene;
 
 import main.maths.FullRay;
+import main.maths.Quaternion;
 import main.maths.Vector3;
 
 //import java.geometry.Vector3;
 
 public class Camera {
-    private Vector3 position, direction;
+    private Vector3 position;
 
-    double imageHeight, imageWidth, fieldOfView, ratio;
+    private Quaternion orientation;
+
+    private final Vector3 standardOrientation = new Vector3(0, 0, -1);
+
+    private double imageHeight, imageWidth, fieldOfView, ratio;
 
     public Camera(Vector3 position, int imageHeight, int imageWidth, int fieldOfView) {
         this.position = position;
@@ -16,6 +21,17 @@ public class Camera {
         this.imageHeight = imageHeight;
         this.fieldOfView = fieldOfView; //the field of view expressed in degrees
         this.imageWidth = imageWidth;
+        //calculate the quaternion that represents no rotation
+        this.orientation = new Quaternion().quaternionRepresentingRotationBetween(standardOrientation, new Vector3(0, 0, -1));
+    }
+
+    public Camera(Vector3 position, Vector3 lookingAt, int imageHeight, int imageWidth, int fieldOfView) {
+        this.position = position;
+        //calculate the quaternion that represents a certain location
+        this.orientation = new Quaternion().quaternionRepresentingRotationBetween(standardOrientation, lookingAt.normalise());
+        this.imageHeight = imageHeight;
+        this.imageWidth = imageWidth;
+        this.fieldOfView = fieldOfView;
     }
 
     public double getRatio() {
@@ -26,16 +42,17 @@ public class Camera {
         return position;
     }
 
-    public Vector3 getDirection() {
-        return this.direction;
-    }
 
     public void setPosition(Vector3 position) {
         this.position = position;
     }
 
-    public void setDirection(Vector3 direction) {
-        this.direction = direction;
+    public Quaternion getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Quaternion orientation) {
+        this.orientation = orientation;
     }
 
     //returns a ray that uses the x and y of an image and returns a ray that can be cast
@@ -55,12 +72,12 @@ public class Camera {
         Vector3 pointInCameraSpace = new Vector3(pixelCameraX, pixelCameraY, -1);
 
         //next we need to rotate this point to match the camera's actual direction
-        //todo make that happen using quaternions or something
+        Vector3 rotatedPointInCameraSpace = pointInCameraSpace.normalise().rotateByQuaternion(orientation);
 
         //finally we need to transform this point by the camera's position
-        Vector3 PositionInSpace = pointInCameraSpace.add(position);
+        Vector3 PositionInSpace = rotatedPointInCameraSpace.add(position);
 
-        return new FullRay(pointInCameraSpace, PositionInSpace);
+        return new FullRay(rotatedPointInCameraSpace, PositionInSpace);
     }
 
 

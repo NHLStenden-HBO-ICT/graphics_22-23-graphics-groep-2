@@ -90,7 +90,7 @@ public class Vector3 {
         return vectorA.x * x + vectorA.y * y + vectorA.z * z;
     }
 
-    //Normalise vector, creates a normale vector of this vector
+    //Normalise vector, creates a normal vector from this vector
     public Vector3 normalise() {
         double magnitude = length();
         return new Vector3(
@@ -149,6 +149,28 @@ public class Vector3 {
         }
 
         return vec;
+    }
+
+    //converts a direction unit vector to a quaternion given a rotation angle in radians
+    //this assumes the direction is normalized
+    //it will not provide the expected result if it isn't
+    //explanation of why this works this way can be found at: https://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/notations/scalarAndVector/index.htm
+    //and here: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Example_conjugation_operation
+    public Quaternion unitVectorToQuaternion(double angleInRadians) {
+        return new Quaternion(this.multi(Math.sin(angleInRadians / 2)), Math.cos(angleInRadians / 2));
+    }
+
+    public Vector3 rotateByQuaternion(Quaternion q) {
+        Vector3 p = new Vector3();
+
+        p.setX(x * (q.getX() * q.getX() + q.getRotation() * q.getRotation() - q.getY() * q.getY() - q.getZ() * q.getZ()) + y * (2 * q.getX() * q.getY() - 2 * q.getRotation() * q.getZ()) + z * (2 * q.getX() * q.getZ() + 2 * q.getRotation() * q.getY()));
+        p.setY(x * (2 * q.getRotation() * q.getZ() + 2 * q.getX() * q.getY()) + y * (q.getRotation() * q.getRotation() - q.getX() * q.getX() + q.getY() * q.getY() - q.getZ() * q.getZ()) + z * (-2 * q.getRotation() * q.getX() + 2 * q.getY() * q.getZ()));
+        p.setZ(x * (-2 * q.getRotation() * q.getY() + 2 * q.getX() * q.getZ()) + y * (2 * q.getRotation() * q.getX() + 2 * q.getY() * q.getZ()) + z * (q.getRotation() * q.getRotation() - q.getX() * q.getX() - q.getY() * q.getY() + q.getZ() * q.getZ()));
+
+        return p;
+        //Quaternion r = new Quaternion(this, 0);
+        //Quaternion halfRotation = r.multi(q);
+        //return halfRotation.multi(q.conjugate()).getVectorComponent();
     }
 
     @Override
