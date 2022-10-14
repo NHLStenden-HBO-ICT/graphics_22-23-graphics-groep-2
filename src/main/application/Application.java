@@ -46,12 +46,12 @@ public class Application {
         //creates a model loader
         ModelLoader modelloader = new ModelLoader();
 
-        //creates the modelfile with path that is going to be read, which could end up becomming a list of items.
+        //creates the modelfile with path that is going to be read, which could end up becoming a list of items.
         //in our case all object will be put in the folder called objfiles to keep everything clean and tidy
         File modelfile = new File("objfiles/cup.obj");
         try {
-            //adds model to scene using the modelloader, it gets the file path and sets the startposition
-            Model model =modelloader.readFile(modelfile, (new Vector3(100, 0, -500)));
+            //adds model to scene using the modelloader, it gets the file path and sets the start position
+            Model model = modelloader.readFile(modelfile, (new Vector3(100, 0, -500)));
             model.setSize(100);
             scene.addIntersectable(model);
         } catch (Exception e) {

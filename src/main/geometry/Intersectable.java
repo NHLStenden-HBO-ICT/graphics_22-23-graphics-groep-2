@@ -10,8 +10,4 @@ public interface Intersectable {
     public abstract RayHit intersects(FullRay fullRay);
 
     public abstract boolean intersectsFast(ShadowRay shadowRay);
-
-    //public abstract Vector3 getSurfaceNormal(Vector3 point);
-
-
 }
