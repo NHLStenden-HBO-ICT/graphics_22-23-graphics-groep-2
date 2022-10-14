@@ -13,12 +13,16 @@ public class RayHit {
     //the distance to the contact point
     private double distance;
 
+    //the surface normal of the object hit
+    private Vector3 surfaceNormal;
 
-    public RayHit(FullRay fullRay, Solid hitSolid, Vector3 contactPoint, double distance) {
+
+    public RayHit(FullRay fullRay, Solid hitSolid, Vector3 contactPoint, double distance, Vector3 surfaceNormal) {
         this.fullRay = fullRay;
         this.hitSolid = hitSolid;
         this.contactPoint = contactPoint;
         this.distance = distance;
+        this.surfaceNormal = surfaceNormal;
     }
 
     public FullRay getRay() {
@@ -34,7 +38,7 @@ public class RayHit {
     }
 
     public Vector3 getNormal() {
-        return contactPoint;
+        return surfaceNormal;
     }
 
     public double getDistance() {
