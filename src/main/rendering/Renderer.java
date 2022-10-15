@@ -54,7 +54,7 @@ public class Renderer {
                 // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
                 // Finally set that pixel with the final color in the image buffer
                 if (hit != null) {
-                    Color finalColor = calculateLight(hit, scene);
+                    VectorColor finalColor = calculateLight(hit, scene, 0);
 
                     buffer.setRGB(x, y, finalColor.getJavaColor().getRGB());
 
@@ -72,7 +72,17 @@ public class Renderer {
 
     // This method checks wheter or not a pixel should be lit up by casting a shadow ray to each light source
     // First it puts the lights and contactpoint in variables and makes a variable for the final output
-    public VectorColor calculateLight(RayHit hit, Scene scene) {
+    public VectorColor calculateLight(RayHit hit, Scene scene, double rayDepth) {
+
+        if (rayDepth == 5){
+            return new VectorColor(new Vector3(0,0,0));
+        }
+
+
+        if (hit == null){
+            return new VectorColor(new Vector3(0,0,0));
+        }
+
         List<PointLight> lights = scene.getLights();
         Vector3 hitPos = hit.getContactPoint();
         Solid hitSolid = hit.getHitSolid();
@@ -104,15 +114,17 @@ public class Renderer {
             VectorColor reflection = hitColor.addVectorColor(lightColor);
             
 
-            if (hitSolid.getMaterial().getReflective()){
+            if (hitSolid.getMaterial().getReflectivity() > 0.0){
 
                 Vector3 fullRayDir = hit.getRay().getDirection();
-                Vector3 reflectedRayDir = fullRayDir.sub(hitPos.multi(2 * fullRayDir.dot(hitPos)));
+                Vector3 reflectedRayDir = fullRayDir.sub(hit.getNormal().multi(2 * fullRayDir.dot(hit.getNormal())));
 
                 FullRay reflectedRay = new FullRay(reflectedRayDir, hitPos);
                 RayHit reflectedHit = reflectedRay.castRay(scene.getGeometry());
 
-                return new VectorColor(calculateLight(reflectedHit, scene).getVector().multi(hitSolid.getMaterial().getReflectivity()));
+                rayDepth = rayDepth + 1;
+
+                return finalColor.addVectorColor(calculateLight(reflectedHit, scene, rayDepth));
             }
 
             // If it doesn't intersect with anything calculate light and color
