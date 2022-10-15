@@ -2,7 +2,6 @@ package main.application;
 
 import main.geometry.Model;
 import main.geometry.ModelLoader;
-import main.maths.Orientation;
 import main.maths.Vector3;
 import main.rendering.Renderer;
 import main.scene.Camera;
@@ -49,10 +48,10 @@ public class Application {
 
         //creates the modelfile with path that is going to be read, which could end up becoming a list of items.
         //in our case all object will be put in the folder called objfiles to keep everything clean and tidy
-        File modelfile = new File("objfiles/testobj.obj");
+        File modelfile = new File("objfiles/cup.obj");
         try {
             //adds model to scene using the modelloader, it gets the file path and sets the start position
-            Model model = modelloader.readFile(modelfile, (new Vector3(0, 0, 0)));
+            Model model = modelloader.readFile(modelfile, (new Vector3(0, 0, -3)));
             //model.setSize(100);
             model.lookAt(new Vector3(0, 1, 0));
             scene.addIntersectable(model);
