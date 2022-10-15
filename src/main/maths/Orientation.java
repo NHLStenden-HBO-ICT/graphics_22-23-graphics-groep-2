@@ -39,6 +39,7 @@ public class Orientation {
         quaternion = new Quaternion().quaternionRepresentingRotationBetween(standardOrientation, relativePoint);
     }
 
+    //generates a unit vector pointing towards the direction of this orientation
     public Vector3 getLookingAt() {
         return standardOrientation.rotateByQuaternion(quaternion);
     }
