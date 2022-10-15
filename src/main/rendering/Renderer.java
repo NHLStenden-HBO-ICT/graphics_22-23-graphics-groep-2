@@ -53,7 +53,6 @@ public class Renderer {
                 // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
                 // Finally set that pixel with the final color in the image buffer
                 if (hit != null) {
-                    System.out.println("intersect on  x: " + x + " y : " + y);
                     Color finalColor = calculateLight(hit, scene);
 
                     buffer.setRGB(x, y, finalColor.getRGB());
@@ -107,7 +106,7 @@ public class Renderer {
 
                 // Calculate the angle at which the light hits the contact point
                 Vector3 lightAngleDir = hitPos.sub(lightPos);
-                double lightAngle = Math.max(0.01, hit.getHitSolid().getSurfaceNormal(hitPos).dot(lightAngleDir));
+                double lightAngle = Math.max(0.01, hit.getNormal().dot(lightAngleDir));
 
                 // Divide the reflection by the angle of the light and multiply it by 255 to get 255 rgb values again
                 VectorColor reflectionFinal = new VectorColor(reflection.getVector().divide(lightAngle));
