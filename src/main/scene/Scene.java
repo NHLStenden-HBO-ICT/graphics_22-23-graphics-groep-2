@@ -1,6 +1,7 @@
 package main.scene;
 
 import main.geometry.Intersectable;
+import main.geometry.Model;
 import main.geometry.Solid;
 import main.maths.FullRay;
 import main.maths.RayHit;

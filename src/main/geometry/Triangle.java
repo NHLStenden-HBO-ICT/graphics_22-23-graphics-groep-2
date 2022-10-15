@@ -6,8 +6,10 @@ import main.utils.Material;
 public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] vertices;
+    private Vector3[] verticesorigin; //location of the vertices when triangle is at 0
     private Vector3 surfaceNormal;
 
+    //not part of an in loaded model
     public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
         super(material);
         this.vertices = new Vector3[]{
@@ -15,12 +17,30 @@ public class Triangle extends Solid implements Intersectable {
                 point2,
                 point3,
         };
-
         this.surfaceNormal = calculateSurfaceNormal();
+    }
+
+    //triangle of a loaded model
+    public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3, Vector3 normal) {
+        super(material);
+        this.vertices = new Vector3[]{
+                point1,
+                point2,
+                point3,
+        };
+        this.verticesorigin = new Vector3[]{
+                point1,
+                point2,
+                point3,
+        };
+        this.surfaceNormal = normal;
     }
 
     public Vector3 getVertex(int index) {
         return vertices[index];
+    }
+    public Vector3 getVertexOrigin(int index) {
+        return verticesorigin[index];
     }
 
     public Vector3[] getVertices() {
@@ -136,8 +156,7 @@ public class Triangle extends Solid implements Intersectable {
             //we can return a RayHit object because a collision happens.
             return null;
         }
-        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance);
-
+        return new RayHit(fullRay, this, fullRay.getPointAlongRay(distance), distance, surfaceNormal);
     }
 
     @Override

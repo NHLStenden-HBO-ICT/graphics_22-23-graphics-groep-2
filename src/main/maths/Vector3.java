@@ -90,7 +90,7 @@ public class Vector3 {
         return vectorA.x * x + vectorA.y * y + vectorA.z * z;
     }
 
-    //Normalise vector, creates a normale vector of this vector
+    //Normalise vector, creates a normal vector from this vector
     public Vector3 normalise() {
         double magnitude = length();
         return new Vector3(
@@ -149,6 +149,34 @@ public class Vector3 {
         }
 
         return vec;
+    }
+
+    //converts a direction unit vector to a quaternion given a rotation angle in radians
+    //this assumes the vector is normalized
+    //it will not provide the expected result if it isn't
+    //explanation of why this works this way can be found at: https://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/notations/scalarAndVector/index.htm
+    //and here: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Example_conjugation_operation
+    public Quaternion unitVectorToQuaternion(double angleInRadians) {
+        return new Quaternion(this.multi(Math.sin(angleInRadians / 2)), Math.cos(angleInRadians / 2));
+    }
+
+
+    //rotates point by a quaternion
+    public Vector3 rotateByQuaternion(Quaternion q) {
+        Vector3 p = new Vector3();
+
+        // this is the full expanded formula
+        // this is a combination of a half left rotation and then a negative half right rotation
+        // this ensures that the w of the quaternion is 0, otherwise our point would lie in a 4th dimension
+        // if it's 0 however, we can just ignore it
+        // full explanation can be found here: https://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/transforms/derivations/vectors/index.htm
+        // TODO replace fully expanded formula by one containing abstraction to improve readability
+        // I'm probably not going to, though.
+        p.setX(x * (q.getX() * q.getX() + q.getRotation() * q.getRotation() - q.getY() * q.getY() - q.getZ() * q.getZ()) + y * (2 * q.getX() * q.getY() - 2 * q.getRotation() * q.getZ()) + z * (2 * q.getX() * q.getZ() + 2 * q.getRotation() * q.getY()));
+        p.setY(x * (2 * q.getRotation() * q.getZ() + 2 * q.getX() * q.getY()) + y * (q.getRotation() * q.getRotation() - q.getX() * q.getX() + q.getY() * q.getY() - q.getZ() * q.getZ()) + z * (-2 * q.getRotation() * q.getX() + 2 * q.getY() * q.getZ()));
+        p.setZ(x * (-2 * q.getRotation() * q.getY() + 2 * q.getX() * q.getZ()) + y * (2 * q.getRotation() * q.getX() + 2 * q.getY() * q.getZ()) + z * (q.getRotation() * q.getRotation() - q.getX() * q.getX() - q.getY() * q.getY() + q.getZ() * q.getZ()));
+
+        return p;
     }
 
     @Override
