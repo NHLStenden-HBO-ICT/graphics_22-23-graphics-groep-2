@@ -152,7 +152,7 @@ public class Vector3 {
     }
 
     //converts a direction unit vector to a quaternion given a rotation angle in radians
-    //this assumes the direction is normalized
+    //this assumes the vector is normalized
     //it will not provide the expected result if it isn't
     //explanation of why this works this way can be found at: https://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/notations/scalarAndVector/index.htm
     //and here: https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Example_conjugation_operation

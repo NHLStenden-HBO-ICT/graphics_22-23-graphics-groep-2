@@ -1,8 +1,10 @@
 package test.maths;
 
+import main.maths.Quaternion;
 import main.maths.Vector3;
 import org.junit.jupiter.api.Test;
 
+import static main.maths.Constants.EPSILON;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Vector3Test {
@@ -101,9 +103,9 @@ class Vector3Test {
     @Test
     void distance() {
         //create two vectors
-        Vector3 a = new Vector3(3,3,3);
-        Vector3 b = new Vector3(9,9,9);
-        
+        Vector3 a = new Vector3(3, 3, 3);
+        Vector3 b = new Vector3(9, 9, 9);
+
         //get the result
         double result = a.distance(b);
 
@@ -111,4 +113,20 @@ class Vector3Test {
         assertEquals(10.392304845413264, result);
     }
 
+    @Test
+    void rotateByQuaternion() {
+        //makes two vectors
+        //calculates the rotation between those vectors
+        //then rotates one of the vectors by that rotation
+        Vector3 a = new Vector3(0, 0, 1).normalise();
+        Vector3 b = new Vector3(0, 1, 0).normalise();
+        Quaternion quaternion = new Quaternion().quaternionRepresentingRotationBetween(a, b);
+
+        a = a.rotateByQuaternion(quaternion);
+
+        //the vectors should now be equal
+        assertEquals(b.getX(), a.getX(), EPSILON);
+        assertEquals(b.getY(), a.getY(), EPSILON);
+        assertEquals(b.getZ(), a.getZ(), EPSILON);
+    }
 }
