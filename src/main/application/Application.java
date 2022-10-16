@@ -46,10 +46,9 @@ public class Application {
         //scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(0, 255, 0)), 0.0, 0.0), 10, new Vector3(-10, 10, -60))); //test sphere
         //scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 0.0), new Vector3(3, 0, -5), new Vector3(-3, 0, -5), new Vector3(0, 3, -5), new Vector3(0, 0, 1)));
 
-        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(255,255,255)), 1.0, 0.0), 5, new Vector3(0,0,-100)));
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 0.0), new Vector3(-500, -20, -600), new Vector3(500, -20, -600), new Vector3(0, -20, 10)));
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.0, 0.0), new Vector3(-500, 20, -600), new Vector3(500, 20, -600), new Vector3(0, 20, 10)));
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(0, 0, 255)), 0.0, 0.0), new Vector3(-10, 0, -20), new Vector3(10, 0, -20), new Vector3(0, 0, -10)));
+        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(255,255,255)), 0.3, 0.7), 5, new Vector3(0,0,-100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 1.0), new Vector3(-500, -20, -600), new Vector3(500, -20, -600), new Vector3(0, -20, 10)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.0, 1.0), new Vector3(-500, 20, -600), new Vector3(500, 20, -600), new Vector3(0, 20, 10)));
 
 
         //creates a model loader

@@ -17,6 +17,8 @@ import java.util.List;
 
 public class Renderer {
 
+    private double maxRayDepth = 5;
+
     private Scene scene;
 
     public Renderer(Scene scene) {
@@ -31,6 +33,14 @@ public class Renderer {
     // Set the current scene
     public void setScene(Scene scene_) {
         scene = scene_;
+    }
+
+    public double getMaxRayDepth() {
+        return maxRayDepth;
+    }
+
+    public void setMaxRayDepth(double maxRayDepth) {
+        this.maxRayDepth = maxRayDepth;
     }
 
     // Cast rays from the camera into the scene to detect intersections and see if they need to be lit up
@@ -74,7 +84,7 @@ public class Renderer {
     // First it puts the lights and contactpoint in variables and makes a variable for the final output
     public VectorColor calculateLight(RayHit hit, Scene scene, double rayDepth) {
 
-        if (rayDepth == 5){
+        if (rayDepth == maxRayDepth){
             return new VectorColor(new Vector3(0,0,0));
         }
 
@@ -86,7 +96,10 @@ public class Renderer {
         List<PointLight> lights = scene.getLights();
         Vector3 hitPos = hit.getContactPoint();
         Solid hitSolid = hit.getHitSolid();
-        VectorColor finalColor = new VectorColor(new Vector3(0, 0, 0));
+
+        VectorColor reflColor = new VectorColor(new Vector3(0,0,0));
+        VectorColor diffColor = new VectorColor(new Vector3(0,0,0));
+
 
         // Then calculate the light for the given contactpoint for each light and check if it can see the light
         for (int i = 0; i < lights.size(); i++) {
@@ -124,12 +137,12 @@ public class Renderer {
 
                 rayDepth = rayDepth + 1;
 
-                return finalColor.addVectorColor(calculateLight(reflectedHit, scene, rayDepth));
+                reflColor = new VectorColor(reflection.addVectorColor(calculateLight(reflectedHit, scene, rayDepth)).getVector().multi(hitSolid.getMaterial().getReflectivity()));
             }
 
             // If it doesn't intersect with anything calculate light and color
             // Else return black color
-            if (!shadowHit) {
+            if (!shadowHit && hitSolid.getMaterial().getReflectivity() < 1.0) {
 
                 // Calculate the angle at which the light hits the contact point
                 Vector3 lightAngleDir = hitPos.sub(lightPos);
@@ -138,13 +151,9 @@ public class Renderer {
                 // Divide the reflection by the angle of the light and multiply it by 255 to get 255 rgb values again
                 VectorColor reflectionFinal = new VectorColor(reflection.getVector().divide(lightAngle));
 
-                // Clamp the color to a range of 0-255 to prevent rgb overflows
-
-                //Color processedColor = new Color((int) reflectionFinal.getX(), (int) reflectionFinal.getY(), (int) reflectionFinal.getZ());
-
                 // Add the result of the list loop with to the result of this loop
                 // This only happens when there are multiple lights
-                finalColor = finalColor.addVectorColor(reflectionFinal);
+                diffColor = new VectorColor(reflection.addVectorColor(reflectionFinal).getVector().multi(hitSolid.getMaterial().getDiffuse()));
             } else {
                 // If there is a hit return gray
                 // we do this because it allows us to disambiguate shadows from the background
@@ -153,7 +162,7 @@ public class Renderer {
         }
 
         // Finally return the final result after all the lights have been calculated
-        return finalColor;
+        return diffColor.addVectorColor(reflColor);
     }
 
     // Quick method to add the rbg values of two java.awt.Color objects to each other
