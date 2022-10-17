@@ -33,10 +33,10 @@ public class Application {
         Scene scene = new Scene();
 
         //adds camera to scene
-        scene.setCamera(new Camera(new Vector3(0, 0, 0), height, (int) (height * ratio), 90));
+        scene.setCamera(new Camera(new Vector3(0, 0, 5), new Vector3(0, 0.1, -1), height, (int) (height * ratio), 90));
 
         //adds light to scene
-        scene.addLight(new PointLight(new VectorColor(new Vector3(255, 255, 255)), 500, new Vector3(0, 100, 50)));
+        scene.addLight(new PointLight(new VectorColor(new Vector3(100, 100, 100)), 0.5, new Vector3(0, 1, 10)));
 
         //adds some basic geometry to the scene
         //scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.0, 0.0), 5, new Vector3(0, -10, -30))); //test sphere
@@ -51,8 +51,9 @@ public class Application {
         File modelfile = new File("objfiles/cup.obj");
         try {
             //adds model to scene using the modelloader, it gets the file path and sets the start position
-            Model model = modelloader.readFile(modelfile, (new Vector3(100, 0, -500)));
-            model.setSize(100);
+            Model model = modelloader.readFile(modelfile, (new Vector3(0, 0, -3)));
+            //model.setSize(100);
+            model.lookAt(new Vector3(0, 1, 0));
             scene.addIntersectable(model);
         } catch (Exception e) {
             //because a file is being read, for safety it needs a try and catch
