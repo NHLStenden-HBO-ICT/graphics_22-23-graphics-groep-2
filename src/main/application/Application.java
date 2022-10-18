@@ -35,20 +35,25 @@ public class Application {
         //make a new scene
         Scene scene = new Scene();
 
-        //adds camera to scene
-        scene.setCamera(new Camera(new Vector3(0, 0, 5), new Vector3(0, 0.1, -1), height, (int) (height * ratio), 90));
+        //make some stuff and add it to the scene
+        scene.setCamera(new Camera(new Vector3(-10, 10, -20), height, (int) (height * ratio), 90));
 
-        //adds light to scene
-        scene.addLight(new PointLight(new VectorColor(new Vector3(100, 100, 100)), 0.5, new Vector3(0, 1, 10)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.9, 0), new Vector3(100, -20, -100), new Vector3(-100, -20, -100), new Vector3(0, 100, -100)));
+        
+        // Bottom plane
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255,255 ,255 )), 0.0, 0), new Vector3(-100, -20, -100), new Vector3(100, -20, -100), new Vector3(0, -20, 0)));
 
-        //adds some basic geometry to the scene
-        //scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.0, 0.0), 5, new Vector3(0, -10, -30))); //test sphere
-        //scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(0, 255, 0)), 0.0, 0.0), 10, new Vector3(-10, 10, -60))); //test sphere
-        //scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 0.0), new Vector3(3, 0, -5), new Vector3(-3, 0, -5), new Vector3(0, 3, -5), new Vector3(0, 0, 1)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 0), new Vector3(300, -20, 0), new Vector3(0, -20, 0), new Vector3(100, -20, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(0, 255, 0)), 0.0, 0), new Vector3(0, -20, 0), new Vector3(-300, -20, 0), new Vector3(-100, -20, -100)));
 
-        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(255,255,255)), 0.3, 0.7), 5, new Vector3(0,0,-100)));
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 1.0), new Vector3(-500, -20, -600), new Vector3(500, -20, -600), new Vector3(0, -20, 10)));
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.0, 1.0), new Vector3(-500, 20, -600), new Vector3(500, 20, -600), new Vector3(0, 20, 10)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 0), new Vector3(-100, -20, -100), new Vector3(-100, -20, 0), new Vector3(0, 100, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 0), new Vector3(100, -20, 0), new Vector3(100, -20, -100), new Vector3(0, 100, -100)));
+        
+        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.0, 1.3), 5, new Vector3(0, 0, -50))); //test sphere
+        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(0, 0, 255)), 0.3, 0), 5, new Vector3(-15, 0, -70))); //test sphere
+        
+
+        scene.addLight(new PointLight(new VectorColor(new Vector3(255, 255, 255)), 20, new Vector3(0, 100, -50)));
 
 
         //creates a model loader
@@ -59,10 +64,9 @@ public class Application {
         File modelfile = new File("objfiles/cup.obj");
         try {
             //adds model to scene using the modelloader, it gets the file path and sets the start position
-            Model model = modelloader.readFile(modelfile, (new Vector3(0, 0, -3)));
-            //model.setSize(100);
-            model.lookAt(new Vector3(0, 1, 0));
-            scene.addIntersectable(model);
+            Model model = modelloader.readFile(modelfile, (new Vector3(100, 0, -500)));
+            model.setSize(100);
+            //scene.addIntersectable(model);
         } catch (Exception e) {
             //because a file is being read, for safety it needs a try and catch
             throw new RuntimeException(e);

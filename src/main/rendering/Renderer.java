@@ -5,6 +5,7 @@ import main.maths.FullRay;
 import main.maths.RayHit;
 import main.maths.ShadowRay;
 import main.maths.Vector3;
+import main.maths.RefractionMath;
 import main.scene.Camera;
 import main.scene.PointLight;
 import main.scene.Scene;
@@ -107,6 +108,7 @@ public class Renderer {
         // Get hit position and object
         Vector3 hitPos = hit.getContactPoint();
         Solid hitSolid = hit.getHitSolid();
+        Vector3 fullRayDir = hit.getRay().getDirection();
 
         // Create colors later to be used for reflective calculations and diffuse
         // calculations
@@ -121,6 +123,8 @@ public class Renderer {
             PointLight light = lights.get(i);
             Vector3 lightPos = light.getPosition();
             Vector3 lightDir = lightPos.sub(hitPos).normalise();
+
+            Vector3 refractDir = new Vector3(0,0,0);
 
             // First calculate the intensity of the color of the pixel according to the
             // intensity of the lightsource and the distance of the lightsource to the
@@ -143,7 +147,6 @@ public class Renderer {
             if (hitSolid.getMaterial().getReflectivity() > 0.0) {
 
                 // Calculate new ray direction
-                Vector3 fullRayDir = hit.getRay().getDirection();
                 Vector3 reflectedRayDir = fullRayDir.sub(hit.getNormal().multi(2 * fullRayDir.dot(hit.getNormal())));
 
                 // Cast a new ray for the reflection
@@ -157,6 +160,47 @@ public class Renderer {
                 // Multiply the result by the reflectivity of the material
                 reflColor = new VectorColor(reflection.addVectorColor(calculateLight(reflectedHit, scene, rayDepth))
                         .getVector().multi(hitSolid.getMaterial().getReflectivity()));
+            }
+
+            if (hitSolid.getMaterial().getIor() > 0.0){
+            
+                double hitIor = hitSolid.getMaterial().getIor();
+                Vector3 sNormal = hit.getNormal();
+                double cosi = RefractionMath.clampDouble(-1, 1, fullRayDir.dot(sNormal));
+                double etai = 1, etat = hitIor;
+
+                if (cosi < 0){
+                    cosi = cosi * -1;
+                }else{
+                    double tempEta = etai;
+                    etai = etat;
+                    etat = tempEta;
+
+                    sNormal = sNormal.multi(-1);
+                }
+
+                double eta = etai / etat;
+                double k = 1 - eta * eta * (1 - cosi * cosi);
+                
+                if (k < 0){
+                    refractDir = fullRayDir.multi(0).add(sNormal.multi(0 * cosi - Math.sqrt(k)));
+
+                    FullRay refractFullRay = new FullRay(refractDir, hitPos);
+                    RayHit refractHit = refractFullRay.castRay(scene.getGeometry());
+
+                    rayDepth = rayDepth + 1;
+
+                    return calculateLight(refractHit, scene, rayDepth);
+                }else{
+                    refractDir = fullRayDir.multi(eta).add(sNormal.multi(eta * cosi - Math.sqrt(k)));
+
+                    FullRay refractFullRay = new FullRay(refractDir, hitPos);
+                    RayHit refractHit = refractFullRay.castRay(scene.getGeometry());
+
+                    rayDepth = rayDepth + 1;
+
+                    return calculateLight(refractHit, scene, rayDepth);
+                }
             }
 
             // Check if reflectivity of object is lower then 1
