@@ -10,8 +10,6 @@ import main.scene.PointLight;
 import main.scene.Scene;
 import main.utils.VectorColor;
 
-import java.awt.Color;
-
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -92,24 +90,31 @@ public class Renderer {
     // for the final output
     public VectorColor calculateLight(RayHit hit, Scene scene, double rayDepth) {
 
+        // Stopping conditions for when this function is called recursively
+        // Stop when max raydepth has been reached
         if (rayDepth == maxRayDepth) {
             return new VectorColor(new Vector3(0, 0, 0));
         }
 
+        // Stop if nothing has been hit
         if (hit == null) {
             return new VectorColor(new Vector3(0, 0, 0));
         }
 
+        // Retrieve scene lights
         List<PointLight> lights = scene.getLights();
-        
+
+        // Get hit position and object
         Vector3 hitPos = hit.getContactPoint();
         Solid hitSolid = hit.getHitSolid();
 
+        // Create colors later to be used for reflective calculations and diffuse
+        // calculations
         VectorColor reflColor = new VectorColor(new Vector3(0, 0, 0));
         VectorColor diffColor = new VectorColor(new Vector3(0, 0, 0));
 
-        // Then calculate the light for the given contactpoint for each light and check
-        // if it can see the light
+        // Calculate the light for the given contactpoint for each light and check if it
+        // can see the light
         for (int i = 0; i < lights.size(); i++) {
 
             // Get the light position and the direction towards the light
@@ -134,20 +139,28 @@ public class Renderer {
             VectorColor lightColor = new VectorColor(light.getColor().getVector().multi(lightIntensity));
             VectorColor reflection = hitColor.addVectorColor(lightColor);
 
+            // Check if object is reflective and send a reflective ray if it is
             if (hitSolid.getMaterial().getReflectivity() > 0.0) {
 
+                // Calculate new ray direction
                 Vector3 fullRayDir = hit.getRay().getDirection();
                 Vector3 reflectedRayDir = fullRayDir.sub(hit.getNormal().multi(2 * fullRayDir.dot(hit.getNormal())));
 
+                // Cast a new ray for the reflection
                 FullRay reflectedRay = new FullRay(reflectedRayDir, hitPos);
                 RayHit reflectedHit = reflectedRay.castRay(scene.getGeometry());
 
+                // Add one step to the raydepth
                 rayDepth = rayDepth + 1;
 
+                // Start recursive calculation for the reflection
+                // Multiply the result by the reflectivity of the material
                 reflColor = new VectorColor(reflection.addVectorColor(calculateLight(reflectedHit, scene, rayDepth))
                         .getVector().multi(hitSolid.getMaterial().getReflectivity()));
             }
 
+            // Check if reflectivity of object is lower then 1
+            // If it is 1, diffuse doesn't need to be calculated anyways
             if (hitSolid.getMaterial().getReflectivity() < 1.0) {
 
                 // Cast a shadowray to the light source
@@ -166,8 +179,7 @@ public class Renderer {
                     // 255 rgb values again
                     VectorColor reflectionFinal = new VectorColor(reflection.getVector().divide(lightAngle));
 
-                    // Add the result of the list loop with to the result of this loop
-                    // This only happens when there are multiple lights
+                    // Multiply the resulting color with 1 - the reflectivity of the object
                     diffColor = new VectorColor(reflection.addVectorColor(reflectionFinal).getVector()
                             .multi(1 - hitSolid.getMaterial().getReflectivity()));
                 } else {
@@ -179,14 +191,5 @@ public class Renderer {
         }
         // Finally return the final result after all the lights have been calculated
         return diffColor.addVectorColor(reflColor);
-    }
-
-    // Quick method to add the rbg values of two java.awt.Color objects to each
-    // other
-    public Color addColors(Color color1, Color color2) {
-        int r = (color1.getRed() + color2.getRed());
-        int g = (color1.getGreen() + color2.getGreen());
-        int b = (color1.getBlue() + color2.getBlue());
-        return new Color(r, g, b);
     }
 }
