@@ -10,7 +10,6 @@ public class Application {
     private static double ratio = 16.0 / 9.0;
 
     private static int width = (int) (ratio * height);
-    private static MainWindow program;
 
     public static void main(String[] args) {
         //use invoke later to schedule a task on the event dispatch thread (EDT)
@@ -18,7 +17,7 @@ public class Application {
         //otherwise unexpected behavior might occur
         //but because swing is weird unexpected behavior might still occur
         invokeLater(() -> {
-            program = new MainWindow(height, width);
+            new MainWindow(height, width);
         });
 
     }
