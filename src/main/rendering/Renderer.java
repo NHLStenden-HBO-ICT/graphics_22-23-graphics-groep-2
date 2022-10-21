@@ -9,69 +9,59 @@ import main.scene.PointLight;
 import main.scene.Scene;
 import main.utils.VectorColor;
 
+import javax.swing.*;
 import java.awt.Color;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Renderer {
 
-    private Scene scene;
-
-    public Renderer(Scene scene) {
-        this.scene = scene;
-    }
-
-    // Return the current scene
-    public Scene getScene() {
-        return scene;
-    }
-
-    // Set the current scene
-    public void setScene(Scene scene_) {
-        scene = scene_;
+    private Renderer() {
     }
 
     // Cast rays from the camera into the scene to detect intersections and see if they need to be lit up
     // First get screen resolution and ratio
-    // Then setip a buffer and a camera
+    // Then set up a buffer and a camera
     // Then cast a ray through each pixel and calculate the color for it if it intersects with a solid
-    public BufferedImage RenderToImage(int height) {
-
-        PixelData pixelData = new PixelData(height, scene.getCamera().getRatio());
-        BufferedImage buffer = new BufferedImage(pixelData.getWidth(), pixelData.getHeight(), BufferedImage.TYPE_INT_RGB);
-
+    public BufferedImage RenderToImage(Scene scene) {
         Camera camera = scene.getCamera();
+        BufferedImage buffer = new BufferedImage((int) camera.getImageWidth(), (int) camera.getImageHeight(), BufferedImage.TYPE_INT_RGB);
 
         // Loop for each pixel on the image
-        for (int y = 0; y < pixelData.getHeight(); ++y) {
-            for (int x = 0; x < pixelData.getWidth(); ++x) {
-                // Cast ray and check if it intersects with something
-                FullRay ray = camera.getRayFromPixel(x, y);//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
-                RayHit hit = ray.castRay(scene.getGeometry());
-
-                // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
-                // Finally set that pixel with the final color in the image buffer
-                if (hit != null) {
-                    Color finalColor = calculateLight(hit, scene);
-
-                    buffer.setRGB(x, y, finalColor.getRGB());
-
-                } else {
-                    //if there is no intersection then it will color x and y black
-                    buffer.setRGB(x, y, 000000);
-                }
+        for (int y = 0; y < buffer.getHeight(); ++y) {
+            for (int x = 0; x < buffer.getWidth(); ++x) {
+                int rgb = tracePixel(camera, scene, x, y).getRGB();
+                buffer.setRGB(x, y, rgb);
             }
         }
 
-        // At the end call toImage(bufferedImage image) in pixelData to convert the buffer to an image
-        pixelData.toImage(buffer);
         return buffer;
     }
 
-    // This method checks wheter or not a pixel should be lit up by casting a shadow ray to each light source
+    public static Color tracePixel(Camera camera, Scene scene, int x, int y) {
+        // Cast ray and check if it intersects with something
+        FullRay ray = camera.getRayFromPixel(x, y);//gets the ray with the coörds of the virtual screen that's equal to the x and y pixel of the image
+        RayHit hit = ray.castRay(scene.getGeometry());
+
+        // If the ray intersects with something, write coordinates in console and call the calculateLight(RayHit hit) method with the current rayhit
+        // Finally set that pixel with the final color in the image buffer
+        if (hit != null) {
+            Color finalColor = calculateLight(hit, scene);
+
+            return finalColor;
+
+        } else {
+            //if there is no intersection then it will color x and y black
+            return new Color(0, 0, 0);
+        }
+    }
+
+
+    // This method checks whether a pixel should be lit up by casting a shadow ray to each light source
     // First it puts the lights and contactpoint in variables and makes a variable for the final output
-    public Color calculateLight(RayHit hit, Scene scene) {
+    public static Color calculateLight(RayHit hit, Scene scene) {
         List<PointLight> lights = scene.getLights();
         Vector3 hitPos = hit.getContactPoint();
         Color finalColor = new Color(0, 0, 0);
@@ -130,10 +120,11 @@ public class Renderer {
     }
 
     // Quick method to add the rbg values of two java.awt.Color objects to each other
-    public Color addColors(Color color1, Color color2) {
+    public static Color addColors(Color color1, Color color2) {
         int r = (color1.getRed() + color2.getRed());
         int g = (color1.getGreen() + color2.getGreen());
         int b = (color1.getBlue() + color2.getBlue());
         return new Color(r, g, b);
     }
+
 }
