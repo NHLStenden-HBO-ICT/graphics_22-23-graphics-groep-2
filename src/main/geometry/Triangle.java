@@ -8,6 +8,7 @@ public class Triangle extends Solid implements Intersectable {
     private Vector3[] vertices;
     private Vector3[] verticesorigin; //location of the vertices when triangle is at 0
     private Vector3 surfaceNormal;
+    private Vector3 surfaceNormalOrg;
 
     //not part of an in loaded model
     public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
@@ -33,7 +34,8 @@ public class Triangle extends Solid implements Intersectable {
                 point2,
                 point3,
         };
-        this.surfaceNormal = normal;
+        this.surfaceNormalOrg = normal;
+        this.surfaceNormal =normal;
     }
 
     public Vector3 getVertex(int index) {
@@ -74,6 +76,14 @@ public class Triangle extends Solid implements Intersectable {
     @Override
     public Vector3 getSurfaceNormal(Vector3 point) {
         return surfaceNormal;
+    }
+
+    public Vector3 getSurfaceNormalOrg() {
+        return surfaceNormal;
+    }
+
+    public void setSurfaceNormal(Vector3 surfaceNormal){
+        this.surfaceNormal =surfaceNormal;
     }
 
     //this method would normally allow us to change the length of the Triangle.Vertices array

@@ -28,7 +28,7 @@ public class RenderWorker implements Runnable {
         Camera camera = scene.getCamera();
         for (int y = startY; y <= endY; y++) {
             for (int x = startX; x <= endX; x++) {
-                int rgb = Renderer.tracePixel(camera, scene, x, y).getRGB();
+                int rgb = Renderer.tracePixel(camera, scene, x, y);
                 //set the pixel
                 bufferedImage.setRGB(x, y, rgb);
 

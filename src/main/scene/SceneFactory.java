@@ -50,7 +50,7 @@ public class SceneFactory {
 
         scene.addLight(new PointLight(new VectorColor(new Vector3(255, 255, 255)), 500, new Vector3(0, 100, 50)));
 
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 0.0), new Vector3(3, 0, -5), new Vector3(-3, 0, -5), new Vector3(0, 3, -5), new Vector3(0, 0, 1)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.5), new Vector3(3, 0, -5), new Vector3(-3, 0, -5), new Vector3(0, 3, -5), new Vector3(0, 0, 1)));
 
         return scene;
     }

@@ -11,13 +11,15 @@ import java.util.ArrayList;
 
 public class ModelLoader {
 
-    public Model readFile(File file, Vector3 startPosition) throws Exception {
+    public Model readFile(String path, Vector3 startPosition) throws Exception {
 
         ArrayList<Triangle> triangles = new ArrayList<>();
         ArrayList<Vector3> vertices = new ArrayList<>();
         ArrayList<Vector3> normals = new ArrayList<>();
 
+
         //creates bufferreader that reads the file
+        File file = new File(path);
         BufferedReader bufferfile = new BufferedReader(new FileReader(file));
 
         String line;
@@ -72,7 +74,7 @@ public class ModelLoader {
     //it return a triangle which is a face of the object, later textures and normals can be added
     private Triangle setFace(ArrayList<Vector3> vertices, ArrayList<Vector3> normals, String[] data) {
 
-        return new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0, 0), setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals));
+        return new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0), setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals));
     }
 
 
@@ -106,8 +108,8 @@ public class ModelLoader {
     private ArrayList<Triangle> squareToTriangle(String[] data, ArrayList<Vector3> vertices, ArrayList<Vector3> normals) {
         ArrayList<Triangle> squareTriangles = new ArrayList<>();
 
-        squareTriangles.add(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0, 0), setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals)));
-        squareTriangles.add(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0, 0), setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleVertex(data[4].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals)));
+        squareTriangles.add(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0), setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals)));
+        squareTriangles.add(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0), setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleVertex(data[4].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals)));
         return squareTriangles;
 
     }
