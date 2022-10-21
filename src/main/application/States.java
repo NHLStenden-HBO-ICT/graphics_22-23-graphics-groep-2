@@ -1,6 +1,6 @@
 package main.application;
 
-//program states
+//the different valid program states our program can be in
 public enum States {
     STARTING,       //starting up the program
     LOADING_MODEL,  //loading a model

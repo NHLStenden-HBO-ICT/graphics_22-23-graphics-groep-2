@@ -12,16 +12,18 @@ public class StatusBar extends JPanel {
 
     //this method should only be called from the event dispatch thread because it affects the gui
     public StatusBar() {
+        //configure this JPanel
         this.setOpaque(false);
         this.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
+        //make some elements to add to it
         stateDisplay = new Label();
         progressBar = new JProgressBar();
 
-        //state display label
+        //configure state display label
         stateDisplay.setPreferredSize(new Dimension(100, 20));
 
-        //progress bar
+        //configure progress bar
         progressBar.setPreferredSize(new Dimension(100, 20));
 
         this.add(stateDisplay);
