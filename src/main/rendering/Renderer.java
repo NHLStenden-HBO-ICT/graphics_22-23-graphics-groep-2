@@ -15,31 +15,36 @@ import java.util.List;
 
 public class Renderer {
 
-    private double maxRayDepth = 5;
+    private static double MAX_RAY_DEPTH = 5;
 
-    private Scene scene;
 
-    public Renderer(Scene scene) {
-        this.scene = scene;
+    private Renderer() {
     }
 
-    // Return the current scene
-    public Scene getScene() {
-        return scene;
-    }
+    public static int tracePixel(Camera camera, Scene scene, int x, int y) {
+        // Cast ray and check if it intersects with something
+        FullRay ray = camera.getRayFromPixel(x, y);// gets the ray with the coörds of the virtual screen that's
+        // equal to the x and y pixel of the image
+        RayHit hit = ray.castRay(scene.getGeometry());
 
-    // Set the current scene
-    public void setScene(Scene scene_) {
-        scene = scene_;
+        // If the ray intersects with something, write coordinates in console and call
+        // the calculateLight(RayHit hit) method with the current rayhit
+        // Finally set that pixel with the final color in the image buffer
+        if (hit != null) {
+            VectorColor finalColor = calculateLight(hit, scene, 0);
+
+            return finalColor.getJavaColor().getRGB();
+
+        } else {
+            // if there is no intersection then it will color x and y black
+            return 000000;
+        }
     }
 
     public double getMaxRayDepth() {
-        return maxRayDepth;
+        return MAX_RAY_DEPTH;
     }
 
-    public void setMaxRayDepth(double maxRayDepth) {
-        this.maxRayDepth = maxRayDepth;
-    }
 
     // Cast rays from the camera into the scene to detect intersections and see if
     // they need to be lit up
@@ -47,7 +52,7 @@ public class Renderer {
     // Then setip a buffer and a camera
     // Then cast a ray through each pixel and calculate the color for it if it
     // intersects with a solid
-    public BufferedImage RenderToImage(int height) {
+    public BufferedImage RenderToImage(Scene scene, int height) {
 
         PixelData pixelData = new PixelData(height, scene.getCamera().getRatio());
         BufferedImage buffer = new BufferedImage(pixelData.getWidth(), pixelData.getHeight(),
@@ -58,23 +63,7 @@ public class Renderer {
         // Loop for each pixel on the image
         for (int y = 0; y < pixelData.getHeight(); ++y) {
             for (int x = 0; x < pixelData.getWidth(); ++x) {
-                // Cast ray and check if it intersects with something
-                FullRay ray = camera.getRayFromPixel(x, y);// gets the ray with the coörds of the virtual screen that's
-                                                           // equal to the x and y pixel of the image
-                RayHit hit = ray.castRay(scene.getGeometry());
-
-                // If the ray intersects with something, write coordinates in console and call
-                // the calculateLight(RayHit hit) method with the current rayhit
-                // Finally set that pixel with the final color in the image buffer
-                if (hit != null) {
-                    VectorColor finalColor = calculateLight(hit, scene, 0);
-
-                    buffer.setRGB(x, y, finalColor.getJavaColor().getRGB());
-
-                } else {
-                    // if there is no intersection then it will color x and y black
-                    buffer.setRGB(x, y, 000000);
-                }
+                buffer.setRGB(x, y, tracePixel(camera, scene, x, y));
             }
         }
 
@@ -88,11 +77,11 @@ public class Renderer {
     // ray to each light source
     // First it puts the lights and contactpoint in variables and makes a variable
     // for the final output
-    public VectorColor calculateLight(RayHit hit, Scene scene, double rayDepth) {
+    public static VectorColor calculateLight(RayHit hit, Scene scene, double rayDepth) {
 
         // Stopping conditions for when this function is called recursively
         // Stop when max raydepth has been reached
-        if (rayDepth == maxRayDepth) {
+        if (rayDepth == MAX_RAY_DEPTH) {
             return new VectorColor(new Vector3(0, 0, 0));
         }
 

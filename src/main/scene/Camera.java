@@ -35,6 +35,22 @@ public class Camera {
         this.ratio = (double) imageWidth / (double) imageHeight;
     }
 
+    public double getImageHeight() {
+        return imageHeight;
+    }
+
+    public void setImageHeight(double imageHeight) {
+        this.imageHeight = imageHeight;
+    }
+
+    public double getImageWidth() {
+        return imageWidth;
+    }
+
+    public void setImageWidth(double imageWidth) {
+        this.imageWidth = imageWidth;
+    }
+
     public double getRatio() {
         return ratio;
     }
