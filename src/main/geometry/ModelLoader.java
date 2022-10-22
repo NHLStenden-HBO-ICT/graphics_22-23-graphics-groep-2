@@ -52,7 +52,7 @@ public class ModelLoader {
                     vertices.add(setVertice(data));
                     break;
                 case "vt":
-                    //textureVertices.add(setTextureVertice(data));//todo fix
+                    textureVertices.add(setTextureVertice(data));//todo fix
                     break;
                 case "vn":
                     normals.add(setVertice(data));
@@ -63,7 +63,7 @@ public class ModelLoader {
                         System.out.println("this object's faces are made out squaires and not triangles so this can not be used");
                         break;
                     } else {
-                        triangles.add(setFace(vertices, normals, data,material));
+                        triangles.add(setFace(vertices, normals, data,material,textureVertices));
                         break;
                     }
             }
@@ -91,17 +91,15 @@ public class ModelLoader {
     //sets the color of the triangle and gets the correct vertex that is a part of the face.
     //a face can be seen as the triangles of object
     //it return a triangle which is a face of the object, later textures and normals can be added
-    private Triangle setFace(ArrayList<Vector3> vertices, ArrayList<Vector3> normals, String[] data,Material material) {
+    private Triangle setFace(ArrayList<Vector3> vertices, ArrayList<Vector3> normals, String[] data,Material material, ArrayList<Vector3> textureVertices) {
         //todo add vertexes
+
 
         return new Triangle(material,
                 setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices),
-                setTriangleNormal(data[1].split("/"), normals));
-        /*return new Triangle(material,
-                setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices),
                 setTriangleNormal(data[1].split("/"), normals),
                 setTriangleTexture(data[1].split("/"), textureVertices), setTriangleTexture(data[2].split("/"), textureVertices), setTriangleTexture(data[3].split("/"), textureVertices));
-        */
+
     }
 
 

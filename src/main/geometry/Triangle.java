@@ -7,6 +7,8 @@ public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] vertices;
     private Vector3[] verticesorigin; //location of the vertices when triangle is at 0
+    private Vector3[] texturemap;
+    //todo add back texturemaps
     private Vector3 surfaceNormal;
     private Vector3 surfaceNormalOrg;
 
@@ -38,6 +40,22 @@ public class Triangle extends Solid implements Intersectable {
         this.surfaceNormal =normal;
     }
 
+    public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3, Vector3 normal, Vector3 pointT1, Vector3 pointT2, Vector3 pointT3) {
+        super(material);
+        this.vertices = new Vector3[]{
+                point1,
+                point2,
+                point3,
+        };
+        this.verticesorigin = new Vector3[]{
+                point1,
+                point2,
+                point3,
+        };
+        this.surfaceNormalOrg = normal;
+        this.surfaceNormal =normal;
+    }
+
     public Vector3 getVertex(int index) {
         return vertices[index];
     }
@@ -52,6 +70,13 @@ public class Triangle extends Solid implements Intersectable {
     public void setVertex(int index, Vector3 vertex) {
         this.vertices[index] = vertex;
     }
+
+    public Vector3[] getTexturemap() {
+        return texturemap;
+    }
+
+    public void setTexturemap(Vector3[] texturemap){this.texturemap=texturemap;}
+
 
     // calculates the surface normal of this triangle.
     // by calculating this when the triangle gets generated we avoid having to continuously recalculate this

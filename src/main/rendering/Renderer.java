@@ -1,6 +1,7 @@
 package main.rendering;
 
 import main.geometry.Solid;
+import main.geometry.Triangle;
 import main.maths.FullRay;
 import main.maths.RayHit;
 import main.maths.ShadowRay;
@@ -181,4 +182,49 @@ public class Renderer {
         // Finally return the final result after all the lights have been calculated
         return diffColor.addVectorColor(reflColor);
     }
+
+    public int textures(RayHit hit){
+
+        Solid solid = hit.getHitSolid();
+        Triangle triangle = new Triangle(solid.getMaterial(),new Vector3(),new Vector3(), new Vector3());
+
+        if(solid.getClass()==Triangle.class){
+             triangle = (Triangle) solid.getClass().cast(solid);
+        }
+
+
+        Vector3[] vertexes =triangle.getVertices();
+
+        Vector3[] Texturemap=triangle.getTexturemap();
+
+        double widthRatio3D=Math.max(vertexes[0].getX(),Math.max(vertexes[1].getX(),vertexes[2].getX()))
+                -Math.min(vertexes[0].getX(),Math.min(vertexes[1].getX(),vertexes[2].getX()));
+
+        double heightRatio3D=Math.max(vertexes[0].getY(),Math.max(vertexes[1].getY(),vertexes[2].getY()))
+                -Math.min(vertexes[0].getY(),Math.min(vertexes[1].getY(),vertexes[2].getY()));
+
+        double widthRatioTM=Math.max(Texturemap[0].getX(),Math.max(Texturemap[1].getX(),Texturemap[2].getX()))
+                -Math.min(Texturemap[0].getX(),Math.min(Texturemap[1].getX(),Texturemap[2].getX()));
+
+        double heightRatioTM=Math.max(Texturemap[0].getY(),Math.max(Texturemap[1].getY(),Texturemap[2].getY()))
+                -Math.min(Texturemap[0].getY(),Math.min(Texturemap[1].getY(),Texturemap[2].getY()));
+
+
+        int width =4;
+
+
+        int height =4;
+
+        //todo calculations
+
+        //todomin max
+
+        //to do get rgb from picture
+
+
+
+        return triangle.getMaterial().getTexturmap().getRGB(width, height);
+    }
+
+
 }

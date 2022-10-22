@@ -30,7 +30,7 @@ public class MaterialLoader {
                     break;
                 //more cases for Ambient(Ka), diffuse(Kd), reflection/specular color (Ks), transparent/dissolved(d) with transmision filter(Tf), optical density/refraction(Ni) and incase the object gives light/emision(Ke)
                 case "map_Kd":
-                    //material.setTexturmap(getImage(data));
+                    material.setTexturmap(getImage(data));
                 break;
             }
 
@@ -48,9 +48,9 @@ public class MaterialLoader {
     }
 
     private BufferedImage getImage(String[] data){
-        String[] line = data[1].split("/");
+        String[] line = data[1].split("//");
         try {
-            return ImageIO.read(new File(data[data.length-1]));
+            return ImageIO.read(new File("objfiles/"+data[1]));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
