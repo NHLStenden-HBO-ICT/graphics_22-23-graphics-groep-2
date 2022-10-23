@@ -36,9 +36,8 @@ public class SceneFactory {
             throw new RuntimeException(e);
         }
         model.setSize(100);
-        model.lookAt(new Vector3(1,0,-1));
+        model.lookAt(new Vector3(0,0,-1));
         scene.addIntersectable(model);
-
 
         return scene;
     }

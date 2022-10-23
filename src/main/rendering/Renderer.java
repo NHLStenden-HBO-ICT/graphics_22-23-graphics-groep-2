@@ -33,19 +33,19 @@ public class Renderer {
         // the calculateLight(RayHit hit) method with the current rayhit
         // Finally set that pixel with the final color in the image buffer
         if (hit != null) {
+
             if (hit.getHitSolid().getMaterial().getTexturmap()==null){
                 VectorColor finalColor = calculateLight(hit, scene, 0);
                 return finalColor.getJavaColor().getRGB();
             }
             else {
-
                 return textures(hit);
             }
 
 
         } else {
             // if there is no intersection then it will color x and y black
-            return 000000;
+            return 100000;
         }
     }
 
@@ -204,56 +204,44 @@ public class Renderer {
 
         Vector3[] texturevertices=triangle.getTexturemap();
 
-        double widthRatio3D=Math.max(vertexes[0].getX(),Math.max(vertexes[1].getX(),vertexes[2].getX()))
-                -Math.min(vertexes[0].getX(),Math.min(vertexes[1].getX(),vertexes[2].getX()));
+        double vertXmin = Math.min(vertexes[0].getX(),Math.min(vertexes[1].getX(),vertexes[2].getX()));
+        double vertYmin = Math.min(vertexes[0].getY(),Math.min(vertexes[1].getY(),vertexes[2].getY()));
+        double textXmin = Math.min(texturevertices[0].getX(),Math.min(texturevertices[1].getX(),texturevertices[2].getX()));
+        double textYmin = Math.min(texturevertices[0].getY(),Math.min(texturevertices[1].getY(),texturevertices[2].getY()));
 
-        double heightRatio3D=Math.max(vertexes[0].getY(),Math.max(vertexes[1].getY(),vertexes[2].getY()))
-                -Math.min(vertexes[0].getY(),Math.min(vertexes[1].getY(),vertexes[2].getY()));
+        double widthRatio3D=Math.max(vertexes[0].getX(),Math.max(vertexes[1].getX(),vertexes[2].getX())) - vertXmin;
 
-        double widthRatioTM=Math.max(texturevertices[0].getX(),Math.max(texturevertices[1].getX(),texturevertices[2].getX()))
-                -Math.min(texturevertices[0].getX(),Math.min(texturevertices[1].getX(),texturevertices[2].getX()));
+        double heightRatio3D=Math.max(vertexes[0].getY(),Math.max(vertexes[1].getY(),vertexes[2].getY())) - vertYmin;
 
-        double heightRatioTM=Math.max(texturevertices[0].getY(),Math.max(texturevertices[1].getY(),texturevertices[2].getY()))
-                -Math.min(texturevertices[0].getY(),Math.min(texturevertices[1].getY(),texturevertices[2].getY()));
+        double widthRatioTM=Math.max(texturevertices[0].getX(),Math.max(texturevertices[1].getX(),texturevertices[2].getX())) - textXmin;
+
+        double heightRatioTM=Math.max(texturevertices[0].getY(),Math.max(texturevertices[1].getY(),texturevertices[2].getY())) - textYmin;
 
 
         int width;
 
         int height;
 
-
-        if(Math.min(vertexes[0].getX(),Math.min(vertexes[1].getX(),vertexes[2].getX()))<=0){
-            width= Math.abs((int) (Math.min(texturevertices[0].getX(),Math.min(texturevertices[1].getX(),texturevertices[2].getX()))
-                    *material.getTexturmap().getWidth()
-                    +(((Math.abs(Math.min(vertexes[0].getX(),Math.min(vertexes[1].getX(),vertexes[2].getX())))
-                    +hit.getContactPoint().getX())
-                    *material.getTexturmap().getWidth() *widthRatioTM
-                    /widthRatio3D))));
+        if(vertXmin<=0){
+            width= Math.abs((int) ((textXmin *material.getTexturmap().getWidth())+
+                    (((vertXmin +hit.getContactPoint().getX()) *material.getTexturmap().getWidth() *widthRatioTM)/widthRatio3D)));
         }
         else{
-            width= Math.abs((int) (Math.min(texturevertices[0].getX(),Math.min(texturevertices[1].getX(),texturevertices[2].getX()))
-                    *material.getTexturmap().getWidth()
-                    +(hit.getContactPoint().getX()-((Math.abs(Math.min(vertexes[0].getX(),Math.min(vertexes[1].getX(),vertexes[2].getX()))
-                    *material.getTexturmap().getWidth() *widthRatioTM
-                    /widthRatio3D))))));
+            width= Math.abs((int) ((textXmin *material.getTexturmap().getWidth()) +
+                    (((hit.getContactPoint().getX()-vertXmin) *material.getTexturmap().getWidth() *widthRatioTM)/widthRatio3D)));
         }
 
 
-        if(Math.min(vertexes[0].getY(),Math.min(vertexes[1].getY(),vertexes[2].getY()))<=0){
-            height= Math.abs((int) (Math.min(texturevertices[0].getY(),Math.min(texturevertices[1].getY(),texturevertices[2].getY()))
-                    *material.getTexturmap().getHeight()
-                    +(((Math.abs(Math.min(vertexes[0].getY(),Math.min(vertexes[1].getY(),vertexes[2].getY())))
-                    +hit.getContactPoint().getY())
-                    *material.getTexturmap().getHeight() *heightRatioTM
-                    /heightRatio3D))));
+        if(vertYmin<=0){
+            height= Math.abs((int) ((textYmin * material.getTexturmap().getHeight())
+                    +(((vertYmin +hit.getContactPoint().getY()) *material.getTexturmap().getHeight() *heightRatioTM )/heightRatio3D)));
         }
         else{
-            height= Math.abs((int) (Math.min(texturevertices[0].getY(),Math.min(texturevertices[1].getY(),texturevertices[2].getY()))
-                    *material.getTexturmap().getHeight()
-                    +(hit.getContactPoint().getY()-((Math.abs(Math.min(vertexes[0].getY(),Math.min(vertexes[1].getY(),vertexes[2].getY()))
-                    *material.getTexturmap().getHeight() *heightRatioTM
-                    /heightRatio3D))))));
+            height= Math.abs((int) ((textYmin * material.getTexturmap().getHeight())
+                    +(((hit.getContactPoint().getY()-vertYmin) *material.getTexturmap().getHeight() *heightRatioTM )/heightRatio3D)));
         }
+
+        //System.out.println("texture loading " +width +" "+height);
 
         if (height<=0){
             height =0;
@@ -269,7 +257,7 @@ public class Renderer {
             width=solid.getMaterial().getTexturmap().getHeight()-1;
         }
 
-        System.out.println("texture loading " +width +" "+height);
+        //System.out.println("texture loading " +width +" "+height);
 
         return solid.getMaterial().getTexturmap().getRGB(width, height);
     }
