@@ -52,6 +52,11 @@ public class Triangle extends Solid implements Intersectable {
                 point2,
                 point3,
         };
+        this.texturemap = new Vector3[]{
+                pointT1,
+                pointT2,
+                pointT3,
+        };
         this.surfaceNormalOrg = normal;
         this.surfaceNormal =normal;
     }

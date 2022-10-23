@@ -30,12 +30,13 @@ public class SceneFactory {
 
         try {
             //adds model to scene using the model loader, it gets the file path and sets the start position
-            model = modelloader.readFile("objfiles/box.obj", (new Vector3(100, 0, -500)));
+            model = modelloader.readFile("objfiles/box1.obj", (new Vector3(100, 0, -500)));
         } catch (Exception e) {
             //because a file is being read, for safety it needs a try and catch
             throw new RuntimeException(e);
         }
         model.setSize(100);
+        model.lookAt(new Vector3(1,0,-1));
         scene.addIntersectable(model);
 
 
