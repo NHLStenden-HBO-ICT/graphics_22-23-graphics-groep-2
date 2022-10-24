@@ -8,7 +8,6 @@ public class Triangle extends Solid implements Intersectable {
     private Vector3[] vertices;
     private Vector3[] verticesorigin; //location of the vertices when triangle is at 0
     private Vector3[] texturemap;
-    //todo add back texturemaps
     private Vector3 surfaceNormal;
     private Vector3 surfaceNormalOrg;
 
@@ -21,6 +20,7 @@ public class Triangle extends Solid implements Intersectable {
                 point3,
         };
         this.surfaceNormal = calculateSurfaceNormal();
+
     }
 
     //triangle of a loaded model

@@ -30,13 +30,13 @@ public class SceneFactory {
 
         try {
             //adds model to scene using the model loader, it gets the file path and sets the start position
-            model = modelloader.readFile("objfiles/box1.obj", (new Vector3(100, 0, -500)));
+            model = modelloader.readFile("objfiles/box1.obj", (new Vector3(20, 0, -500)));
         } catch (Exception e) {
             //because a file is being read, for safety it needs a try and catch
             throw new RuntimeException(e);
         }
         model.setSize(100);
-        model.lookAt(new Vector3(0,0,-1));
+        model.lookAt(new Vector3(0,0,20)); //todo rotation are fine unless it the x or y does not contain equal numbers
         scene.addIntersectable(model);
 
         return scene;

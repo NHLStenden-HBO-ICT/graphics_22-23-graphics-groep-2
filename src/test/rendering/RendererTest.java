@@ -23,8 +23,8 @@ class RendererTest {
     void widthpixelTexture(){
 
         //folowing numbers are theoretical
-        double minX=2;
-        double maxX=200;
+        double minX=-51.86090037556417;
+        double maxX=162.38721616503693;
 
         double minTX=0;
         double maxTX=1;
@@ -39,13 +39,13 @@ class RendererTest {
 
         if(minX<=0){
             //                     pixel start       calculations of upcomming pixels
-            width= Math.abs((int) (minTX *matWidth +(((minX +contactpointX) *matWidth *widthRatioTM )/widthRatio3D)));
+            width= Math.abs((int) (minTX *matWidth +(((Math.abs(minX) +contactpointX) *matWidth *widthRatioTM )/widthRatio3D)));
         }
         else{
-            width= Math.abs((int) (minTX *matWidth +((contactpointX-minX) *matWidth *widthRatioTM) /widthRatio3D));
+            width= Math.abs((int) (minTX *matWidth +((contactpointX-Math.abs(minX)) *matWidth *widthRatioTM) /widthRatio3D));
         }
 
-        assertEquals(9, width);
+        assertEquals(19, width);
     }
 
 }
