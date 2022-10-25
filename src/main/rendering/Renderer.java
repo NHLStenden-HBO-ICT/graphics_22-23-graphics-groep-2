@@ -145,8 +145,6 @@ public class Renderer {
             // Check if object is reflective and send a reflective ray if it is
             if (hitSolid.getMaterial().getReflectivity() > 0.0) {
 
-                VectorColor refractColor = new VectorColor(new Vector3(0, 0, 0));
-
                 // Calculate new ray direction
                 Vector3 reflectedRayDir = fullRayDir.sub(hit.getNormal().multi(2 * fullRayDir.dot(hit.getNormal())));
 
@@ -173,16 +171,17 @@ public class Renderer {
                         Vector3 refractDir = RefractionMath.refract(fullRayDir, hit.getNormal(), ior).normalise();
                         Vector3 refractOrigin = hitPos;
 
-                        if (outside){
+                        if (outside) {
                             refractOrigin = refractOrigin.sub(bias);
-                        }else{
+                        } else {
                             refractOrigin = refractOrigin.add(bias);
                         }
 
                         FullRay refractRay = new FullRay(refractDir, refractOrigin);
                         RayHit refractHit = refractRay.castRay(scene.getGeometry());
 
-                        reflColor = new VectorColor(reflColor.getVector().multi(kr)).addVectorColor(new VectorColor(calculateLight(refractHit, scene, rayDepth).getVector().multi(1 - kr)));
+                        reflColor = new VectorColor(reflColor.getVector().multi(kr)).addVectorColor(
+                                new VectorColor(calculateLight(refractHit, scene, rayDepth).getVector().multi(1 - kr)));
                     }
                 }
             }

@@ -14,27 +14,24 @@ public final class RefractionMath {
         return value;
     }
 
-    public static Vector3 refract(Vector3 incidence, Vector3 sNormal, double ior){
-        double cosi = clampDouble(-1, 1, incidence.dot(sNormal)); 
-        double etai = 1, etat = ior; 
-        Vector3 n = sNormal;
+    public static Vector3 refract(Vector3 incidence, Vector3 sNormal, double ior) {
+        double cosi = clampDouble(-1, 1, incidence.dot(sNormal));
+        double etai = 1, etat = ior;
 
-        if (cosi < 0) { 
-            cosi = cosi * -1; 
-        } else { 
+        if (cosi < 0) {
+            cosi = cosi * -1;
+        } else {
             double tempi = etai;
             etai = etat;
             etat = tempi;
-            
-            n = sNormal.multi(-1); 
         }
 
-        double eta = etai / etat; 
+        double eta = etai / etat;
         double k = 1 - eta * eta * (1 - cosi * cosi);
-        
-        if (k < 0){
-            return new Vector3(0,0,0);
-        }else{
+
+        if (k < 0) {
+            return new Vector3(0, 0, 0);
+        } else {
             return incidence.multi(eta).add(sNormal.multi(eta * cosi - Math.sqrt(k)));
         }
     }
