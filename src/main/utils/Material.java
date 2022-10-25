@@ -11,6 +11,33 @@ public class Material {
 
     private VectorColor vectorColor;
 
+    public Material(VectorColor vectorColor) {
+
+        this.vectorColor = vectorColor;
+        this.reflectivity = 0;
+        this.ior = 1;
+    }
+
+    public Material(VectorColor vectorColor, double reflectivity) {
+
+        this.vectorColor = vectorColor;
+
+        // Check if reflectivity value is above or below the max or min value
+        if (reflectivity > 1.0) {
+            this.reflectivity = 1.0;
+        } else {
+            this.reflectivity = reflectivity;
+        }
+
+        if (reflectivity < 0.0) {
+            this.reflectivity = 0.0;
+        } else {
+            this.reflectivity = reflectivity;
+        }
+
+        this.ior = 1;
+    }
+
     public Material(VectorColor vectorColor, double reflectivity, double ior) {
 
         this.vectorColor = vectorColor;

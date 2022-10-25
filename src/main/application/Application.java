@@ -38,16 +38,16 @@ public class Application {
         //make some stuff and add it to the scene
         scene.setCamera(new Camera(new Vector3(-10, 10, -20), height, (int) (height * ratio), 90));
 
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.9, 1.0), new Vector3(100, -20, -100), new Vector3(-100, -20, -100), new Vector3(0, 100, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.9), new Vector3(100, -20, -100), new Vector3(-100, -20, -100), new Vector3(0, 100, -100)));
         
         // Bottom plane
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255,255 ,255 )), 0.0, 1), new Vector3(-100, -20, -100), new Vector3(100, -20, -100), new Vector3(0, -20, 0)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255,255 ,255 ))), new Vector3(-100, -20, -100), new Vector3(100, -20, -100), new Vector3(0, -20, 0)));
 
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 1), new Vector3(300, -20, 0), new Vector3(0, -20, 0), new Vector3(100, -20, -100)));
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(0, 255, 0)), 0.0, 1), new Vector3(0, -20, 0), new Vector3(-300, -20, 0), new Vector3(-100, -20, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255))), new Vector3(300, -20, 0), new Vector3(0, -20, 0), new Vector3(100, -20, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(0, 255, 0))), new Vector3(0, -20, 0), new Vector3(-300, -20, 0), new Vector3(-100, -20, -100)));
 
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 1), new Vector3(-100, -20, -100), new Vector3(-100, -20, 0), new Vector3(0, 100, -100)));
-        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0.0, 1), new Vector3(100, -20, 0), new Vector3(100, -20, -100), new Vector3(0, 100, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255))), new Vector3(-100, -20, -100), new Vector3(-100, -20, 0), new Vector3(0, 100, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255))), new Vector3(100, -20, 0), new Vector3(100, -20, -100), new Vector3(0, 100, -100)));
         
         scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(255, 0, 0)), 1.0, 1.5), 5, new Vector3(0, 0, -50))); //test sphere
         scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(0, 0, 255)), 1.0, 1.3), 5, new Vector3(-15, 0, -70))); //test sphere
