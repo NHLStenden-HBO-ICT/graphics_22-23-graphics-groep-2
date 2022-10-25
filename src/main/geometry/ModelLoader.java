@@ -11,13 +11,15 @@ import java.util.ArrayList;
 
 public class ModelLoader {
 
-    public Model readFile(File file, Vector3 startPosition) throws Exception {
+    public Model readFile(String path, Vector3 startPosition) throws Exception {
 
         ArrayList<Triangle> triangles = new ArrayList<>();
         ArrayList<Vector3> vertices = new ArrayList<>();
         ArrayList<Vector3> normals = new ArrayList<>();
 
+
         //creates bufferreader that reads the file
+        File file = new File(path);
         BufferedReader bufferfile = new BufferedReader(new FileReader(file));
 
         String line;
