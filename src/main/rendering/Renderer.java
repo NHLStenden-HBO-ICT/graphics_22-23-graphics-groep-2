@@ -1,6 +1,7 @@
 package main.rendering;
 
 import main.geometry.Solid;
+import main.maths.Constants;
 import main.maths.FullRay;
 import main.maths.RayHit;
 import main.maths.ShadowRay;
@@ -124,8 +125,6 @@ public class Renderer {
             Vector3 lightPos = light.getPosition();
             Vector3 lightDir = lightPos.sub(hitPos).normalise();
 
-            Vector3 refractDir = new Vector3(0,0,0);
-
             // First calculate the intensity of the color of the pixel according to the
             // intensity of the lightsource and the distance of the lightsource to the
             // contactpoint
@@ -146,6 +145,8 @@ public class Renderer {
             // Check if object is reflective and send a reflective ray if it is
             if (hitSolid.getMaterial().getReflectivity() > 0.0) {
 
+                VectorColor refractColor = new VectorColor(new Vector3(0, 0, 0));
+
                 // Calculate new ray direction
                 Vector3 reflectedRayDir = fullRayDir.sub(hit.getNormal().multi(2 * fullRayDir.dot(hit.getNormal())));
 
@@ -160,46 +161,29 @@ public class Renderer {
                 // Multiply the result by the reflectivity of the material
                 reflColor = new VectorColor(reflection.addVectorColor(calculateLight(reflectedHit, scene, rayDepth))
                         .getVector().multi(hitSolid.getMaterial().getReflectivity()));
-            }
 
-            if (hitSolid.getMaterial().getIor() > 0.0){
-            
-                double hitIor = hitSolid.getMaterial().getIor();
-                Vector3 sNormal = hit.getNormal();
-                double cosi = RefractionMath.clampDouble(-1, 1, fullRayDir.dot(sNormal));
-                double etai = 1, etat = hitIor;
+                if (hitSolid.getMaterial().getIor() > 1.0) {
 
-                if (cosi < 0){
-                    cosi = cosi * -1;
-                }else{
-                    double tempEta = etai;
-                    etai = etat;
-                    etat = tempEta;
+                    double ior = hitSolid.getMaterial().getIor();
+                    double kr = RefractionMath.fresnel(fullRayDir, hit.getNormal(), ior);
+                    boolean outside = fullRayDir.dot(hit.getNormal()) < 0;
+                    Vector3 bias = hit.getNormal().multi(Constants.EPSILON);
 
-                    sNormal = sNormal.multi(-1);
-                }
+                    if (kr < 1) {
+                        Vector3 refractDir = RefractionMath.refract(fullRayDir, hit.getNormal(), ior).normalise();
+                        Vector3 refractOrigin = hitPos;
 
-                double eta = etai / etat;
-                double k = 1 - eta * eta * (1 - cosi * cosi);
-                
-                if (k < 0){
-                    refractDir = fullRayDir.multi(0).add(sNormal.multi(0 * cosi - Math.sqrt(k)));
+                        if (outside){
+                            refractOrigin = refractOrigin.sub(bias);
+                        }else{
+                            refractOrigin = refractOrigin.add(bias);
+                        }
 
-                    FullRay refractFullRay = new FullRay(refractDir, hitPos);
-                    RayHit refractHit = refractFullRay.castRay(scene.getGeometry());
+                        FullRay refractRay = new FullRay(refractDir, refractOrigin);
+                        RayHit refractHit = refractRay.castRay(scene.getGeometry());
 
-                    rayDepth = rayDepth + 1;
-
-                    return calculateLight(refractHit, scene, rayDepth);
-                }else{
-                    refractDir = fullRayDir.multi(eta).add(sNormal.multi(eta * cosi - Math.sqrt(k)));
-
-                    FullRay refractFullRay = new FullRay(refractDir, hitPos);
-                    RayHit refractHit = refractFullRay.castRay(scene.getGeometry());
-
-                    rayDepth = rayDepth + 1;
-
-                    return calculateLight(refractHit, scene, rayDepth);
+                        reflColor = new VectorColor(reflColor.getVector().multi(kr)).addVectorColor(new VectorColor(calculateLight(refractHit, scene, rayDepth).getVector().multi(1 - kr)));
+                    }
                 }
             }
 
