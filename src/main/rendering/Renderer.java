@@ -160,26 +160,40 @@ public class Renderer {
                 reflColor = new VectorColor(reflection.addVectorColor(calculateLight(reflectedHit, scene, rayDepth))
                         .getVector().multi(hitSolid.getMaterial().getReflectivity()));
 
+                // Check if object refracts light
                 if (hitSolid.getMaterial().getIor() > 1.0) {
 
+                    // Get ior of material
                     double ior = hitSolid.getMaterial().getIor();
+
+                    // Calculate fresnel equations
                     double kr = RefractionMath.fresnel(fullRayDir, hit.getNormal(), ior);
+
+                    // Check if ray is outside surface
                     boolean outside = fullRayDir.dot(hit.getNormal()) < 0;
+
+                    // Bias to offset the ray and avoid shadow acne-like effects
                     Vector3 bias = hit.getNormal().multi(Constants.EPSILON);
 
+                    // If the result of the fresnel equations is below 1 calculate refraction
                     if (kr < 1) {
+
+                        // Calculate refraction direction and set origin
                         Vector3 refractDir = RefractionMath.refract(fullRayDir, hit.getNormal(), ior).normalise();
                         Vector3 refractOrigin = hitPos;
 
+                        // Offset origin with bias
                         if (outside) {
                             refractOrigin = refractOrigin.sub(bias);
                         } else {
                             refractOrigin = refractOrigin.add(bias);
                         }
 
+                        // Create refraction ray and cast it
                         FullRay refractRay = new FullRay(refractDir, refractOrigin);
                         RayHit refractHit = refractRay.castRay(scene.getGeometry());
 
+                        // Mix reflection color with refraction color
                         reflColor = new VectorColor(reflColor.getVector().multi(kr)).addVectorColor(
                                 new VectorColor(calculateLight(refractHit, scene, rayDepth).getVector().multi(1 - kr)));
                     }

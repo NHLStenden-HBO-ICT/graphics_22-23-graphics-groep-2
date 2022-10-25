@@ -2,6 +2,16 @@ package main.utils;
 
 public class Material {
 
+    // Ior stands for "index of refraction"
+    // This determines how much the object "refracts" incoming rays
+    // More detailed explanation can of course be found online
+    // Source used for this particular project:
+    // https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel
+
+    // Common iors are:
+    // Air = 1.0 (close to 1.0 in real life)
+    // Water = 1.3
+    // Glass = 1.5
     private double ior;
 
     // Note: This value can't be higher than 1 or lower than 0
@@ -11,6 +21,8 @@ public class Material {
 
     private VectorColor vectorColor;
 
+    // If only a color is given default to a diffuse object
+    // 0 reflectivity and 1:1 refractions
     public Material(VectorColor vectorColor) {
 
         this.vectorColor = vectorColor;
@@ -18,6 +30,7 @@ public class Material {
         this.ior = 1;
     }
 
+    // If reflectivity is also provided only set refraction to default value
     public Material(VectorColor vectorColor, double reflectivity) {
 
         this.vectorColor = vectorColor;
@@ -38,6 +51,7 @@ public class Material {
         this.ior = 1;
     }
 
+    // Final overload constructor if ior is also provided
     public Material(VectorColor vectorColor, double reflectivity, double ior) {
 
         this.vectorColor = vectorColor;
