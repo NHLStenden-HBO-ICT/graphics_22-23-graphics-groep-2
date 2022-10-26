@@ -66,7 +66,7 @@ public class Model implements Intersectable {
                 triangle.setVertex(i, (triangle.getVertex(i).multi(size))); //first the size is calculated before position because size needs to be calculated out of the origin before position is added
                 triangle.setVertex(i, (triangle.getVertex(i).add(position))); // if object moves to the plus side it will be added since plus + plus = plus while moving to minus side will also be added since plus + minus = plus-plus
             }
-            triangle.setSurfaceNormal(triangle.getSurfaceNormalOrg().rotateByQuaternion(orientation.getQuaternion()));
+            triangle.setSurfaceNormal(triangle.getSurfaceNormal().rotateByQuaternion(orientation.getQuaternion()));
         }
     }
 

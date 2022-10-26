@@ -7,9 +7,7 @@ public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] vertices;
     private Vector3[] verticesorigin; //location of the vertices when triangle is at 0
-    private Vector3[] texturemap;
     private Vector3 surfaceNormal;
-    private Vector3 surfaceNormalOrg;
 
     //not part of an in loaded model
     public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
@@ -36,34 +34,13 @@ public class Triangle extends Solid implements Intersectable {
                 point2,
                 point3,
         };
-        this.surfaceNormalOrg = normal;
-        this.surfaceNormal =normal;
-    }
-
-    public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3, Vector3 normal, Vector3 pointT1, Vector3 pointT2, Vector3 pointT3) {
-        super(material);
-        this.vertices = new Vector3[]{
-                point1,
-                point2,
-                point3,
-        };
-        this.verticesorigin = new Vector3[]{
-                point1,
-                point2,
-                point3,
-        };
-        this.texturemap = new Vector3[]{
-                pointT1,
-                pointT2,
-                pointT3,
-        };
-        this.surfaceNormalOrg = normal;
         this.surfaceNormal =normal;
     }
 
     public Vector3 getVertex(int index) {
         return vertices[index];
     }
+
     public Vector3 getVertexOrigin(int index) {
         return verticesorigin[index];
     }
@@ -76,17 +53,9 @@ public class Triangle extends Solid implements Intersectable {
         this.vertices[index] = vertex;
     }
 
-    public Vector3[] getTexturemap() {
-        return texturemap;
-    }
-
-    public void setTexturemap(Vector3[] texturemap){this.texturemap=texturemap;}
-
-
     // calculates the surface normal of this triangle.
     // by calculating this when the triangle gets generated we avoid having to continuously recalculate this
     // while ray tracing
-
     private Vector3 calculateSurfaceNormal() {
         //find two edges
         Vector3 u = vertices[0].sub(vertices[1]);
@@ -108,7 +77,8 @@ public class Triangle extends Solid implements Intersectable {
         return surfaceNormal;
     }
 
-    public Vector3 getSurfaceNormalOrg() {
+    //non overide version to work with rotations
+    public Vector3 getSurfaceNormal() {
         return surfaceNormal;
     }
 

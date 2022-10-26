@@ -1,7 +1,5 @@
 package main.utils;
 
-import java.awt.image.BufferedImage;
-
 public class Material {
 
     // Ior stands for "index of refraction"
@@ -20,8 +18,6 @@ public class Material {
     // This is accounted for in the constructor so entering a wrong value won't
     // break the program
     private double reflectivity;
-
-    private BufferedImage texturmap;
 
     private VectorColor vectorColor;
 
@@ -96,13 +92,6 @@ public class Material {
         this.reflectivity = reflectivity;
     }
 
-    public void setTexturmap(BufferedImage texturmap){
-        this.texturmap=texturmap;
-    }
-
-    public BufferedImage getTexturmap() {
-        return texturmap;
-    }
     public void setIor(double ior) {
         this.ior = ior;
     }

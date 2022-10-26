@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ModelLoader {
 
-    public Model readFile(String path, Vector3 startPosition) throws Exception {
+    public Model readFile(String path,String filename, Vector3 startPosition,double size,Vector3 lookat) throws Exception {
 
         ArrayList<Triangle> triangles = new ArrayList<>();
         ArrayList<Vector3> vertices = new ArrayList<>();
@@ -24,7 +24,7 @@ public class ModelLoader {
 
 
         //creates bufferreader that reads the file
-        File file = new File(path);
+        File file = new File(path+filename);
         BufferedReader bufferfile = new BufferedReader(new FileReader(file));
 
 
@@ -45,14 +45,14 @@ public class ModelLoader {
                     //materials are seperated in a different file
                     //to get the correct file we need to get the name out of the obj file.
                     //the material file can beobtain by looking forr the line starting with mtllib
-                    material =materialloader.MaterialFile(new File("objfiles/" + data[1]));
+                    material =materialloader.MaterialFile(new File(path + data[1]));
                     break;
                 //v stands for vertices aka the points of a triangle
                 case "v":
                     vertices.add(setVertice(data));
                     break;
                 case "vt":
-                    textureVertices.add(setTextureVertice(data));//todo fix
+                    textureVertices.add(setTextureVertice(data));//todo is set for the textures in case they are needed
                     break;
                 case "vn":
                     normals.add(setVertice(data));
@@ -63,13 +63,18 @@ public class ModelLoader {
                         System.out.println("this object's faces are made out squaires and not triangles so this can not be used");
                         break;
                     } else {
-                        triangles.add(setFace(vertices, normals, data,material,textureVertices));
+                        triangles.add(setFace(vertices, normals, data,material));
                         break;
                     }
             }
         }
 
-        return new Model(triangles, startPosition, 1);
+        Model model = new Model(triangles, startPosition, 1);
+        if(lookat!=null){
+            model.lookAt(lookat);
+        }
+        model.setSize(size);
+        return model;
 
     }
 
@@ -91,14 +96,8 @@ public class ModelLoader {
     //sets the color of the triangle and gets the correct vertex that is a part of the face.
     //a face can be seen as the triangles of object
     //it return a triangle which is a face of the object, later textures and normals can be added
-    private Triangle setFace(ArrayList<Vector3> vertices, ArrayList<Vector3> normals, String[] data,Material material, ArrayList<Vector3> textureVertices) {
-
-        return new Triangle(material,
-                setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices),
-                setTriangleNormal(data[1].split("/"), normals),
-                setTriangleTexture(data[1].split("/"), textureVertices), setTriangleTexture(data[2].split("/"), textureVertices), setTriangleTexture(data[3].split("/"), textureVertices));
-
-        return new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0, 0), setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals));
+    private Triangle setFace(ArrayList<Vector3> vertices, ArrayList<Vector3> normals, String[] data,Material material) {
+        return new Triangle(material, setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals));
     }
 
 
