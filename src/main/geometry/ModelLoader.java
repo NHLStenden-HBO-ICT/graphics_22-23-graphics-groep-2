@@ -98,6 +98,7 @@ public class ModelLoader {
                 setTriangleNormal(data[1].split("/"), normals),
                 setTriangleTexture(data[1].split("/"), textureVertices), setTriangleTexture(data[2].split("/"), textureVertices), setTriangleTexture(data[3].split("/"), textureVertices));
 
+        return new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255)), 0, 0), setTriangleVertex(data[1].split("/"), vertices), setTriangleVertex(data[2].split("/"), vertices), setTriangleVertex(data[3].split("/"), vertices), setTriangleNormal(data[1].split("/"), normals));
     }
 
 
