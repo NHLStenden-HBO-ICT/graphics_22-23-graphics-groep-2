@@ -1,10 +1,12 @@
 package main.rendering;
 
 import main.geometry.Solid;
+import main.maths.Constants;
 import main.maths.FullRay;
 import main.maths.RayHit;
 import main.maths.ShadowRay;
 import main.maths.Vector3;
+import main.maths.RefractionMath;
 import main.scene.Camera;
 import main.scene.PointLight;
 import main.scene.Scene;
@@ -96,6 +98,7 @@ public class Renderer {
         // Get hit position and object
         Vector3 hitPos = hit.getContactPoint();
         Solid hitSolid = hit.getHitSolid();
+        Vector3 fullRayDir = hit.getRay().getDirection();
 
         // Create colors later to be used for reflective calculations and diffuse
         // calculations
@@ -132,7 +135,6 @@ public class Renderer {
             if (hitSolid.getMaterial().getReflectivity() > 0.0) {
 
                 // Calculate new ray direction
-                Vector3 fullRayDir = hit.getRay().getDirection();
                 Vector3 reflectedRayDir = fullRayDir.sub(hit.getNormal().multi(2 * fullRayDir.dot(hit.getNormal())));
 
                 // Cast a new ray for the reflection
@@ -146,6 +148,45 @@ public class Renderer {
                 // Multiply the result by the reflectivity of the material
                 reflColor = new VectorColor(reflection.addVectorColor(calculateLight(reflectedHit, scene, rayDepth))
                         .getVector().multi(hitSolid.getMaterial().getReflectivity()));
+
+                // Check if object refracts light
+                if (hitSolid.getMaterial().getIor() > 1.0) {
+
+                    // Get ior of material
+                    double ior = hitSolid.getMaterial().getIor();
+
+                    // Calculate fresnel equations
+                    double kr = RefractionMath.fresnel(fullRayDir, hit.getNormal(), ior);
+
+                    // Check if ray is outside surface
+                    boolean outside = fullRayDir.dot(hit.getNormal()) < 0;
+
+                    // Bias to offset the ray and avoid shadow acne-like effects
+                    Vector3 bias = hit.getNormal().multi(Constants.EPSILON);
+
+                    // If the result of the fresnel equations is below 1 calculate refraction
+                    if (kr < 1) {
+
+                        // Calculate refraction direction and set origin
+                        Vector3 refractDir = RefractionMath.refract(fullRayDir, hit.getNormal(), ior).normalise();
+                        Vector3 refractOrigin = hitPos;
+
+                        // Offset origin with bias
+                        if (outside) {
+                            refractOrigin = refractOrigin.sub(bias);
+                        } else {
+                            refractOrigin = refractOrigin.add(bias);
+                        }
+
+                        // Create refraction ray and cast it
+                        FullRay refractRay = new FullRay(refractDir, refractOrigin);
+                        RayHit refractHit = refractRay.castRay(scene.getGeometry());
+
+                        // Mix reflection color with refraction color
+                        reflColor = new VectorColor(reflColor.getVector().multi(kr)).addVectorColor(
+                                new VectorColor(calculateLight(refractHit, scene, rayDepth).getVector().multi(1 - kr)));
+                    }
+                }
             }
 
             // Check if reflectivity of object is lower then 1

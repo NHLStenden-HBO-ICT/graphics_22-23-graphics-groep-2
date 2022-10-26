@@ -18,7 +18,7 @@ class SphereTest {
 
     @BeforeEach
     void setup() {
-        sphere = new Sphere(new Material(new VectorColor(new Vector3(0, 0, 0)), 0.0), 1, new Vector3(1, 0, 0));
+        sphere = new Sphere(new Material(new VectorColor(new Vector3(0, 0, 0))), 1, new Vector3(1, 0, 0));
     }
 
     @Test

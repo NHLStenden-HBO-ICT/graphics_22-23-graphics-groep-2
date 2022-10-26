@@ -50,7 +50,7 @@ class ShadowRayTest {
     void castTest() {
         //create an array with two spheres
 
-        Material mat = new Material(new VectorColor(new Vector3(0, 0, 0)), 0.0);
+        Material mat = new Material(new VectorColor(new Vector3(0, 0, 0)));
 
         Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
         Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
@@ -70,7 +70,7 @@ class ShadowRayTest {
     @Test
     void castTestMiss() {
         //create an array with two spheres
-        Material mat = new Material(new VectorColor(new Vector3(0, 0, 0)), 0.0);
+        Material mat = new Material(new VectorColor(new Vector3(0, 0, 0)));
 
         Sphere sphereA = new Sphere(mat, 1.0, new Vector3(0, 0, 0));
         Sphere sphereB = new Sphere(mat, 1.0, new Vector3(2, 0, 0));
