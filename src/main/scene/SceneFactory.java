@@ -2,6 +2,7 @@ package main.scene;
 
 import main.geometry.Model;
 import main.geometry.ModelLoader;
+import main.geometry.Sphere;
 import main.geometry.Triangle;
 import main.maths.Vector3;
 import main.utils.Material;
@@ -18,14 +19,33 @@ public class SceneFactory {
         //make a new scene
         Scene scene = new Scene();
 
-        //adds camera to scene
-        scene.setCamera(new Camera(new Vector3(0, 0, 0), height, width, 90));
+        //make some stuff and add it to the scene
+        scene.setCamera(new Camera(new Vector3(-10, 10, -10), height, width, 90));
 
-        //adds light to scene
-        scene.addLight(new PointLight(new VectorColor(new Vector3(255, 255, 255)), 500, new Vector3(0, 100, 50)));
+        // Back plane
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 0, 0)), 0.9), new Vector3(100, -20, -100), new Vector3(-100, -20, -100), new Vector3(0, 100, -100)));
+        
+        // Bottom planes
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255,255 ,255 ))), new Vector3(-100, -20, -100), new Vector3(100, -20, -100), new Vector3(0, -20, 0)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255))), new Vector3(300, -20, 0), new Vector3(0, -20, 0), new Vector3(100, -20, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(0, 255, 0))), new Vector3(0, -20, 0), new Vector3(-300, -20, 0), new Vector3(-100, -20, -100)));
+
+        // Side planes
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255))), new Vector3(-100, -20, -100), new Vector3(-100, -20, 0), new Vector3(0, 100, -100)));
+        scene.addIntersectable(new Triangle(new Material(new VectorColor(new Vector3(255, 255, 255))), new Vector3(100, -20, 0), new Vector3(100, -20, -100), new Vector3(0, 100, -100)));
+        
+        // Spheres
+        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(255, 0, 0)), 1.0, 1.5), 5, new Vector3(0, 0, -50))); //test sphere
+        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(0, 0, 255))), 5, new Vector3(-15, 0, -70))); //test sphere
+
+        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(0, 0, 255))), 5, new Vector3(-15, 0, -120))); //test sphere
+        scene.addIntersectable(new Sphere(new Material(new VectorColor(new Vector3(0, 0, 255))), 5, new Vector3(0, 0, -140))); //test sphere
+        
+
+        scene.addLight(new PointLight(new VectorColor(new Vector3(255, 255, 255)), 15, new Vector3(0, 100, -70)));
 
         //creates a model loader
-        ModelLoader modelloader = new ModelLoader();
+        /*ModelLoader modelloader = new ModelLoader();
         Model model;
 
         try {
@@ -36,7 +56,7 @@ public class SceneFactory {
             throw new RuntimeException(e);
         }
         model.setSize(100);
-        scene.addIntersectable(model);
+        scene.addIntersectable(model);*/
 
 
         return scene;

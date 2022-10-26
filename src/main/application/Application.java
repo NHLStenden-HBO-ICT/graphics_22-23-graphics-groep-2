@@ -7,7 +7,7 @@ import static javax.swing.SwingUtilities.invokeLater;
 
 public class Application {
 
-    private static int height = 400;
+    private static int height = 1000;
     private static double ratio = 16.0 / 9.0;
     private static int width = (int) (ratio * height);
 
