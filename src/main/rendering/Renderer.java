@@ -242,16 +242,18 @@ public class Renderer {
         }
 
 
-        Triangle copy =triangle;
-        copy.setPosition(new Vector3());
-        copy.getOrientation().LookAt(copy.getPosition(),new Vector3());
-        Quaternion rotation = copy.getOrientation().getQuaternion();
+        //Triangle copy =triangle;
+        //copy.setPosition(new Vector3());
+        //copy.getOrientation().LookAt(copy.getPosition(),new Vector3());
+        //Quaternion rotation = copy.getOrientation().getQuaternion();
 
         Vector3 hitpoint =hit.getContactPoint();
-        hitpoint.sub(triangle.getPosition());
-        hitpoint.rotateByQuaternion(rotation);
+        hitpoint = hitpoint.sub(new Vector3(Math.abs()));
+        //Quaternion reverserotation =new Quaternion(new Vector3(-rotation.getX(),-rotation.getY(),-rotation.getZ()),rotation.getRotation());
+        //hitpoint.rotateByQuaternion(reverserotation);
 
         //Vector3[] vertexes = triangle.getVertices();
+        System.out.println(hitpoint.getX()+" "+hitpoint.getY());
         Vector3[] texturevertices = triangle.getTexturemap();
 
         Vector3[] vertexesOrg = triangle.getVerticesorigin();
@@ -308,7 +310,7 @@ public class Renderer {
             width=solid.getMaterial().getTexturemap().getWidth()-1;
         }
 
-        return solid.getMaterial().getTexturemap().getRGB(14, height);
+        return solid.getMaterial().getTexturemap().getRGB(width, height);
     }
 
 
