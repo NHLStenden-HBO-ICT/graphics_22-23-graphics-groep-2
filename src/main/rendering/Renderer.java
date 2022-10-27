@@ -1,12 +1,7 @@
 package main.rendering;
 
 import main.geometry.Solid;
-import main.maths.Constants;
-import main.maths.FullRay;
-import main.maths.RayHit;
-import main.maths.ShadowRay;
-import main.maths.Vector3;
-import main.maths.RefractionMath;
+import main.maths.*;
 import main.scene.Camera;
 import main.scene.PointLight;
 import main.scene.Scene;
@@ -33,9 +28,9 @@ public class Renderer {
         // the calculateLight(RayHit hit) method with the current rayhit
         // Finally set that pixel with the final color in the image buffer
         if (hit != null) {
-            VectorColor finalColor = calculateLight(hit, scene, 0);
 
-            return finalColor.getJavaColor().getRGB();
+                VectorColor finalColor = calculateLight(hit, scene, 0);
+                return finalColor.getJavaColor().getRGB();
 
         } else {
             // if there is no intersection then it will color x and y black
@@ -222,4 +217,5 @@ public class Renderer {
         // Finally return the final result after all the lights have been calculated
         return diffColor.addVectorColor(reflColor);
     }
+
 }
