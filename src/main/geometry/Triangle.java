@@ -6,8 +6,11 @@ import main.utils.Material;
 public class Triangle extends Solid implements Intersectable {
 
     private Vector3[] vertices;
+    private Vector3[] texturemap;
     private Vector3[] verticesorigin; //location of the vertices when triangle is at 0
     private Vector3 surfaceNormal;
+    private Orientation orientation;
+    private Vector3 position;
 
     //not part of an in loaded model
     public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3) {
@@ -37,6 +40,42 @@ public class Triangle extends Solid implements Intersectable {
         this.surfaceNormal =normal;
     }
 
+    public Triangle(Material material, Vector3 point1, Vector3 point2, Vector3 point3, Vector3 normal, Vector3 pointT1, Vector3 pointT2, Vector3 pointT3) {
+        super(material);
+        this.vertices = new Vector3[]{
+                point1,
+                point2,
+                point3,
+        };
+        this.verticesorigin = new Vector3[]{
+                point1,
+                point2,
+                point3,
+        };
+        this.texturemap = new Vector3[]{
+                pointT1,
+                pointT2,
+                pointT3,
+        };
+        this.surfaceNormal =normal;
+    }
+
+    public void setTexturemap(Vector3[] texturemap) {
+        this.texturemap = texturemap;
+    }
+
+    public Vector3[] getTexturemap() {
+        return texturemap;
+    }
+
+    public Vector3 getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector3 position) {
+        this.position = position;
+    }
+
     public Vector3 getVertex(int index) {
         return vertices[index];
     }
@@ -47,6 +86,10 @@ public class Triangle extends Solid implements Intersectable {
 
     public Vector3[] getVertices() {
         return vertices;
+    }
+
+    public Vector3[] getVerticesorigin() {
+        return verticesorigin;
     }
 
     public void setVertex(int index, Vector3 vertex) {
@@ -97,6 +140,13 @@ public class Triangle extends Solid implements Intersectable {
         this.vertices = vertices;
     }
 
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
     //going to try and make this happen
     // https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
 

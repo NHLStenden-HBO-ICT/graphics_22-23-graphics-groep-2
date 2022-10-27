@@ -103,7 +103,7 @@ public class MainWindow extends JFrame implements EventListener {
     //sets up everything, so we're ready to render a scene.
     private void setUpRayTracer() {
         statusBar.setState(States.LOADING_MODEL);
-        scene = SceneFactory.crystalScene(getHeight(), getWidth());
+        scene = SceneFactory.modelScene(getHeight(), getWidth());
         statusBar.setState(States.IDLE);
     }
 

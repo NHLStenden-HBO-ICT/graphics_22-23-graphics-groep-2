@@ -1,10 +1,12 @@
 package main.rendering;
 
 import main.geometry.Solid;
+import main.geometry.Triangle;
 import main.maths.*;
 import main.scene.Camera;
 import main.scene.PointLight;
 import main.scene.Scene;
+import main.utils.Material;
 import main.utils.VectorColor;
 
 import java.awt.image.BufferedImage;
@@ -28,9 +30,16 @@ public class Renderer {
         // the calculateLight(RayHit hit) method with the current rayhit
         // Finally set that pixel with the final color in the image buffer
         if (hit != null) {
-
+            if (hit.getHitSolid().getMaterial().getTexturemap()!=null)
+            {
+                return textures(hit);
+            }
+            else
+            {
                 VectorColor finalColor = calculateLight(hit, scene, 0);
                 return finalColor.getJavaColor().getRGB();
+            }
+
 
         } else {
             // if there is no intersection then it will color x and y black
@@ -41,7 +50,6 @@ public class Renderer {
     public double getMaxRayDepth() {
         return MAX_RAY_DEPTH;
     }
-
 
     // Cast rays from the camera into the scene to detect intersections and see if
     // they need to be lit up
@@ -217,5 +225,92 @@ public class Renderer {
         // Finally return the final result after all the lights have been calculated
         return diffColor.addVectorColor(reflColor);
     }
+
+    public static int textures(RayHit hit){
+
+        Solid solid = hit.getHitSolid();
+        Triangle triangle = new Triangle(solid.getMaterial(),new Vector3(),new Vector3(), new Vector3());
+        Material material =solid.getMaterial();
+
+
+        if(solid.getClass()==Triangle.class){
+            triangle = (Triangle) solid.getClass().cast(solid);
+        }
+        else
+        {
+            return 0;
+        }
+
+
+        Triangle copy =triangle;
+        copy.setPosition(new Vector3());
+        copy.getOrientation().LookAt(copy.getPosition(),new Vector3());
+        Quaternion rotation = copy.getOrientation().getQuaternion();
+
+        Vector3 hitpoint =hit.getContactPoint();
+        hitpoint.sub(triangle.getPosition());
+        hitpoint.rotateByQuaternion(rotation);
+
+        //Vector3[] vertexes = triangle.getVertices();
+        Vector3[] texturevertices = triangle.getTexturemap();
+
+        Vector3[] vertexesOrg = triangle.getVerticesorigin();
+
+
+        double vertXmin = Math.min(vertexesOrg[0].getX(),Math.min(vertexesOrg[1].getX(),vertexesOrg[2].getX()));
+        double vertYmin = Math.min(vertexesOrg[0].getY(),Math.min(vertexesOrg[1].getY(),vertexesOrg[2].getY()));
+        double textXmin = Math.min(texturevertices[0].getX(),Math.min(texturevertices[1].getX(),texturevertices[2].getX()));
+        double textYmin = Math.min(texturevertices[0].getY(),Math.min(texturevertices[1].getY(),texturevertices[2].getY()));
+
+        double widthRatio3D=Math.max(vertexesOrg[0].getX(),Math.max(vertexesOrg[1].getX(),vertexesOrg[2].getX())) - vertXmin;
+        double heightRatio3D=Math.max(vertexesOrg[0].getY(),Math.max(vertexesOrg[1].getY(),vertexesOrg[2].getY())) - vertYmin;
+        double widthRatioTM=Math.max(texturevertices[0].getX(),Math.max(texturevertices[1].getX(),texturevertices[2].getX())) - textXmin;
+        double heightRatioTM=Math.max(texturevertices[0].getY(),Math.max(texturevertices[1].getY(),texturevertices[2].getY())) - textYmin;
+
+
+        int width;
+        int height;
+
+        if(vertXmin<=0){
+            width= Math.abs((int) ((textXmin * material.getTexturemap().getWidth()) +
+                    (((Math.abs(vertXmin) + hitpoint.getX()) * material.getTexturemap().getWidth() * widthRatioTM) / widthRatio3D)));
+        }
+        else{
+            width= Math.abs((int) ((textXmin *material.getTexturemap().getWidth()) +
+                    (((hitpoint.getX()-vertXmin) * material.getTexturemap().getWidth() * widthRatioTM) / widthRatio3D)));
+        }
+
+        if(vertYmin<=0){
+            height= Math.abs((int) ((textYmin * material.getTexturemap().getHeight()) +
+                    (((Math.abs(vertYmin) + hitpoint.getY()) * material.getTexturemap().getHeight() * heightRatioTM )/heightRatio3D)));
+
+        }
+        else{
+            height= Math.abs((int) ((textYmin * material.getTexturemap().getHeight()) +
+                    (((hitpoint.getY() - vertYmin) * material.getTexturemap().getHeight() * heightRatioTM) / heightRatio3D)));
+        }
+
+
+        //System.out.println(vertexes[0].getX()+" "+vertexes[1].getX()+" "+vertexes[2].getX() );
+        System.out.println("texture loading " +width +" "+height);
+
+        if (height<=0){
+            height =0;
+        }
+        if (height>=solid.getMaterial().getTexturemap().getHeight()){
+            height=solid.getMaterial().getTexturemap().getHeight()-1;
+        }
+
+        if (width<=0){
+            width =0;
+        }
+        if (width>=solid.getMaterial().getTexturemap().getWidth()){
+            width=solid.getMaterial().getTexturemap().getWidth()-1;
+        }
+
+        return solid.getMaterial().getTexturemap().getRGB(14, height);
+    }
+
+
 
 }

@@ -35,8 +35,7 @@ public class SceneFactory {
 
         try {
             //adds model to scene using the model loader, it gets the file path and sets the start position
-            models.add(modelloader.readFile("objfiles/","cup.obj", (new Vector3(0, -1, -500)),100,null));
-            models.add(modelloader.readFile("objfiles/","box1.obj", (new Vector3(-20, -1, -400)),30,null));
+            models.add(modelloader.readFile("objfiles/","box1.obj", (new Vector3(-20, -10, -400)),60,null));
         } catch (Exception e) {
             //because a file is being read, for safety it needs a try and catch
             throw new RuntimeException(e);
