@@ -4,22 +4,28 @@ import main.rendering.RenderTask;
 import main.scene.Scene;
 import main.scene.SceneFactory;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.EventListener;
 
 public class MainWindow extends JFrame implements EventListener {
 
     //ray tracing stuff
     private Scene scene;
+    private BufferedImage image;
 
     //UI elements
     private StatusBar statusBar;
     private JPanel actionBar;
     private JPanel ui;
     private Button renderButton;
+    private Button imageSaveButton;
     private JLabel imageLabel;
+
 
     public void setImage(BufferedImage image) {
         //safe the image in a local variable
@@ -27,8 +33,6 @@ public class MainWindow extends JFrame implements EventListener {
         //render the image to the screen
         this.imageLabel.setIcon(new ImageIcon(image));
     }
-
-    private BufferedImage image;
 
     MainWindow(int height, int width) {
         configureWindow(width, height);
@@ -83,9 +87,15 @@ public class MainWindow extends JFrame implements EventListener {
         renderButton.setPreferredSize(new Dimension(70, 20));
         renderButton.addActionListener(e -> render());
 
+        //instance a new button. This button will save our render to a file when clicked
+        imageSaveButton = new Button("save image to file");
+        imageSaveButton.setPreferredSize(new Dimension(100, 20));
+        imageSaveButton.addActionListener(e -> saveImageToFile());
 
-        //add the button to the appropriate bar
+
+        //add the buttons to the appropriate bar
         actionBar.add(renderButton);
+        actionBar.add(imageSaveButton);
 
         //add the bars to the ui panel
         ui.add(statusBar, BorderLayout.NORTH);
@@ -115,6 +125,17 @@ public class MainWindow extends JFrame implements EventListener {
 
         //makes a new render task and executes it
         new RenderTask(this, height, width).execute();
+    }
+
+    //when called saves the currently stored image to a file
+    private void saveImageToFile() {
+        String outputDestination = "out/image.png";
+        File outputFile = new File(outputDestination);
+        try {
+            ImageIO.write(image, "png", outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
