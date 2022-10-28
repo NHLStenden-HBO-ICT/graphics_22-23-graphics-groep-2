@@ -89,6 +89,7 @@ public class MainWindow extends JFrame implements EventListener {
 
         //instance a new button. This button will save our render to a file when clicked
         imageSaveButton = new Button("save image to file");
+        imageSaveButton.setPreferredSize(new Dimension(100, 20));
         imageSaveButton.addActionListener(e -> saveImageToFile());
 
 
