@@ -248,7 +248,7 @@ public class Renderer {
         //Quaternion rotation = copy.getOrientation().getQuaternion();
 
         Vector3 hitpoint =hit.getContactPoint();
-        hitpoint = hitpoint.sub(new Vector3(Math.abs()));
+        //hitpoint = hitpoint.sub(new Vector3(Math.abs()));
         //Quaternion reverserotation =new Quaternion(new Vector3(-rotation.getX(),-rotation.getY(),-rotation.getZ()),rotation.getRotation());
         //hitpoint.rotateByQuaternion(reverserotation);
 
