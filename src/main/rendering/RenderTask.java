@@ -22,8 +22,6 @@ public class RenderTask extends SwingWorker<BufferedImage, Integer> {
     int width, height, pixelsToRender;
     Scene scene;
 
-    BufferedImage bufferedImage;
-
     public RenderTask(MainWindow mainWindow, int height, int width) {
         this.height = height;
         this.width = width;
