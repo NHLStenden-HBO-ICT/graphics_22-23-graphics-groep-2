@@ -7,7 +7,6 @@ import main.scene.PointLight;
 import main.scene.Scene;
 import main.utils.VectorColor;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class Renderer {
@@ -36,38 +35,6 @@ public class Renderer {
             // if there is no intersection then it will color x and y black
             return 000000;
         }
-    }
-
-    public double getMaxRayDepth() {
-        return MAX_RAY_DEPTH;
-    }
-
-
-    // Cast rays from the camera into the scene to detect intersections and see if
-    // they need to be lit up
-    // First get screen resolution and ratio
-    // Then setip a buffer and a camera
-    // Then cast a ray through each pixel and calculate the color for it if it
-    // intersects with a solid
-    public BufferedImage RenderToImage(Scene scene, int height) {
-
-        PixelData pixelData = new PixelData(height, scene.getCamera().getRatio());
-        BufferedImage buffer = new BufferedImage(pixelData.getWidth(), pixelData.getHeight(),
-                BufferedImage.TYPE_INT_RGB);
-
-        Camera camera = scene.getCamera();
-
-        // Loop for each pixel on the image
-        for (int y = 0; y < pixelData.getHeight(); ++y) {
-            for (int x = 0; x < pixelData.getWidth(); ++x) {
-                buffer.setRGB(x, y, tracePixel(camera, scene, x, y));
-            }
-        }
-
-        // At the end call toImage(bufferedImage image) in pixelData to convert the
-        // buffer to an image
-        pixelData.toImage(buffer);
-        return buffer;
     }
 
     // This method checks wheter or not a pixel should be lit up by casting a shadow
@@ -217,5 +184,11 @@ public class Renderer {
         // Finally return the final result after all the lights have been calculated
         return diffColor.addVectorColor(reflColor);
     }
+
+
+
+
+
+
 
 }

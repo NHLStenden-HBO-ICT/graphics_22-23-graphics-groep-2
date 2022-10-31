@@ -24,8 +24,10 @@ public class MainWindow extends JFrame implements EventListener {
     private JPanel ui;
     private Button renderButton;
     private Button imageSaveButton;
+    private Button forestButton;
+    private Button simpleButton;
+    private Button modelButton;
     private JLabel imageLabel;
-
 
     public void setImage(BufferedImage image) {
         //safe the image in a local variable
@@ -93,9 +95,24 @@ public class MainWindow extends JFrame implements EventListener {
         imageSaveButton.addActionListener(e -> saveImageToFile());
 
 
+        forestButton = new Button("forest");
+        forestButton.setPreferredSize(new Dimension(70, 20));
+        forestButton.addActionListener(e -> forestScene());
+
+        simpleButton = new Button("simple");
+        simpleButton.setPreferredSize(new Dimension(70, 20));
+        simpleButton.addActionListener(e -> simpleScene());
+
+        modelButton = new Button("model");
+        modelButton.setPreferredSize(new Dimension(70, 20));
+        modelButton.addActionListener(e -> modelScene());
+
         //add the buttons to the appropriate bar
         actionBar.add(renderButton);
         actionBar.add(imageSaveButton);
+        actionBar.add(forestButton);
+        actionBar.add(simpleButton);
+        actionBar.add(modelButton);
 
         //add the bars to the ui panel
         ui.add(statusBar, BorderLayout.NORTH);
@@ -113,7 +130,7 @@ public class MainWindow extends JFrame implements EventListener {
     //sets up everything, so we're ready to render a scene.
     private void setUpRayTracer() {
         statusBar.setState(States.LOADING_MODEL);
-        scene = SceneFactory.crystalScene(getHeight(), getWidth());
+        scene = SceneFactory.forestScene(getHeight(), getWidth());
         statusBar.setState(States.IDLE);
     }
 
@@ -138,12 +155,6 @@ public class MainWindow extends JFrame implements EventListener {
         }
     }
 
-
-    //some getters and setters
-    public BufferedImage getImage() {
-        return image;
-    }
-
     public Scene getScene() {
         return scene;
     }
@@ -156,5 +167,13 @@ public class MainWindow extends JFrame implements EventListener {
         return imageLabel;
     }
 
-
+    private void forestScene() {
+        scene=SceneFactory.forestScene(getHeight(), getWidth());
+    }
+    private void simpleScene() {
+        scene=SceneFactory.modelScene(getHeight(), getWidth());
+    }
+    private void modelScene() {
+        scene=SceneFactory.floatingIslandScene(getHeight(), getWidth());
+    }
 }

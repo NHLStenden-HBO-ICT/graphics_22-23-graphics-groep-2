@@ -1,8 +1,5 @@
 package main.application;
 
-import main.rendering.Renderer;
-import main.scene.Scene;
-
 import static javax.swing.SwingUtilities.invokeLater;
 
 public class Application {

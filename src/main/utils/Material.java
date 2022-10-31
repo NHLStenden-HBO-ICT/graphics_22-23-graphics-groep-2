@@ -1,5 +1,7 @@
 package main.utils;
 
+import java.awt.image.BufferedImage;
+
 public class Material {
 
     // Ior stands for "index of refraction"
@@ -13,6 +15,8 @@ public class Material {
     // Water = 1.3
     // Glass = 1.5
     private double ior;
+
+    private BufferedImage texturemap;
 
     // Note: This value can't be higher than 1 or lower than 0
     // This is accounted for in the constructor so entering a wrong value won't
@@ -96,4 +100,11 @@ public class Material {
         this.ior = ior;
     }
 
+    public void setTexturemap(BufferedImage texturemap){
+        this.texturemap=texturemap;
+    }
+
+    public BufferedImage getTexturemap() {
+        return texturemap;
+    }
 }

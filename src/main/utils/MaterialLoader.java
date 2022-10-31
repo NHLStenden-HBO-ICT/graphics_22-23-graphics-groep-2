@@ -2,9 +2,12 @@ package main.utils;
 
 import main.maths.Vector3;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 
 public class MaterialLoader {
 
@@ -31,8 +34,10 @@ public class MaterialLoader {
                 case "Ni": //refraction
                     material.setIor(Double.parseDouble(data[1]));
                     break;
-                //more cases for Ambient(Ka), diffuse(Kd), reflection/specular color (Ks), transparent/dissolved(d) with transmision filter(Tf), optical density/refraction(Ni) and incase the object gives light/emision(Ke)
-
+                case "map_Kd":
+                    material.setTexturemap(getImage(data));
+                    break;
+                //more cases for Ambient(Ka), incase the object gives light/emision(Ke) and maybe more texture ma options
             }
 
         }
@@ -47,6 +52,14 @@ public class MaterialLoader {
         return new VectorColor(new Vector3(Double.parseDouble(data[1])*255, Double.parseDouble(data[2])*255, Double.parseDouble(data[3])*255));
     }
 
+    private BufferedImage getImage(String[] data){
+        String[] line = data[1].split("//");
+        try {
+            return ImageIO.read(new File("objfiles/"+data[1]));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
